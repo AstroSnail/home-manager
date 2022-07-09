@@ -1,0 +1,19 @@
+shopt -s nullglob globstar
+
+if [ "$1" = "--file" ]
+then
+  shift
+  password=$1
+  shift
+else
+  prefix=${PASSWORD_STORE_DIR-~/.password-store}
+  password_files=( "$prefix"/**/*.gpg )
+  password_files=( "${password_files[@]#"$prefix"/}" )
+  password_files=( "${password_files[@]%.gpg}" )
+
+  password=$(printf '%s\n' "${password_files[@]}" | dmenu-wl "$@")
+fi
+
+[[ -n $password ]] || exit
+
+pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } | ydotool type --file /dev/stdin
