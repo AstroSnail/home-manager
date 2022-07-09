@@ -86,7 +86,8 @@ in {
     pkgs.wineWowPackages.waylandFull
     pkgs.yt-dlp
     (pkgs.texlive.combine {
-      inherit (pkgs.texlive) scheme-medium cbfonts cleveref gfsartemisia lipsum srcltx titlesec was;
+      inherit (pkgs.texlive)
+        scheme-medium cbfonts cleveref gfsartemisia lipsum srcltx titlesec was;
     })
   ];
 }

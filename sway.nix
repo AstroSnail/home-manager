@@ -1,31 +1,29 @@
 { pkgs, ... }:
 
-let floatingClasses = [
-  "CrossCode"
-  "Flashplayer"
-  "Ledger Live"
-  "love"
-  "Mojosetup"
-  ".scrcpy-wrapped"
-];
+let
+  floatingClasses = [
+    "CrossCode"
+    "Flashplayer"
+    "Ledger Live"
+    "love"
+    "Mojosetup"
+    ".scrcpy-wrapped"
+  ];
 
 in {
   wayland.windowManager.sway = {
     enable = true;
     package = null;
-    config.bars = [
-      {
-        mode = "hide";
-        position = "bottom";
-        statusCommand = "${pkgs.i3status}/bin/i3status";
-        extraConfig = ''
-          modifier none
-        '';
-      }
-    ];
-    config.floating.criteria = [
-      { class = builtins.concatStringsSep "|" floatingClasses; }
-    ];
+    config.bars = [{
+      mode = "hide";
+      position = "bottom";
+      statusCommand = "${pkgs.i3status}/bin/i3status";
+      extraConfig = ''
+        modifier none
+      '';
+    }];
+    config.floating.criteria =
+      [{ class = builtins.concatStringsSep "|" floatingClasses; }];
     config.focus.followMouse = false;
     config.gaps.inner = 8;
     config.input."4152:4610:SteelSeries_SteelSeries_Apex_Gaming_Keyboard" = {
