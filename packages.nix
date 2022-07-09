@@ -84,6 +84,7 @@ in {
     pkgs.syncplay
     pkgs.texstudio
     pkgs.wineWowPackages.waylandFull
+    pkgs.winetricks
     pkgs.yt-dlp
     (pkgs.texlive.combine {
       inherit (pkgs.texlive)
