@@ -8,7 +8,9 @@ let
     "love"
     "Mojosetup"
     ".scrcpy-wrapped"
+    "steam"
   ];
+  floatingTitles = [ "Rigs of Rods" ];
 
 in {
   wayland.windowManager.sway = {
@@ -22,8 +24,10 @@ in {
         modifier none
       '';
     }];
-    config.floating.criteria =
-      [{ class = builtins.concatStringsSep "|" floatingClasses; }];
+    config.floating.criteria = [
+      { class = builtins.concatStringsSep "|" floatingClasses; }
+      { title = builtins.concatStringsSep "|" floatingTitles; }
+    ];
     config.focus.followMouse = false;
     config.gaps.inner = 8;
     config.input."4152:4610:SteelSeries_SteelSeries_Apex_Gaming_Keyboard" = {

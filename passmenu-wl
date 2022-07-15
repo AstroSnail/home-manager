@@ -5,6 +5,7 @@ then
   shift
   password=$1
   shift
+  sleep=2
 else
   prefix=${PASSWORD_STORE_DIR-~/.password-store}
   password_files=( "$prefix"/**/*.gpg )
@@ -12,8 +13,9 @@ else
   password_files=( "${password_files[@]%.gpg}" )
 
   password=$(printf '%s\n' "${password_files[@]}" | dmenu-wl "$@")
+  sleep=0
 fi
 
 [[ -n $password ]] || exit
 
-pass show "$password" | { IFS= read -r pass; printf %s "$pass"; } | ydotool type --file /dev/stdin
+pass show "$password" | { IFS= read -r pass; sleep "${sleep}"; printf %s "$pass"; } | ydotool type --file /dev/stdin
