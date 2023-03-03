@@ -1,1 +1,0 @@
-exec "${HOME}/.emacs.d/bin/doom" run

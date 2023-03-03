@@ -1,5 +1,5 @@
 " Colemak-DHm usability map
-"
+
 " Actual layout:
 " ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬───────────┐
 " │ ~   │ !   │ @   │ #   │ $   │ %   │ ^   │ &   │ *   │ (   │ )   │ _   │ +   │           │
@@ -17,9 +17,8 @@
 " │       │        │        │                               │        │        │     │       │
 " │ ⎈     │        │        │ ␣                             │ ⇮      │        │     │ ⎈     │
 " └───────┴────────┴────────┴───────────────────────────────┴────────┴────────┴─────┴───────┘
-"
+
 " Remapped keys:
-"   Normal mode:
 " ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬───────────┐
 " │     │     │     │     │     │     │     │     │     │     │     │     │     │           │
 " │     │     │     │     │     │     │     │     │     │     │     │     │     │           │
@@ -36,33 +35,13 @@
 " │       │        │        │                               │        │        │     │       │
 " │       │        │        │                               │        │        │     │       │
 " └───────┴────────┴────────┴───────────────────────────────┴────────┴────────┴─────┴───────┘
-"   Visual mode:
-" ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬───────────┐
-" │     │     │     │     │     │     │     │     │     │     │     │     │     │           │
-" │     │     │     │     │     │     │     │     │     │     │     │     │     │           │
-" ├─────┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬────────┤
-" │        │     │     │     │     │     │ E   │ I   │     │     │     │     │     │        │
-" │        │     │     │     │     │     │ e   │ i   │     │     │     │     │     │        │
-" ├────────┴─┬───┴─┬───┴─┬───┴─┲━━━┷━┱───┴─┬───┴─┲━━━┷━┱───┴─┬───┴─┬───┴─┬───┴─┬───┴─┐      │
-" │          │     │     │     ┃     ┃     │     ┃ H   ┃ J   │ K   │ L   │     │     │      │
-" │          │     │     │     ┃     ┃     │     ┃ h   ┃ j   │ k   │ l   │     │     │      │
-" ├───────┬──┴──┬──┴──┬──┴──┬──┺━━┯━━┹──┬──┴──┬──┺━━┯━━┹──┬──┴──┬──┴──┬──┴──┬──┴─────┴──────┤
-" │       │     │     │     │     │     │     │ N   │ O   │     │     │     │               │
-" │       │     │     │     │     │     │     │ n   │ o   │     │     │     │               │
-" ├───────┼─────┴──┬──┴─────┼─────┴─────┴─────┴─────┴─────┴─┬───┴────┬┴─────┴─┬─────┬───────┤
-" │       │        │        │                               │        │        │     │       │
-" │       │        │        │                               │        │        │     │       │
-" └───────┴────────┴────────┴───────────────────────────────┴────────┴────────┴─────┴───────┘
-" (Operator-pending mode doesn't seem to make use of u/U or i/I)
-
+"   Cycle map: e -> j -> e, h -> o -> l -> u -> i -> k -> n -> h
 noremap j e
 noremap J E
-nnoremap l u
-nnoremap L U
-nnoremap u i
-nnoremap U I
-vnoremap l i
-vnoremap L I
+noremap l u
+noremap L U
+noremap u i
+noremap U I
 noremap n h
 noremap N H
 noremap e j
@@ -70,8 +49,55 @@ noremap E J
 noremap i k
 noremap I K
 noremap o l
-noremap O l
+noremap O L
 noremap k n
 noremap K N
 noremap h o
 noremap H O
+
+" Remapped g-keys:
+" ┌─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬─────┬───────────┐
+" │     │     │     │     │     │     │     │     │     │     │     │     │     │           │
+" │     │     │     │     │     │     │     │     │     │     │     │     │     │           │
+" ├─────┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬──┴──┬────────┤
+" │        │     │     │     │     │     │ E   │ U   │ I   │     │     │     │     │        │
+" │        │     │     │     │     │     │ e   │ u   │ i   │     │     │     │     │        │
+" ├────────┴─┬───┴─┬───┴─┬───┴─┲━━━┷━┱───┴─┬───┴─┲━━━┷━┱───┴─┬───┴─┬───┴─┬───┴─┬───┴─┐      │
+" │          │     │     │     ┃     ┃     │     ┃ L   ┃ J   │ K   │     │     │     │      │
+" │          │     │     │     ┃     ┃     │     ┃ l   ┃ j   │ k   │     │     │     │      │
+" ├───────┬──┴──┬──┴──┬──┴──┬──┺━━┯━━┹──┬──┴──┬──┺━━┯━━┹──┬──┴──┬──┴──┬──┴──┬──┴─────┴──────┤
+" │       │     │     │     │     │     │     │ N   │     │     │     │     │               │
+" │       │     │     │     │     │     │     │ n   │     │     │     │     │               │
+" ├───────┼─────┴──┬──┴─────┼─────┴─────┴─────┴─────┴─────┴─┬───┴────┬┴─────┴─┬─────┬───────┤
+" │       │        │        │                               │        │        │     │       │
+" │       │        │        │                               │        │        │     │       │
+" └───────┴────────┴────────┴───────────────────────────────┴────────┴────────┴─────┴───────┘
+"   Cycle map: e -> j -> e, l -> u -> i -> k -> n -> l
+"   l isn't a useful g-key but it helps complete the cycle map
+noremap gj ge
+noremap gJ gE
+noremap gl gu
+noremap gL gU
+noremap gu gi
+noremap gU gI
+noremap gn gl
+noremap gN gL
+noremap ge gj
+noremap gE gJ
+noremap gi gk
+noremap gI gK
+noremap gk gn
+noremap gK gN
+
+" Notes:
+" - noremap works on normal, visual, select, and operator-pending modes simultaneously
+" - to enter normal mode, press esc
+" - to enter visual mode, press v
+" - to enter select mode, press gh
+" - to enter operator-pending mode, press an operator command such as d
+" TODO:
+" - j is an exceptionally punishing key to put e
+" - u in visual mode maybe should stay on u instead of on l
+" - ditto for gu in all modes
+" - CTRL-W hjkl
+" - CTRL-E CTRL-Y, CTRL-D CTRL-U

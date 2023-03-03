@@ -1,25 +1,32 @@
+{ config, ... }:
+
 {
   imports = [
     ./packages.nix
-    ./sway.nix
+    ./i3status.nix
+    ./i3.nix
+    #./sway.nix
     ./systemd.nix
     ./xdg.nix
   ];
 
-  home.sessionVariables.WINEARCH = "win64";
+  #home.sessionVariables.WINEARCH = "win64";
+  home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
+  home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [
     "dcraw-9.28.0"
   ];
 
-  services.home-manager.autoUpgrade.enable = true;
-  services.home-manager.autoUpgrade.frequency = "daily";
-
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "erry";
   home.homeDirectory = "/home/erry";
+
+  home.shellAliases.find = "noexec";
+  home.shellAliases.grep = "noexec";
+  home.shellAliases.rm = "noexec";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
