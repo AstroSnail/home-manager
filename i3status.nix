@@ -2,7 +2,7 @@
   programs.i3status.enable = true;
   programs.i3status.enableDefault = false;
   programs.i3status.general.colors = true;
-  programs.i3status.general.interval = 5;
+  programs.i3status.general.interval = 1;
   #programs.i3status.modules."cpu_temperature 0".position = 1;
   #programs.i3status.modules."memory".position = 2;
   #programs.i3status.modules."memory".settings.format = "%free";

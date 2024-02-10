@@ -1,9 +1,13 @@
 { pkgs, ... }:
 
 {
-  nixpkgs.overlays = [(_: pkgs: { openssh = pkgs.openssh.override { withFIDO = true; }; })];
+  #nixpkgs.overlays = [(_: pkgs: { openssh = pkgs.openssh.override { withFIDO = true; }; })];
   programs.ssh.enable = true;
-  programs.ssh.controlMaster = "yes";
+  programs.ssh.controlMaster = "auto";
+  programs.ssh.serverAliveInterval = 60;
+  programs.ssh.extraOptionOverrides = {
+    ConnectTimeout = "10";
+  };
   programs.ssh.matchBlocks = {
     #snail.host = "snail";
     #snail.hostname = "192.168.1.65";
@@ -39,12 +43,12 @@
     vps.identitiesOnly = true;
     vps.addressFamily = "inet6";
 
-    vps4.host = "vps-04b3828b-v4";
-    vps4.hostname = "vps-04b3828b.vps.ovh.net";
-    vps4.port = 22;
-    vps4.user = "ubuntu";
-    vps4.identitiesOnly = true;
-    vps4.addressFamily = "inet";
+    vps-4.host = "vps-04b3828b-v4";
+    vps-4.hostname = "vps-04b3828b.vps.ovh.net";
+    vps-4.port = 22;
+    vps-4.user = "ubuntu";
+    vps-4.identitiesOnly = true;
+    vps-4.addressFamily = "inet";
 
     smol.host = "smol";
   #  smol.hostname = "192.168.1.73";
@@ -60,11 +64,38 @@
     soon-prime.user = "izzy";
     soon-prime.identitiesOnly = true;
 
+    sunrise.host = "sunrise";
+    sunrise.hostname = "2a01:4f8:c0c:1013::1";
+    sunrise.port = 22;
+    sunrise.user = "root";
+    sunrise.identitiesOnly = true;
+
+    sunrise-v4.host = "sunrise-v4";
+    sunrise-v4.hostname = "162.55.184.64";
+    sunrise-v4.port = 22;
+    sunrise-v4.user = "root";
+    sunrise-v4.identitiesOnly = true;
+
+    vps2.host = "vps-c7e9a3a0";
+    vps2.hostname = "vps-c7e9a3a0.vps.ovh.ca";
+    vps2.port = 22;
+    vps2.user = "debian";
+    vps2.identitiesOnly = true;
+    vps2.addressFamily = "inet6";
+
+    vps2-4.host = "vps-c7e9a3a0-v4";
+    vps2-4.hostname = "vps-c7e9a3a0.vps.ovh.ca";
+    vps2-4.port = 22;
+    vps2-4.user = "debian";
+    vps2-4.identitiesOnly = true;
+    vps2-4.addressFamily = "inet";
+
     github.host = "github.com";
     github.hostname = "github.com";
     github.port = 22;
     github.user = "git";
     github.identitiesOnly = true;
+    #github.addressFamily = "inet6"; # ????
 
     ubi.host = "ubi.pt";
     ubi.hostname = "unix.ubi.pt";
@@ -73,5 +104,4 @@
     ubi.identitiesOnly = true;
     ubi.proxyJump = "soon-prime";
   };
-  programs.ssh.serverAliveInterval = 60;
 }

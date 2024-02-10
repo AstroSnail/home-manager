@@ -2,56 +2,71 @@
 
 let
   floatingClasses = [
-    "Dwarf_Fortress"
-    "easyeffects"
-    "explorer.exe"
-    "ffplay"
-    "Flashplayer"
-    ".blueman-manager-wrapped"
-    "Ledger Live"
-    "love"
-    "MEGAsync"
-    "Minetest"
-    "Mojosetup"
-    "Pavucontrol"
-    "Pcsx2"
-    ".scrcpy-wrapped"
-    "Steam"
-    "steam"
-    "Terraria.bin.x86_64"
+    "\\.exe$"
+    "^\\.blueman-manager-wrapped$"
+    "^Chromium-browser$"
+    "^Dwarf_Fortress$"
+    #"^easyeffects$"
+    "^ffplay$"
+    "^Flashplayer$"
+    "^Ledger Live$"
+    "^love$"
+    "^MEGAsync$"
+    "^Minecraft "
+    "^Minetest$"
+    "^Mojosetup$"
+    "^NanoBoyAdvance$"
+    "^net\\.querz\\.mcaselector\\.ui\\.Window$"
+    "^org-prismlauncher-EntryPoint$"
+    #"^Pavucontrol$"
+    #"^Pcsx2$"
+    "^Qemu-system-x86_64$"
+    "^\\.sameboy-wrapped$"
+    #"^\\.scrcpy-wrapped$"
+    #"^Steam$"
+    #"^steam$"
+    "^steam_app_11020$"
+    "^steam_proton$"
+    "^Tor Browser$"
+    "^Terraria\\.bin\\.x86_64$"
   ];
   #floatingTitles = [ "Rigs of Rods" ];
-  fonts = {
-    #names = [ "Hack" ];
-    size = 10.0;
-  };
+  #fonts = {
+  #  #names = [ "Hack" ];
+  #  size = 10.0;
+  #};
 
 in {
-  xsession.windowManager.i3 = {
-    enable = true;
-    package = pkgs.i3-gaps;
-    config.bars = [{
-      mode = "hide";
-      fonts = fonts;
-      position = "bottom";
-      statusCommand = "${pkgs.i3status}/bin/i3status";
-      extraConfig = ''
-        modifier none
-      '';
-    }];
-    config.floating.criteria = [
-      { class = lib.concatStringsSep "|" floatingClasses; }
-      #{ title = lib.concatStringsSep "|" floatingTitles; }
-    ];
-    config.floating.modifier = "Mod4";
-    config.focus.followMouse = false;
-    config.fonts = fonts;
-    config.gaps.inner = 8;
-    config.keybindings."Mod1+Escape" = "mode magic";
-    extraConfig = (lib.readFile ./magicmode.conf) + ''
-      exec --no-startup-id setxkbmap
-      exec --no-startup-id feh --image-bg '#8F8F8F' --bg-fill --no-fehbg ${config.xdg.userDirs.pictures}/FnQswpzX0AIt0uP.jpg
-      exec --no-startup-id blueman-applet
+  xsession.windowManager.i3.enable = true;
+  xsession.windowManager.i3.package = pkgs.i3-gaps;
+  xsession.windowManager.i3.config.bars = [{
+    mode = "hide";
+    #fonts = fonts;
+    position = "bottom";
+    statusCommand = "${pkgs.i3status}/bin/i3status";
+    trayOutput = "primary";
+    extraConfig = ''
+      font -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
+      modifier none
     '';
-  };
+  }];
+  xsession.windowManager.i3.config.floating.criteria = [
+    { class = lib.concatStringsSep "|" floatingClasses; }
+    #{ title = lib.concatStringsSep "|" floatingTitles; }
+  ];
+  xsession.windowManager.i3.config.floating.modifier = "Mod4";
+  xsession.windowManager.i3.config.floating.titlebar = true;
+  xsession.windowManager.i3.config.focus.followMouse = false;
+  #xsession.windowManager.i3.config.fonts = fonts;
+  xsession.windowManager.i3.config.gaps.inner = 8;
+  xsession.windowManager.i3.config.keybindings."Mod1+Escape" = "mode magic";
+  xsession.windowManager.i3.config.window.titlebar = true;
+  xsession.windowManager.i3.config.workspaceLayout = "tabbed";
+  xsession.windowManager.i3.extraConfig = (lib.readFile ./magicmode.conf) + ''
+    font -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
+    for_window [all] title_window_icon yes
+    exec --no-startup-id setxkbmap
+    exec --no-startup-id feh --image-bg '#8F8F8F' --no-fehbg --bg-fill ${config.xdg.userDirs.pictures}/FnQswpzX0AIt0uP.jpg --bg-fill ${config.xdg.userDirs.pictures}/upload_528af259f560c1e462768d8662448ebf.png
+    #exec --no-startup-id blueman-applet
+  '';
 }

@@ -89,6 +89,11 @@ noremap gI gK
 noremap gk gn
 noremap gK gN
 
+"noremap <C-w>n <C-w>h
+"noremap <C-w>e <C-w>j
+"noremap <C-w>i <C-w>k
+"noremap <C-w>o <C-w>l
+
 " Notes:
 " - noremap works on normal, visual, select, and operator-pending modes simultaneously
 " - to enter normal mode, press esc
@@ -101,3 +106,4 @@ noremap gK gN
 " - ditto for gu in all modes
 " - CTRL-W hjkl
 " - CTRL-E CTRL-Y, CTRL-D CTRL-U
+" - vim-seek, vim-easymotion
