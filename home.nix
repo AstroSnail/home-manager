@@ -15,17 +15,17 @@
   #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [
-    "dcraw-9.28.0"
-  ];
+  nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
 
   xresources.properties = {
     "XTerm.vt100.decTerminalID" = 520;
     "XTerm.vt100.decGraphicsID" = 340;
     "XTerm.vt100.foreground" = "white";
     "XTerm.vt100.background" = "black";
-    "XTerm.vt100.faceName" = "x:-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1";
-    "XTerm.vt100.faceNameDoublesize" = "x:-misc-fixed-medium-r-normal-ja-18-120-100-100-c-180-iso10646-1";
+    "XTerm.vt100.faceName" =
+      "x:-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1";
+    "XTerm.vt100.faceNameDoublesize" =
+      "x:-misc-fixed-medium-r-normal-ja-18-120-100-100-c-180-iso10646-1";
     "XTerm.vt100.bellIsUrgent" = true;
     #"XTerm.vt100.visualBell" = true;
     "XTerm.vt100.visualBell" = false;

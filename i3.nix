@@ -50,10 +50,8 @@ in {
       modifier none
     '';
   }];
-  xsession.windowManager.i3.config.floating.criteria = [
-    { class = lib.concatStringsSep "|" floatingClasses; }
-    #{ title = lib.concatStringsSep "|" floatingTitles; }
-  ];
+  xsession.windowManager.i3.config.floating.criteria =
+    [{ class = lib.concatStringsSep "|" floatingClasses; }];
   xsession.windowManager.i3.config.floating.modifier = "Mod4";
   xsession.windowManager.i3.config.floating.titlebar = true;
   xsession.windowManager.i3.config.focus.followMouse = false;

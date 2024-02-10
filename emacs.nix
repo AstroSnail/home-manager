@@ -31,5 +31,5 @@ in {
 
   #home.packages = [ doom-emacs ];
 
-  nixpkgs.overlays = [(_: _: { inherit doom-emacs; })];
+  nixpkgs.overlays = [ (_: _: { inherit doom-emacs; }) ];
 }

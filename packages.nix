@@ -80,7 +80,8 @@ in {
 
   nixpkgs.overlays = [
     (final: prev: {
-      mpv-unwrapped = prev.mpv-unwrapped.override { ffmpeg = final.ffmpeg-full; };
+      mpv-unwrapped =
+        prev.mpv-unwrapped.override { ffmpeg = final.ffmpeg-full; };
     })
     #(final: prev: {
     #  yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: {
@@ -95,9 +96,8 @@ in {
     #})
     (final: prev: {
       mpv = prev.mpv.override {
-        extraMakeWrapperArgs = [
-          "--prefix" "PATH" ":" (lib.makeBinPath [ pkgs.xclip ])
-        ];
+        extraMakeWrapperArgs =
+          [ "--prefix" "PATH" ":" (lib.makeBinPath [ pkgs.xclip ]) ];
       };
     })
   ];
@@ -131,7 +131,9 @@ in {
   programs.password-store.enable = true;
   programs.texlive.enable = true;
   programs.texlive.extraPackages = tpkgs: {
-    inherit (tpkgs) scheme-medium cbfonts cleveref gfsartemisia lipsum srcltx titlesec was pgfplots prooftrees svn-prov forest standalone;
+    inherit (tpkgs)
+      scheme-medium cbfonts cleveref gfsartemisia lipsum srcltx titlesec was
+      pgfplots prooftrees svn-prov forest standalone;
   };
   programs.tmux.enable = true;
   programs.vim.enable = true;
@@ -160,7 +162,8 @@ in {
   #services.blueman-applet.enable = true;
   #services.fluidsynth.enable = true;
   #services.fluidsynth.soundFont = "${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2";
-  services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2";
+  services.fluidsynth.soundFont =
+    "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2";
   #services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/titanic.sf2";
   services.fluidsynth.soundService = "pipewire-pulse";
   #services.megasync.enable = true;
@@ -246,7 +249,8 @@ in {
     pkgs.nmap
     #pkgs.nodejs
     pkgs.nvtop-amd
-    (pkgs.openrgb.overrideAttrs (finalAttrs: prevAttrs: {patches = [./openrgb-oldapex.patch];}))
+    (pkgs.openrgb.overrideAttrs
+      (finalAttrs: prevAttrs: { patches = [ ./openrgb-oldapex.patch ]; }))
     #pkgs.osu-lazer
     pkgs.p7zip
     pkgs.pagemon
@@ -257,7 +261,8 @@ in {
     pkgs.piper
     #pkgs.polymc
     pkgs.poppler_utils
-    (pkgs.prismlauncher.overrideAttrs (finalAttrs: prevAttrs: {patches = [./prismlauncher-crack.patch];}))
+    (pkgs.prismlauncher.overrideAttrs
+      (finalAttrs: prevAttrs: { patches = [ ./prismlauncher-crack.patch ]; }))
     pkgs.protontricks
     pkgs.pv
     #pkgs.qemu_full
@@ -280,7 +285,7 @@ in {
     #pkgs.turbovnc
     pkgs.unzip
     pkgs.usbutils
-    pkgs.vdpauinfo 
+    pkgs.vdpauinfo
     pkgs.vgmstream
     pkgs.vttest
     pkgs.wget

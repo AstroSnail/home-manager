@@ -1,11 +1,8 @@
 { config, lib, pkgs, ... }:
 
 let
-  floatingAppIds = [
-    "^com\\.github\\.wwmm\\.easyeffects$"
-    "^pavucontrol$"
-    "^pcsx2$"
-  ];
+  floatingAppIds =
+    [ "^com\\.github\\.wwmm\\.easyeffects$" "^pavucontrol$" "^pcsx2$" ];
   floatingClasses = [
     "\\.exe$"
     "^Dwarf_Fortress$"
@@ -43,7 +40,6 @@ in {
     config.floating.criteria = [
       { app_id = lib.concatStringsSep "|" floatingAppIds; }
       { class = lib.concatStringsSep "|" floatingClasses; }
-      #{ title = lib.concatStringsSep "|" floatingTitles; }
     ];
     config.floating.modifier = "Mod4";
     config.floating.titlebar = true;
@@ -72,13 +68,15 @@ in {
       position = "0 0";
       #position = "1366 0";
       #adaptive_sync = "on";
-      background = "${config.xdg.userDirs.pictures}/FnQswpzX0AIt0uP.jpg fill #8F8F8F";
+      background =
+        "${config.xdg.userDirs.pictures}/FnQswpzX0AIt0uP.jpg fill #8F8F8F";
     };
     config.output."Samsung Electric Company SAMSUNG Unknown" = {
       mode = "1366x768@60Hz";
       position = "1920 0";
       #position = "0 312";
-      background = "${config.xdg.userDirs.pictures}/upload_528af259f560c1e462768d8662448ebf.png fill #8F8F8F";
+      background =
+        "${config.xdg.userDirs.pictures}/upload_528af259f560c1e462768d8662448ebf.png fill #8F8F8F";
     };
     #config.output."Integrated Tech Express Inc HDMI2VGAV121 0x0000FF36" = {
     #  disable = "";
