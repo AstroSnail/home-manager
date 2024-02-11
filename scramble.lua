@@ -107,8 +107,37 @@ function modes.medium(i, o)
     end
 end
 
-function modes.secure(_i, _o)
-    error("nyi")
+local function scramble_gen_inner(i, ...)
+    if i == 0 then
+        return ...
+    end
+    return scramble_gen_inner(i - 1, scramble_all(), ...)
+end
+local function scramble_gen(min, max)
+    local r = math.random(min, max)
+    return scramble_gen_inner(r)
+end
+function modes.secure(i, o)
+    local n = 0
+    local lines = {}
+    local min, max = 0, 0
+    for l in i:lines("l") do
+        local len = #l
+        n = n + 1
+        lines[n] = len
+        if len > 0 and (min == 0 or len < min) then
+            min = len
+        end
+        if len > 0 and (max == 0 or len > max) then
+            max = len
+        end
+    end
+    for l = 1, n do
+        if lines[l] > 0 then
+            o:write(scramble_gen(min, max))
+        end
+        o:write("\n")
+    end
 end
 
 function modes.help(_i, o)
