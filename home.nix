@@ -77,9 +77,9 @@
   #home.shellAliases.less = "noexec";
   #home.shellAliases.ls = "noexec";
   #home.shellAliases.rm = "noexec";
-  home.shellAliases.diveo = "mpv --volume=20 --demuxer-max-bytes=10G --demuxer-max-back-bytes=10G --keep-open --vo=gpu-next --hwdec=auto-safe --profile=high-quality --ytdl-format='bestvideo[width<=1920]+bestaudio' --stream-lavf-o=extension_picky=0";
-  home.shellAliases.duaio = "mpv --volume=20 --demuxer-max-bytes=10G --demuxer-max-back-bytes=10G --keep-open --no-video --ytdl-format=bestaudio --stream-lavf-o=extension_picky=0";
-  home.shellAliases.vile = "mpv --volume=20 --vo=gpu-next --hwdec=auto-safe --profile=high-quality --ytdl-format='bestvideo[width<=1920]+bestaudio' --stream-lavf-o=extension_picky=0";
+  home.shellAliases.diveo = "mpv --profile=diveo";
+  home.shellAliases.duaio = "mpv --profile=duaio";
+  home.shellAliases.vile = "mpv --profile=vile";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

@@ -74,14 +74,12 @@ in {
     ./bash.nix
     ./emacs.nix
     ./git.nix
+    ./mpv.nix
     ./ssh.nix
+    ./vim.nix
   ];
 
   nixpkgs.overlays = [
-    (final: prev: {
-      mpv-unwrapped =
-        prev.mpv-unwrapped.override { ffmpeg = final.ffmpeg-full; };
-    })
     #(final: prev: {
     #  yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: {
     #    version = "git";
@@ -92,12 +90,6 @@ in {
     #      sha256 = "sha256-wCj2kFkJLGbVIQ5obvA0Q++bSHbwFD/BvdGXsNGR6Zw=";
     #    };
     #  });
-    #})
-    #(final: prev: {
-    #  mpv = prev.mpv.override {
-    #    extraMakeWrapperArgs =
-    #      [ "--prefix" "PATH" ":" (lib.makeBinPath [ pkgs.xclip ]) ];
-    #  };
     #})
     #(final: prev: {
     #  direnv = prev.direnv.overrideAttrs (oldattrs: {
@@ -154,8 +146,6 @@ in {
   #  objects = "1;39";
   #};
   #programs.lesspipe.enable = true;
-  programs.mpv.enable = true;
-  # TODO mpv
   #programs.nheko.enable = true;
   programs.nix-index.enable = true;
   programs.nix-index.enableBashIntegration = false;
@@ -185,33 +175,6 @@ in {
     #soundfont ${pkgs.soundfont-generaluser}/share/soundfonts/GeneralUser-GS.sf2
   '';
   #programs.tmux.enable = true;
-  programs.vim.enable = true;
-  programs.vim.plugins = lib.mkForce [
-    (pkgs.vimUtils.buildVimPlugin {
-      name = "vim-erry";
-      src = ./vim-erry;
-    })
-    pkgs.vimPlugins.easymotion
-  ];
-  programs.vim.extraConfig = ''
-    runtime defaults.vim
-    autocmd! vimHints
-
-    set formatoptions+=j selection=exclusive
-
-    " make scrolling reachable from usual navigation keys
-    " for some reason <C-S-n/p> don't work?
-    " TODO: investigate
-    noremap <C-j> <C-e>
-    "noremap <C-S-j> <C-S-n>
-    noremap <C-S-j> <C-d>
-    noremap <C-k> <C-y>
-    "noremap <C-S-k> <C-S-p>
-    noremap <C-S-k> <C-u>
-
-    " EasyMotion
-    noremap gs <Plug>(easymotion-prefix)
-  '';
   #programs.vscode.enable = true; # broken 2025-02-18
   programs.vscode.mutableExtensionsDir = false;
   programs.vscode.profiles.default.extensions = [
