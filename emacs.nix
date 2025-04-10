@@ -4,8 +4,10 @@ let
   doom-emacs = pkgs.writeShellApplication {
     name = "doom";
     runtimeInputs = [
+      #pkgs.agda
       pkgs.bash
-      pkgs.emacsNativeComp
+      #pkgs.emacsNativeComp
+      pkgs.emacs
       pkgs.fd
       pkgs.fontconfig
       pkgs.git

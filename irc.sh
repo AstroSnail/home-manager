@@ -1,1 +1,0 @@
-exec abduco -a weechat

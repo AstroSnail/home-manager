@@ -5,4 +5,5 @@
   programs.git.signing.signByDefault = true;
   programs.git.userName = "AstroSnail";
   programs.git.userEmail = "astrosnail@protonmail.com";
+  programs.git.extraConfig.merge.conflictStyle = "zdiff3";
 }

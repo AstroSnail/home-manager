@@ -1,0 +1,32 @@
+diff --git a/vi_mode.c b/vi_mode.c
+index 3a033ba..dc0024c 100644
+--- vi_mode.c
++++ vi_mode.c
+@@ -1722,21 +1722,16 @@ rl_vi_unix_word_rubout (int count, int key)
+ 	    while (--rl_point > 0 && whitespace (rl_line_buffer[rl_point]))
+ 	      ;
+ 
+-	  /* If we're at the start of a word, move back to word boundary so we
+-	     move back to the `preceding' word */
+-	  if (rl_point > 0 && (vi_unix_word_boundary (rl_line_buffer[rl_point]) == 0) &&
+-		vi_unix_word_boundary (rl_line_buffer[rl_point - 1]))
+-	    rl_point--;
+-
+ 	  /* If we are at a word boundary (whitespace/punct), move backward
+ 	     past a sequence of word boundary characters.  If we are at the
+ 	     end of a word (non-word boundary), move back to a word boundary */
+-	  if (rl_point > 0 && vi_unix_word_boundary (rl_line_buffer[rl_point]))
+-	    while (rl_point && vi_unix_word_boundary (rl_line_buffer[rl_point - 1]))
+-	      rl_point--;
+-	  else if (rl_point > 0 && vi_unix_word_boundary (rl_line_buffer[rl_point]) == 0)
+-	    while (rl_point > 0 && (vi_unix_word_boundary (rl_line_buffer[rl_point - 1]) == 0))
++	  if (rl_point > 0 && vi_unix_word_boundary (rl_line_buffer[rl_point - 1]))
++	    while (--rl_point > 0 && vi_unix_word_boundary (rl_line_buffer[rl_point - 1]))
++	      ;
++	  else if (rl_point > 0 && vi_unix_word_boundary (rl_line_buffer[rl_point - 1]) == 0)
++	    do
+ 	      _rl_vi_backup_point ();
++	    while (rl_point > 0 && (vi_unix_word_boundary (rl_line_buffer[rl_point - 1]) == 0));
+ 	}
+ 
+       rl_kill_text (orig_point, rl_point);

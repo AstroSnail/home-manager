@@ -17,6 +17,8 @@ in {
     #./weechat.nix
   ];
 
+  systemd.user.startServices = "suggest";
+
   services.home-manager.autoUpgrade.enable = true;
   services.home-manager.autoUpgrade.frequency = "05:00";
   systemd.user.services.home-manager-auto-upgrade.Service.Environment =

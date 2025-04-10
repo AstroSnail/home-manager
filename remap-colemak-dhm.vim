@@ -9,7 +9,7 @@
 " │ ⇥      │ q   │ w   │ f   │ p   │ b   │ j   │ l   │ u   │ y   │ ;   │ [   │ ]   │ ↵      │
 " ├────────┴─┬───┴─┬───┴─┬───┴─┲━━━┷━┱───┴─┬───┴─┲━━━┷━┱───┴─┬───┴─┬───┴─┬───┴─┬───┴─┐      │
 " │          │ A   │ R   │ S   ┃ T   ┃ G   │ M   ┃ N   ┃ E   │ I   │ O   │ "   │ |   │      │
-" │ ⌫        │ a   │ r   │ s   ┃ t   ┃ g   │ m   ┃ n   ┃ e   │ i   │ o   │ '   │ \   │      │
+" │ ⎋        │ a   │ r   │ s   ┃ t   ┃ g   │ m   ┃ n   ┃ e   │ i   │ o   │ '   │ \   │      │
 " ├───────┬──┴──┬──┴──┬──┴──┬──┺━━┯━━┹──┬──┴──┬──┺━━┯━━┹──┬──┴──┬──┴──┬──┴──┬──┴─────┴──────┤
 " │       │ Z   │ X   │ C   │ D   │ V   │ |   │ K   │ H   │ <   │ >   │ ?   │               │
 " │ ⇧     │ z   │ x   │ c   │ d   │ v   │ \   │ k   │ h   │ ,   │ .   │ /   │ ⇧             │
@@ -94,6 +94,15 @@ noremap gK gN
 "noremap <C-w>i <C-w>k
 "noremap <C-w>o <C-w>l
 
+map gs <Plug>(easymotion-prefix)
+map gsj <Plug>(easymotion-e)
+map gsJ <Plug>(easymotion-E)
+map gse <Plug>(easymotion-j)
+map gsi <Plug>(easymotion-k)
+map gsgj <Plug>(easymotion-ge)
+map gsgJ <Plug>(easymotion-gE)
+let g:EasyMotion_keys = 'arsgmeioqwfpluy;zxc,./tdhn'
+
 " Notes:
 " - noremap works on normal, visual, select, and operator-pending modes simultaneously
 " - to enter normal mode, press esc
@@ -106,4 +115,4 @@ noremap gK gN
 " - ditto for gu in all modes
 " - CTRL-W hjkl
 " - CTRL-E CTRL-Y, CTRL-D CTRL-U
-" - vim-seek, vim-easymotion
+" - vim-seek
