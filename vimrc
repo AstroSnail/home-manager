@@ -1,7 +1,11 @@
 runtime defaults.vim
 autocmd! vimHints
+runtime ftplugin/man.vim
+packadd! matchit
 
-set formatoptions+=j selection=exclusive
+set selection=exclusive sidescroll=1 sidescrolloff=10 nowrap
+set formatoptions+=j
+set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 
 " make scrolling reachable from usual navigation keys
 " for some reason <C-S-n/p> don't work?
