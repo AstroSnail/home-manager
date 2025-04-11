@@ -18,14 +18,15 @@
   nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
 
   xresources.properties = {
-    #"XTerm.vt100.decTerminalID" = 520;
+    "XTerm.vt100.decTerminalID" = 520;
     "XTerm.vt100.decGraphicsID" = 340;
 
     "XTerm.vt100.foreground" = "white";
     "XTerm.vt100.background" = "black";
     "XTerm.vt100.boldColors" = false;
-    "XTerm.vt100.cursorBar" = true;
+    #"XTerm.vt100.cursorBar" = true;
     "XTerm.vt100.cursorBlink" = true;
+    #"XTerm.vt100.cursorUnderLine" = true;
 
     #"XTerm.vt100.faceName" =
     #  "x:-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1";

@@ -1,10 +1,9 @@
-runtime defaults.vim
+source $VIMRUNTIME/defaults.vim
 autocmd! vimHints
 runtime ftplugin/man.vim
 packadd! matchit
 
-set selection=exclusive sidescroll=1 sidescrolloff=10 nowrap
-set formatoptions+=j
+set formatoptions+=j keywordprg=:Man sidescroll=1 sidescrolloff=10 nowrap
 set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 
 " make scrolling reachable from usual navigation keys
