@@ -11,6 +11,7 @@ let
     "\\.exe$"
     "^CrossCode$"
     "^Dwarf_Fortress$"
+    "^Editres$"
     "^ffplay$"
     "^Flashplayer$"
     "^Ledger Live$"

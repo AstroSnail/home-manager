@@ -366,7 +366,8 @@ in {
     pkgs.xdotool
     #pkgs.xonotic
     pkgs.xorg.xkill
-    pkgs.xterm
+    #pkgs.xterm # see ./xterm.nix
+    pkgs.xterm-toolbar
     #pkgs.ydotool
     pkgs.zip
     #pkgs.zopfli
