@@ -1,6 +1,10 @@
 { pkgs, ... }:
 
 {
+  home.shellAliases.diveo = "mpv --profile=diveo";
+  home.shellAliases.duaio = "mpv --profile=duaio";
+  home.shellAliases.vile = "mpv --profile=vile";
+
   nixpkgs.overlays = [
     (final: prev: {
       mpv-unwrapped =
@@ -13,6 +17,7 @@
     #  };
     #})
   ];
+
   programs.mpv.enable = true;
   programs.mpv.includes = [ "${./mpv.conf}" ];
 }
