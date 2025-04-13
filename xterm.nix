@@ -7,6 +7,8 @@
         prev.xterm.overrideAttrs (oldattrs: {
           patches = []; # remove sixel-256.support.patch
           configureFlags = oldattrs.configureFlags ++ [
+            "--enable-block-select"
+            "--enable-status-line"
             "--enable-toolbar"
           ];
         });
@@ -58,14 +60,18 @@
     #"XTerm.ttyModes" = "erase ^h";
     "XTerm*VT100.backarrowKey" = false;
 
+    # fix select-extend to also work while meta is held
+    # make middleclick-paste and select-end distinguish between shift and no-shift for clip or pri
+    # add shift-ctrl-c/v for clip copy/paste
     "XTerm*VT100.translations" = ''
       #override \n\
-       Shift  Ctrl ~Meta <Key>C  : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
-       Shift  Ctrl ~Meta <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
-      ~Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
-       Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
-      ~Shift             <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
-       Shift             <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1)
+                         <Btn1Motion>: select-extend() \n\
+      ~Shift ~Ctrl ~Meta <Btn2Up>    : insert-selection(PRIMARY, CUT_BUFFER0) \n\
+       Shift ~Ctrl ~Meta <Btn2Up>    : insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
+      ~Shift             <BtnUp>     : select-end(PRIMARY, CUT_BUFFER0) \n\
+       Shift             <BtnUp>     : select-end(CLIPBOARD, CUT_BUFFER1)
+       Shift  Ctrl ~Meta <Key>C      : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
+       Shift  Ctrl ~Meta <Key>V      : insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
     '';
   };
 }
