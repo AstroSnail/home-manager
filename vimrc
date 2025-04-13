@@ -16,5 +16,9 @@ noremap <C-k> <C-y>
 "noremap <C-S-k> <C-S-p>
 noremap <C-S-k> <C-u>
 
+" Netrw
+" work around broken netrw#own#PathJoin()
+let g:netrw_home = expand('~/.vim')
+
 " EasyMotion
 noremap gs <Plug>(easymotion-prefix)

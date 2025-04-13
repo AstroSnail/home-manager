@@ -19,7 +19,6 @@
     "XTerm*vt100.numColorRegisters" = 1024;
 
     #"XTerm.toolBar" = true;
-    #"XTerm*vt100.scrollBar" = true;
     "XTerm*vt100.foreground" = "white";
     "XTerm*vt100.background" = "black";
     #"XTerm*vt100.boldColors" = false;
@@ -41,6 +40,8 @@
     #"XTerm*vt100.visualBell" = true;
     #"XTerm*vt100.visualBellLine" = true;
 
+    #"XTerm*vt100.scrollBar" = true;
+    "XTerm*vt100.rightScrollBar" = true;
     "XTerm*vt100.scrollKey" = true;
     "XTerm*vt100.scrollTtyOutput" = false;
     #"XTerm*vt100.allowScrollLock" = true;
@@ -49,6 +50,7 @@
     "XTerm.buffered" = true;
     #"XTerm*vt100.jumpScroll" = true;
     #"XTerm*vt100.fastScroll" = false;
+    "XTerm*vt100.multiScroll" = true;
 
     "XTerm*vt100.locale" = true;
     "XTerm*vt100.eightBitInput" = false;
@@ -58,17 +60,20 @@
 
     "XTerm*vt100.translations" = ''
       #override \n\
-         Ctrl ~Meta  Shift <Key>C  : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
-         Ctrl ~Meta  Shift <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
-        ~Ctrl ~Meta ~Shift <Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
-        ~Ctrl ~Meta  Shift <Btn2Up>: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
-                    ~Shift <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
-                     Shift <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1)
+       Shift  Ctrl ~Meta <Key>C  : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
+       Shift  Ctrl ~Meta <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
+      ~Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+       Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
+      ~Shift             <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
+       Shift             <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1)
     '';
     "XTerm*vt100.scrollbar.translations" = ''
-      #override \n\
-        <Btn1Down>  : StartScroll(Continuous) MoveThumb() NotifyThumb() \n\
-        <Btn1Motion>: MoveThumb() NotifyThumb()
+      #replace \n\
+      <Btn1Down>  : StartScroll(Continuous) MoveThumb() NotifyThumb() \n\
+      <Btn1Motion>: MoveThumb() NotifyThumb() \n\
+      <Btn5Down>  : StartScroll(Forward) \n\
+      <Btn4Down>  : StartScroll(Backward) \n\
+      <BtnUp>     : NotifyScroll(Proportional) EndScroll()
     '';
   };
 }
