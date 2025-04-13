@@ -18,6 +18,18 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
 
+  xresources.properties = {
+    # make Xaw scrollbars easier to use
+    "*Scrollbar.translations" = ''
+      #replace \n\
+      <Btn1Down>  : StartScroll(Continuous) MoveThumb() NotifyThumb() \n\
+      <Btn1Motion>: MoveThumb() NotifyThumb() \n\
+      <Btn5Down>  : StartScroll(Forward) \n\
+      <Btn4Down>  : StartScroll(Backward) \n\
+      <BtnUp>     : NotifyScroll(FullLength) EndScroll()
+    '';
+  };
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "erry";
