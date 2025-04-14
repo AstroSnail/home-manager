@@ -69,7 +69,6 @@
       ~Shift             <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
        Shift             <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1) \n\
        Shift  Ctrl ~Meta <Key>C  : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
-       Shift  Ctrl ~Meta <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1)
-    '';
+       Shift  Ctrl ~Meta <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1)'';
   };
 }

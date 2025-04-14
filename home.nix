@@ -26,8 +26,7 @@
       <Btn1Motion>: MoveThumb() NotifyThumb() \n\
       <Btn5Down>  : StartScroll(Forward) \n\
       <Btn4Down>  : StartScroll(Backward) \n\
-      <BtnUp>     : NotifyScroll(FullLength) EndScroll()
-    '';
+      <BtnUp>     : NotifyScroll(FullLength) EndScroll()'';
   };
 
   # Home Manager needs a bit of information about you and the
