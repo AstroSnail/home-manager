@@ -25,7 +25,7 @@
     "XTerm*VT100.background" = "black";
     #"XTerm*VT100.boldColors" = false;
     #"XTerm*VT100.cursorBar" = true;
-    "XTerm*VT100.cursorBlink" = true;
+    #"XTerm*VT100.cursorBlink" = true;
     #"XTerm*VT100.cursorUnderLine" = true;
     #"XTerm*VT100.showWrapMarks" = true;
 
@@ -64,12 +64,12 @@
     # add shift-ctrl-c/v for clip copy/paste
     "XTerm*VT100.translations" = ''
       #override \n\
-      ~Shift ~Ctrl ~Meta <Btn2Up>    : insert-selection(PRIMARY, CUT_BUFFER0) \n\
-       Shift ~Ctrl ~Meta <Btn2Up>    : insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
-      ~Shift             <BtnUp>     : select-end(PRIMARY, CUT_BUFFER0) \n\
-       Shift             <BtnUp>     : select-end(CLIPBOARD, CUT_BUFFER1) \n\
-       Shift  Ctrl ~Meta <Key>C      : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
-       Shift  Ctrl ~Meta <Key>V      : insert-selection(CLIPBOARD, CUT_BUFFER1)
+      ~Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
+       Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
+      ~Shift             <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
+       Shift             <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1) \n\
+       Shift  Ctrl ~Meta <Key>C  : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
+       Shift  Ctrl ~Meta <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1)
     '';
   };
 }
