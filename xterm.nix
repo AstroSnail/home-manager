@@ -21,7 +21,7 @@
     "XTerm*VT100.numColorRegisters" = 1024;
 
     #"XTerm.toolBar" = true;
-    "XTerm*VT100.foreground" = "white";
+    "XTerm*VT100.foreground" = "gray90";
     "XTerm*VT100.background" = "black";
     #"XTerm*VT100.boldColors" = false;
     #"XTerm*VT100.cursorBar" = true;
