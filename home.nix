@@ -24,8 +24,8 @@
       #replace \n\
       <Btn1Down>  : StartScroll(Continuous) MoveThumb() NotifyThumb() \n\
       <Btn1Motion>: MoveThumb() NotifyThumb() \n\
-      <Btn5Down>  : StartScroll(Forward) \n\
       <Btn4Down>  : StartScroll(Backward) \n\
+      <Btn5Down>  : StartScroll(Forward) \n\
       <BtnUp>     : NotifyScroll(FullLength) EndScroll()'';
   };
 
