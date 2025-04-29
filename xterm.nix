@@ -49,7 +49,7 @@
     #"XTerm*VT100.allowScrollLock" = true;
     "XTerm*VT100.autoScrollLock" = true;
     "XTerm*VT100.cdXtraScroll" = true;
-    "XTerm.buffered" = true;
+    #"XTerm.buffered" = true; # holy shit this causes SO MANY GLITCHES
     #"XTerm*VT100.jumpScroll" = true;
     #"XTerm*VT100.fastScroll" = false;
     "XTerm*VT100.multiScroll" = true;
