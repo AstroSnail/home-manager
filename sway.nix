@@ -3,12 +3,14 @@
 let
   floatingAppIds = [
     #"^com\\.github\\.wwmm\\.easyeffects$"
+    #"^firefox$"
     #"^pavucontrol$"
     #"^pcsx2$"
     "^qemu$"
   ];
   floatingClasses = [
     "\\.exe$"
+    #"^Chromium-browser$"
     "^CrossCode$"
     "^Dwarf_Fortress$"
     "^Editres$"
