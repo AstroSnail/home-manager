@@ -18,7 +18,22 @@
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
 
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      enable-animations = false;
+    };
+  };
+
   xresources.properties = {
+    # dark theme for Xaw       # applies to:
+    "*Background"  = "black";  # *background, *pointerColorBackground
+    "*Foreground"  = "gray90"; # *foreground, *pointerColor, *StripChart.highlight
+    "*Color"       = "gray90"; # *AsciiSink.cursorColor
+    "*BorderColor" = "gray90"; # *borderColor, *Paned.internalBorderColor
+    "*ShadowColor" = "gray90"; # *Panner.shadowColor
+    "*StripChart.highlight" = "gray50"; # looks better this way
+
     # make Xaw scrollbars easier to use
     "*Scrollbar.translations" = ''
       #replace \n\

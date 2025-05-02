@@ -25,6 +25,8 @@ let
     #"^Steam$"
     #"^steam$"
     "^Terraria\\.bin\\.x86_64$"
+    "^XLoad$"
+    #"^XTerm$"
   ];
   #floatingTitles = [ "Rigs of Rods" ];
   fonts = {
@@ -84,20 +86,20 @@ in {
   wayland.windowManager.sway.config.output."Samsung Electric Company C24FG7x HTNK700265" = {
     position = "0 0"; # load-bearing if crt is in use, idk why
     #adaptive_sync = "on";
-    background = "${config.xdg.userDirs.pictures}/FnQswpzX0AIt0uP.jpg fill #8F8F8F";
+    background = "${config.xdg.userDirs.pictures}/3591884.jpg fill #8F8F8F";
   };
   wayland.windowManager.sway.config.output."Samsung Electric Company SAMSUNG Unknown" = {
     position = "1920 0";
   };
   wayland.windowManager.sway.config.output."Samsung Electric Company SAMSUNG" = {
-    background = "${config.xdg.userDirs.pictures}/upload_528af259f560c1e462768d8662448ebf.png fill #8F8F8F";
+    background = "${config.xdg.userDirs.pictures}/b5ca3eba7925092a3f9f47bf5b1f0c33.png fill #8F8F8F";
   };
   wayland.windowManager.sway.config.output."KIT 41001561224e Unknown" = {
     #mode = "640x480@75Hz";
     position = "0 1080";
   };
   wayland.windowManager.sway.config.output."KIT 41001561224e" = {
-    background = "${config.xdg.userDirs.pictures}/3337286_crop.jpg fill #8F8F8F";
+    background = "${config.xdg.userDirs.pictures}/2af1ea3e5195f698b4dfeb1f32b31afc.png fill #8F8F8F";
   };
   #wayland.windowManager.sway.config.output."Integrated Tech Express Inc HDMI2VGAV121 0x0000FF36" = {
   #  disable = "";
