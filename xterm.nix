@@ -21,6 +21,8 @@
     "XTerm*VT100.numColorRegisters" = 1024;
 
     #"XTerm.toolBar" = true;
+    "XTerm*menubar.borderWidth" = 1;
+    "XTerm*VT100.borderWidth" = 0;
     #"XTerm*VT100.background" = "black";
     #"XTerm*VT100.foreground" = "gray90";
     #"XTerm*VT100.boldColors" = false;

@@ -48,16 +48,45 @@ in {
       modifier none
     '';
   }];
+  wayland.windowManager.sway.config.colors.focused = {
+    border = "#e5e5e5"; # gray90
+    background = "#285577"; # default
+    text = "#ffffff"; # default
+    indicator = "#2e9ef4"; # default
+    childBorder = "#e5e5e5"; # gray90
+  };
+  wayland.windowManager.sway.config.colors.focusedInactive = {
+    border = "#7f7f7f"; # gray50
+    background = "#5f676a"; # default
+    text = "#ffffff"; # default
+    indicator = "#484e50"; # default
+    childBorder = "#7f7f7f"; # gray50
+  };
+  wayland.windowManager.sway.config.colors.unfocused = {
+    border = "#333333"; # gray20
+    background = "#222222"; # default
+    text = "#888888"; # default
+    indicator = "#292d2e"; # default (unused?)
+    childBorder = "#333333"; # gray20
+  };
+  wayland.windowManager.sway.config.colors.urgent = {
+    border = "#cd0000"; # red3
+    background = "#900000"; # default
+    text = "#ffffff"; # default
+    indicator = "#cd0000"; # red3
+    childBorder = "#cd0000"; # red3
+  };
   wayland.windowManager.sway.config.floating.criteria = [
     { app_id = lib.concatStringsSep "|" floatingAppIds; }
     { class = lib.concatStringsSep "|" floatingClasses; }
   ];
+  wayland.windowManager.sway.config.floating.border = 1;
   wayland.windowManager.sway.config.floating.modifier = "Mod4";
   wayland.windowManager.sway.config.floating.titlebar = true;
   wayland.windowManager.sway.config.focus.followMouse = false;
   #wayland.windowManager.sway.config.fonts = fonts;
-  wayland.windowManager.sway.config.fonts.names = [ "serif" ];
-  wayland.windowManager.sway.config.fonts.size = 8.5;
+  wayland.windowManager.sway.config.fonts.names = [ "DejaVu Serif" ];
+  wayland.windowManager.sway.config.fonts.size = 9.5;
   wayland.windowManager.sway.config.gaps.inner = 8;
   wayland.windowManager.sway.config.input."4152:4610:SteelSeries_SteelSeries_Apex_Gaming_Keyboard" = {
     #xkb_layout = "pt";
@@ -71,13 +100,14 @@ in {
   wayland.windowManager.sway.config.input."type:pointer".accel_profile = "flat";
   wayland.windowManager.sway.config.input."type:pointer".pointer_accel = "0";
   wayland.windowManager.sway.config.keybindings."Mod1+Escape" = "mode magic";
+  wayland.windowManager.sway.config.window.border = 1;
   wayland.windowManager.sway.config.window.titlebar = true;
   wayland.windowManager.sway.config.window.commands = [
     { criteria.all = true; command = "title_window_icon yes"; }
   ];
   wayland.windowManager.sway.config.workspaceLayout = "tabbed";
   wayland.windowManager.sway.extraConfig = (lib.readFile ./magicmode.conf) + ''
-    titlebar_padding 4 1
+    titlebar_padding 4 2
     include /etc/sway/config.d/*
   '';
   #wayland.windowManager.sway.config.output."*".background = "${config.xdg.userDirs.pictures}/draw.icynet.eu-canvas.png center #8F8F8F";
