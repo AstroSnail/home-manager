@@ -127,6 +127,7 @@ in {
   wayland.windowManager.sway.config.output."KIT 41001561224e Unknown" = {
     #mode = "640x480@75Hz";
     position = "0 1080";
+    #color_profile = "icc ${./srgb_3.2.icc}";
   };
   wayland.windowManager.sway.config.output."KIT 41001561224e" = {
     background = "${config.xdg.userDirs.pictures}/2af1ea3e5195f698b4dfeb1f32b31afc.png fill #8F8F8F";
