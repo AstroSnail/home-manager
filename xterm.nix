@@ -64,6 +64,7 @@
 
     # make middleclick-paste and select-end distinguish between shift and no-shift for clip or pri
     # add shift-ctrl-c/v for clip copy/paste
+    # (sometimes shift-ctrl-v doesn't work and seems to do ctrl-v instead??? TODO: investigate)
     "XTerm*VT100.translations" = ''
       #override \n\
       ~Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
