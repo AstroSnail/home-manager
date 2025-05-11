@@ -112,6 +112,16 @@ in {
     #    patches = oldattrs.patches ++ [ ./readline.patch ];
     #  });
     #})
+    #(final: prev: {
+    #  prismlauncher = prev.prismlauncher.overrideAttrs (finalAttrs: prevAttrs: {
+    #    patches = [ ./prismlauncher-crack.patch ];
+    #  });
+    #})
+    (final: prev: {
+      openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
+        patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
+      });
+    })
   ];
 
   programs.btop.enable = true;
@@ -175,6 +185,7 @@ in {
     #soundfont ${pkgs.soundfont-generaluser}/share/soundfonts/GeneralUser-GS.sf2
   '';
   #programs.tmux.enable = true;
+  # NOTE: after re-enabling vscode, also add direnv and lua-language-server to packages
   #programs.vscode.enable = true; # broken 2025-02-18
   programs.vscode.mutableExtensionsDir = false;
   programs.vscode.profiles.default.extensions = [
@@ -239,7 +250,7 @@ in {
     github-clone
     noexec
     passmenu-patient
-    pscrcpy
+    #pscrcpy
     #rigsofrods
     winelegacy
     wine32
@@ -259,15 +270,15 @@ in {
     #pkgs.chromium-bsu
     #pkgs.croc
     #pkgs.dcraw
-    pkgs.direnv
+    #pkgs.direnv
     #pkgs.discord
     pkgs.dmenu
     #pkgs.dmenu-wayland
-    pkgs.dnsutils
-    pkgs.doom-emacs
+    #pkgs.dnsutils
+    #pkgs.doom-emacs
     #pkgs.dos2unix
     #pkgs.dwarf-fortress # broken 2023-02-15
-    pkgs.espeak
+    #pkgs.espeak
     pkgs.ffmpeg-full
     pkgs.file
     #pkgs.gamescope
@@ -279,23 +290,23 @@ in {
     pkgs.grim
     #pkgs.gzdoom
     pkgs.imagemagick
-    pkgs.inetutils
+    #pkgs.inetutils
     #pkgs.inkscape
     #pkgs.iotop
-    pkgs.irssi
+    #pkgs.irssi
     pkgs.jre
     #pkgs.kdenlive # replaced with kdepackages.kdenlive 2025-02-25
-    pkgs.killall
+    #pkgs.killall
     #pkgs.krita
     #pkgs.ledger-live-desktop
     pkgs.libreoffice
     #pkgs.libva-utils
     #pkgs.linux-manual
-    pkgs.lm_sensors
+    #pkgs.lm_sensors
     #pkgs.ltrace
     (pkgs.lua5_3.withPackages (ps: [ ps.lpeg ]))
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
-    pkgs.lua-language-server
+    #pkgs.lua-language-server
     #pkgs.lutris
     pkgs.man-pages
     pkgs.man-pages-posix
@@ -310,66 +321,65 @@ in {
     pkgs.nixos-option
     pkgs.nix-output-monitor
     #pkgs.nixpkgs-fmt
-    pkgs.nmap
+    #pkgs.nmap
     #pkgs.nodejs
     #pkgs.nvtopPackages.amd
-    (pkgs.openrgb.overrideAttrs
-      (finalAttrs: prevAttrs: { patches = [ ./openrgb-oldapex.patch ]; }))
-    pkgs.openssl
+    pkgs.openrgb
+    #pkgs.openssl
     #pkgs.osu-lazer
     pkgs.p7zip
-    pkgs.pagemon
+    #pkgs.pagemon
     pkgs.pavucontrol
-    pkgs.pciutils
+    #pkgs.pciutils
     pkgs.pcsx2
     #pkgs.pcsxr
     #pkgs.piper
     #pkgs.polymc
     #pkgs.poppler_utils
     pkgs.prismlauncher
-    #(pkgs.prismlauncher.overrideAttrs
-    #  (finalAttrs: prevAttrs: { patches = [ ./prismlauncher-crack.patch ]; }))
     #pkgs.protontricks
     pkgs.pv
     (pkgs.python3.withPackages (ps: [ ps.matplotlib ps.more-itertools ps.numpy ps.sympy ]))
     #pkgs.qemu_full
-    pkgs.qrencode
+    #pkgs.qrencode
     #pkgs.qpwgraph
     #pkgs.qtox
-    pkgs.ripcord
+    #pkgs.ripcord
     pkgs.rm-improved
-    #pkgs.sameboy
-    pkgs.scanmem
-    pkgs.scrot
-    pkgs.shellcheck
+    pkgs.rxvt-unicode
+    pkgs.sameboy
+    #pkgs.scanmem
+    #pkgs.scrot
+    #pkgs.shellcheck
     pkgs.slurp
-    pkgs.socat
-    pkgs.speechd
+    #pkgs.socat
+    #pkgs.speechd
     #pkgs.steamcmd
     #pkgs.strongswan
     #pkgs.superTuxKart
     pkgs.syncplay
     pkgs.texstudio
     #pkgs.turbovnc
-    pkgs.unzip
-    pkgs.usbutils
+    pkgs.unrar
+    #pkgs.unzip
+    #pkgs.usbutils
     #pkgs.vdpauinfo
     pkgs.vesktop
     #pkgs.vgmstream
-    pkgs.vlc
+    #pkgs.vlc
     #pkgs.vttest
-    pkgs.wget
+    #pkgs.wget
     #pkgs.winePackages.waylandFull
     #pkgs.wineWowPackages.waylandFull
     #pkgs.winetricks
-    pkgs.wl-clipboard
+    #pkgs.wl-clipboard
     pkgs.xdotool
     #pkgs.xonotic
-    pkgs.xorg.xkill
+    #pkgs.xorg.xkill
     #pkgs.xterm # see ./xterm.nix
     pkgs.xterm-toolbar
     #pkgs.ydotool
-    pkgs.zip
+    #pkgs.zip
     #pkgs.zopfli
   ];
 }
