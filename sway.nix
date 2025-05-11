@@ -105,7 +105,7 @@ in {
   wayland.windowManager.sway.config.window.commands = [
     { criteria.all = true; command = "title_window_icon yes"; }
   ];
-  wayland.windowManager.sway.config.workspaceLayout = "tabbed";
+  #wayland.windowManager.sway.config.workspaceLayout = "tabbed";
   wayland.windowManager.sway.extraConfig = (lib.readFile ./magicmode.conf) + ''
     titlebar_padding 4 2
     include /etc/sway/config.d/*
