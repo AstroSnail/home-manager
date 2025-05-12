@@ -51,7 +51,6 @@ let
   };
 
   apexctl = pkgs.callPackage ./apexctl { };
-  #zutty = pkgs.callPackage ./zutty { };
 
   #ffmpeg-rav1e = pkgs.ffmpeg-full.override {
   #  rav1e = pkgs.rav1e;
@@ -76,7 +75,10 @@ in {
     ./git.nix
     ./mpv.nix
     ./ssh.nix
+    ./urxvt.nix
     ./vim.nix
+    ./xterm.nix
+    ./zutty.nix
   ];
 
   nixpkgs.overlays = [
@@ -255,7 +257,6 @@ in {
     winelegacy
     wine32
     wine64
-    #zutty
 
     #pkgs.anbox
     pkgs.appimage-run
@@ -381,5 +382,6 @@ in {
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli
+    pkgs.zutty
   ];
 }
