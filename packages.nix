@@ -73,6 +73,7 @@ in {
     ./bash.nix
     ./emacs.nix
     ./git.nix
+    ./gnome-terminal.nix
     ./mpv.nix
     ./ssh.nix
     ./urxvt.nix
