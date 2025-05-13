@@ -62,16 +62,10 @@
     #"XTerm.ttyModes" = "erase ^h";
     "XTerm*VT100.backarrowKey" = false;
 
-    # make middleclick-paste and select-end distinguish between shift and no-shift for clip or pri
-    # add shift-ctrl-c/v for clip copy/paste
-    # (sometimes shift-ctrl-v doesn't work and seems to do ctrl-v instead??? TODO: investigate)
+    # use left-shift to choose between pri and clip
     "XTerm*VT100.translations" = ''
       #override \n\
-      ~Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(PRIMARY, CUT_BUFFER0) \n\
-       Shift ~Ctrl ~Meta <Btn2Up>: insert-selection(CLIPBOARD, CUT_BUFFER1) \n\
-      ~Shift             <BtnUp> : select-end(PRIMARY, CUT_BUFFER0) \n\
-       Shift             <BtnUp> : select-end(CLIPBOARD, CUT_BUFFER1) \n\
-       Shift  Ctrl ~Meta <Key>C  : copy-selection(CLIPBOARD, CUT_BUFFER1) \n\
-       Shift  Ctrl ~Meta <Key>V  : insert-selection(CLIPBOARD, CUT_BUFFER1)'';
+      <KeyPress> Shift_L: set-select(on) \n\
+      <KeyRelease> Shift_L: set-select(off)'';
   };
 }
