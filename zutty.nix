@@ -8,6 +8,7 @@
     #"Zutty.font" = "Dina"; # uses Medium instead of Regular, zutty can't find it
     #"Zutty.fontsize" = 10; # pixels, not points. also the line spacing is wrong
     #"Zutty.dwfont" = ""; # idk
+
     "Zutty.bellIsUrgent" = true;
   };
 }
