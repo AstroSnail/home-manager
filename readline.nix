@@ -15,6 +15,7 @@
   programs.readline.variables.completion-map-case = true;
   # query (triggered by show-all-if-ambiguous) breaks menu-complete
   programs.readline.variables.completion-query-items = -1;
+  programs.readline.variables.convert-meta = true;
   # leave this to the shell
   #programs.readline.variables.editing-mode = "vi";
   # reduce lag when just pressing esc
@@ -39,11 +40,10 @@
   # the way the module distinguishes keynames from keyseqs is inadequate
   # so programs.readline.bindings is unusable
   programs.readline.extraConfig = ''
-    tab: menu-complete
+    Tab: menu-complete
 
     $if term=linux
-    # meta-tab doesn't work??? TODO: investigate
-    "\e\t": menu-complete-backward
+    Meta-Tab: menu-complete-backward
     $endif
 
     $if term=xterm
