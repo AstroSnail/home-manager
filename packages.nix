@@ -75,6 +75,7 @@ in {
     ./git.nix
     ./gnome-terminal.nix
     ./mpv.nix
+    ./readline.nix
     ./ssh.nix
     ./urxvt.nix
     ./vim.nix
@@ -108,11 +109,6 @@ in {
     #(final: prev: {
     #  vlc = prev.vlc.overrideAttrs (oldattrs: {
     #    buildInputs = oldattrs.buildInputs ++ [ pkgs.projectm ];
-    #  });
-    #})
-    #(final: prev: {
-    #  readline = prev.readline.overrideAttrs (oldattrs: {
-    #    patches = oldattrs.patches ++ [ ./readline.patch ];
     #  });
     #})
     #(final: prev: {

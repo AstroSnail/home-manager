@@ -31,7 +31,7 @@
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
 
-  # fixing garbage a bit maybe?
+  # replace tildes with absolute home dir
   xdg.cacheHome = "${config.home.homeDirectory}/.cache";
   xdg.configHome = "${config.home.homeDirectory}/.config";
   xdg.dataHome = "${config.home.homeDirectory}/.local/share";

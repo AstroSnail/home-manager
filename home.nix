@@ -10,9 +10,18 @@
     ./xdg.nix
   ];
 
+  home.preferXdgDirectories = true;
   #home.sessionVariables.WINEARCH = "win64";
   home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
   #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
+
+  #home.shellAliases.cat = "noexec";
+  #home.shellAliases.find = "noexec";
+  #home.shellAliases.grep = "noexec";
+  #home.shellAliases.htop = "noexec";
+  #home.shellAliases.less = "noexec";
+  #home.shellAliases.ls = "noexec";
+  #home.shellAliases.rm = "noexec";
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
@@ -47,14 +56,6 @@
   # paths it should manage.
   home.username = "erry";
   home.homeDirectory = "/home/erry";
-
-  #home.shellAliases.cat = "noexec";
-  #home.shellAliases.find = "noexec";
-  #home.shellAliases.grep = "noexec";
-  #home.shellAliases.htop = "noexec";
-  #home.shellAliases.less = "noexec";
-  #home.shellAliases.ls = "noexec";
-  #home.shellAliases.rm = "noexec";
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
