@@ -16,6 +16,13 @@ noremap <C-k> <C-y>
 "noremap <C-S-k> <C-S-p>
 noremap <C-S-k> <C-u>
 
+" work around broken :terminal handling of numpad
+" keys when they're ambiguous with editpad keys
+tmap <kHome> <xHome>
+tmap <kEnd> <xEnd>
+tmap <kPageUp> <PageUp>
+tmap <kPageDown> <PageDown>
+
 " Netrw
 " work around broken netrw#own#PathJoin()
 let g:netrw_home = expand('~/.vim')
