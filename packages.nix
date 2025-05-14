@@ -73,7 +73,7 @@ in {
     ./bash.nix
     ./emacs.nix
     ./git.nix
-    ./gnome-terminal.nix
+    #./gnome-terminal.nix
     ./mpv.nix
     ./readline.nix
     ./ssh.nix
