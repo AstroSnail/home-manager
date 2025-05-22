@@ -3,8 +3,11 @@ autocmd! vimHints
 runtime ftplugin/man.vim
 packadd! matchit
 
-set formatoptions+=j keywordprg=:Man sidescroll=1 sidescrolloff=10 nowrap
+set hlsearch nowrap
+set formatoptions+=j keywordprg=:Man laststatus=2 showtabline=2
+set sidescroll=1 sidescrolloff=10
 set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
+set viminfo+=r/run/media,r/tmp
 
 " make scrolling reachable from usual navigation keys
 " for some reason <C-S-n/p> don't work?
