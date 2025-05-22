@@ -14,7 +14,7 @@
     "histreedit"
     "histverify"
   ];
-  programs.bash.initExtra = ''
+  programs.bash.initExtra = (lib.readFile ./bash-prompt.bash) + ''
     HISTTIMEFORMAT=
     PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
   '';
