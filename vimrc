@@ -28,4 +28,4 @@ tmap <kPageDown> <PageDown>
 let g:netrw_home = expand('~/.vim')
 
 " EasyMotion
-noremap gs <Plug>(easymotion-prefix)
+map gs <Plug>(easymotion-prefix)

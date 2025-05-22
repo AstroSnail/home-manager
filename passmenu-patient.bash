@@ -45,5 +45,5 @@ then
   echo "Error: only --type is supported" >&2
   exit 1
 else
-  printf %s "${password}" | $xdotool
+  printf %s "${password}" | ${xdotool}
 fi

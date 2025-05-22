@@ -15,7 +15,9 @@
   programs.readline.variables.completion-map-case = true;
   # query (triggered by show-all-if-ambiguous) breaks menu-complete
   programs.readline.variables.completion-query-items = -1;
-  programs.readline.variables.convert-meta = true;
+  # makes inputting >ascii impossible, but necessary for some bindings
+  # set for linux term below
+  #programs.readline.variables.convert-meta = true;
   # leave this to the shell
   #programs.readline.variables.editing-mode = "vi";
   # reduce lag when just pressing esc
@@ -43,6 +45,7 @@
     Tab: menu-complete
 
     $if term=linux
+    set convert-meta on
     Meta-Tab: menu-complete-backward
     $endif
 
