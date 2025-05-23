@@ -1,20 +1,31 @@
 erry_set_title_to_command() {
-	# TODO: sanitize
-	printf '\e]0;%s\e\\' "${BASH_COMMAND}"
+	local bash_command=${BASH_COMMAND}
+
+	# replace all C0 controls with a space
+	local c0_fmt c0
+	for c0_fmt in \\0{0..3}{0..7}
+	do
+		printf -v c0 "${c0_fmt}"
+		bash_command=${bash_command//${c0}/ }
+	done
+
+	printf '\e]0;%s\e\\' "${bash_command}"
 }
 
+# functions evaluated in command substitution don't set global state
+# TODO: investigate, are they evaluated in a subshell?
 erry_show_pipestatus() {
-	local pipestatus=("${PIPESTATUS[@]}")
-	for p in "${!pipestatus[@]}"
+	for p in "${!erry_pipestatus[@]}"
 	do
-		if [[ ${pipestatus[${p}]} -ne 0 ]]
-		then printf -v "pipestatus[${p}]" '\e[1;31m%s\e[0m' "${pipestatus[${p}]}"
+		if [[ ${erry_pipestatus[${p}]} -ne 0 ]]
+		then printf -v "erry_pipestatus[${p}]" '\e[1;31m%s\e[0m' "${erry_pipestatus[${p}]}"
 		fi
 	done
-	local IFS=\|
-	printf %s "${pipestatus[*]}"
+	IFS=\|
+	printf %s "${erry_pipestatus[*]}"
 }
 
+# TODO: detect whether cursor is on the first column
 erry_prompt_extra='\n'
 
 erry_prompt_extra+='\e[0;1;32m'
@@ -34,8 +45,9 @@ erry_prompt_extra+='\e[0m'
 erry_prompt_extra+='=${SHLVL}\n'
 
 erry_show_prompt_extra() {
-	# trust that we don't need to save $? and
-	# $PIPESTATUS for the interactive user
+	# we don't need to restore $? as long as the command
+	# gets its own place in the $PROMPT_COMMAND array
+	local erry_pipestatus=("${PIPESTATUS[@]}")
 	printf %s "${erry_prompt_extra@P}"
 }
 
