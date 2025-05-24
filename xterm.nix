@@ -10,6 +10,7 @@
             "--enable-block-select"
             "--enable-status-line"
             "--enable-toolbar"
+            #"--enable-trace"
           ];
         });
     })
