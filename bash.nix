@@ -16,7 +16,23 @@
   ];
   programs.bash.initExtra = ''
     HISTTIMEFORMAT=
-    PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
+
+    # vim :terminal emulates xterm, and correctly changes TERM to xterm when it
+    # doesn't begin with xterm already.
+    # but that method doesn't handle more exotic xterm descriptions like
+    # xterm-vt220, which vim :terminal doesn't emulate.
+    # it should set TERM unconditionally!
+    if [[ -n $VIM_TERMINAL ]]
+    then
+      if [[ $COLORS -ge 256 ]]
+      then TERM=xterm-256color
+      else TERM=xterm
+      fi
+    fi
+
     . ${./bash-prompt.bash}
+  '';
+  programs.bash.profileExtra = ''
+    PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
   '';
 }

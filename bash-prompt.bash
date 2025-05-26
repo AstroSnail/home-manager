@@ -1,4 +1,6 @@
-# CSI 0 doesn't seem to have a corresponding terminfo code
+# CSI 0 doesn't seem to have a corresponding terminfo code.
+# however, rxvt-unicode sets tsl/fsl in such a way that the
+# "status line" is actually CSI 2.
 erry_set_title() {
 	printf '\e]0;%s\e\\' "${1}"
 }
