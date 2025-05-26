@@ -40,6 +40,7 @@ erry_gen_prompt_extra() {
 	# might use fish's trick: print ↵ or ⏎, then as many
 	# spaces as $COLUMNS - 1, then \r
 	# tip: stty size
+	# maybe optimize spaces-spam with cuf. but beware of xenl!
 	# or maybe use terminfo u6/u7, however:
 	# - TODO: how to parse u6
 	# - how to deal with previously-unread stdin? discard?
