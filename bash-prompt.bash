@@ -5,7 +5,9 @@ erry_set_title() {
 	printf '\e]0;%s\e\\' "${1}"
 }
 
-erry_set_title_sanitize() (
+erry_set_title_sanitize() {
+	local title fmt c0 pc0
+
 	title=${1}
 
 	# replace all C0 controls with their printable forms
@@ -17,10 +19,11 @@ erry_set_title_sanitize() (
 	done
 
 	erry_set_title "${title}"
-)
+}
 
-# evaluated in subshell (command substitution)
 erry_show_pipestatus() {
+	local IFS p this_status
+
 	for p in "${!erry_pipestatus[@]}"
 	do
 		if [[ ${erry_pipestatus[p]} -ne 0 ]]
@@ -33,6 +36,7 @@ erry_show_pipestatus() {
 			erry_pipestatus[p]=${this_status}
 		fi
 	done
+
 	IFS=\|
 	printf %s "${erry_pipestatus[*]}"
 }
@@ -44,7 +48,7 @@ erry_gen_prompt_extra() {
 	# tip: stty size
 	# maybe optimize spaces-spam with cuf. but beware of xenl!
 	# or maybe use terminfo u6/u7, however:
-	# - TODO: how to parse u6
+	# - how to parse u6?
 	# - how to deal with previously-unread stdin? discard?
 	#   (probably a good idea, but needs
 	#   care in case terminal doesn't respond)
@@ -85,12 +89,14 @@ erry_gen_prompt_extra() {
 erry_prompt_extra=$(erry_gen_prompt_extra)
 erry_prompt_extra=${erry_prompt_extra%.}
 
-erry_show_prompt_extra() (
+erry_show_prompt_extra() {
+	# save pipestatus so it's visible through
+	# command substitution (subshell)
+	local erry_pipestatus=("${PIPESTATUS[@]}")
+	printf %s "${erry_prompt_extra@P}"
 	# we don't need to restore $? as long as the command
 	# gets its own place in the $PROMPT_COMMAND array
-	erry_pipestatus=("${PIPESTATUS[@]}")
-	printf %s "${erry_prompt_extra@P}"
-)
+}
 
 if [[ ${TERM} != dumb ]]
 then
