@@ -1,0 +1,40 @@
+# remember: earlier 'use='s override later ones
+
+xterm-erry|Erry's custom xterm description,
+#	more like xterm-256color (with fixed setaf/b)
+	use=xterm+osc104, use=xterm+256color2+copy,
+#	more like xterm-p371
+	use=vt420+lrmm, use=dec+sl, use=bracketed+paste,
+	use=report+version,
+#	add more f-keys
+#	sets kf1-4 to f1-4 instead of pf1-4
+#	requires xterm patch!
+#	ideally xterm would let me mix keyboardType legacy
+#	(for f-keys) and vt220 (for keypad)
+#	pf1-4 is still reachable by XK_KP_F1-4
+#	(achieved with custom xkeyboard configs)
+	use=xterm+nopcfkeys+moar,
+#	fix inconsistency betweem kmous and xm (i think?)
+	use=xterm+sm+1006,
+#	based on xterm-vt220
+	use=xterm-vt220,
+
+# helpful fragments:
+
+# tic doesn't see cleared caps in compiled fragments
+# copy the cleared caps (from xterm+256color)
+xterm+256color2+copy|xterm 256-color feature (copy),
+	setb@, setf@, use=xterm+256color2,
+
+# xterm+nopcfkeys is good, but doesn't go far enough
+# too bad terminfo tops out at kf63
+# (X11 goes up to XK_F35, combining that with ctrlFKeys: 35
+# and modifyFunctionKeys: -1 lets us theoretically reach
+# absurd f-keys up to kf140 aka CSI 161 ~)
+xterm+nopcfkeys+moar|fragment without PC-style fkeys (extended),
+	kf43=\E[64~, kf44=\E[65~, kf45=\E[66~, kf46=\E[67~,
+	kf47=\E[68~, kf48=\E[69~, kf49=\E[70~, kf50=\E[71~,
+	kf51=\E[72~, kf52=\E[73~, kf53=\E[74~, kf54=\E[75~,
+	kf55=\E[76~, kf56=\E[77~, kf57=\E[78~, kf58=\E[79~,
+	kf59=\E[80~, kf60=\E[81~, kf61=\E[82~, kf62=\E[83~,
+	kf63=\E[84~, use=xterm+nopcfkeys,

@@ -5,7 +5,10 @@
       # directly seems to cause a large cascade of rebuilds
       xterm-toolbar =
         prev.xterm.overrideAttrs (oldattrs: {
-          patches = []; # remove sixel-256.support.patch
+          # remove sixel-256.support.patch
+          patches = [
+            ./xterm-f1-f4.patch
+          ];
           configureFlags = oldattrs.configureFlags ++ [
             "--enable-block-select"
             "--enable-status-line"
@@ -21,8 +24,9 @@
   ];
 
   xresources.properties = {
-    # also see keyboardType below
-    "XTerm.termName" = "xterm-vt220"; # missing vt420+lrmm
+    # custom TERM assumes xterm has been configured in specific ways
+    # e.g. patches above and keyboardType below
+    "XTerm.termName" = "xterm-erry";
     "XTerm*VT100.decTerminalID" = 525;
     "XTerm*VT100.decGraphicsID" = 340;
     "XTerm*VT100.numColorRegisters" = 1024;
@@ -69,7 +73,6 @@
     #"XTerm.ttyModes" = "erase ^h";
     #"XTerm*VT100.backarrowKey" = false;
 
-    # also see termName above
     "XTerm.keyboardType" = "vt220";
     "XTerm.omitTranslation" = [
       "shift-fonts" # gets in the way of shift+kp_add in vt220 keyboard mode

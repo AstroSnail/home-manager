@@ -7,6 +7,7 @@
     ./i3.nix
     ./sway.nix
     ./systemd.nix
+    ./terminfo.nix
     ./xdg.nix
   ];
 
