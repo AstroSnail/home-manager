@@ -2,7 +2,9 @@
 # - earlier 'use='s override later ones
 # - compiled entries don't store cleared caps, so fragments
 #   that should clear caps won't by themselves
+#   (is this really true?)
 
+# xterm-erry
 # specially crafted to map:
 # - kcuu1-kcub1 to SS3 A through SS3 D
 # - kent to SS3 M
@@ -10,12 +12,13 @@
 # - khome-knp to CSI 1 ~ through CSI 6 ~
 # - kf1-kf42 to CSI 11 ~ through CSI 63 ~ (see notes below)
 # and to enable lots of colors and features!
+# in spirit, it's a mishmash of xterm-new (features),
+# xterm-old (F-keys), xterm-vt220 (num- and edit-pad, and
+# compromise of modified keys), xterm-256color (colors) and
+# cherry-picking wherever i decided i liked it best.
 xterm-erry|Erry's custom xterm description,
 #	unwanted and not overriden
 	kbeg@, kp5@,
-#	caps more like xterm-direct
-#	initc@, setb@, setf@,
-#	use=xterm+direct,
 #	caps more like xterm-256color (with fixed setab/f)
 #	(see notes below)
 	setb@, setf@,
@@ -38,8 +41,12 @@ xterm-erry|Erry's custom xterm description,
 # the VT220 keyboard (LK201) grouped the F-keys like so:
 # 1 2 3 4 5   6 7 8 9 10   11 12 13 14   15 16   17 18 19 20
 # the gaps between the groups correspond exactly to gaps in
-# the control codes they send. after F20 there's a gap of 7
-# and past that all codes (invented by XTerm) are contiguous
+# the control codes XTerm sends (with keyboardType: legacy).
+# after F20 there's a gap of 7 and past that all codes
+# (invented for XTerm) are contiguous.
+# note that the VT220 wouldn't actually send F[1-5] over the
+# wire, they are used for local functions. so from a VT220
+# emulation standpoint, it's okay to put PF[1-4] there.
 
 # xterm+nopcfkeys is good, but we can take it further into
 # absurdity! too bad terminfo tops out at kf63.
@@ -59,3 +66,11 @@ xterm-erry|Erry's custom xterm description,
 
 # xterm-direct caps are broken for applications that check
 # colors but not RGB (e.g. vim since 9.1.1114)
+
+# missing from xterm's XTGETTCAP responses:
+# - RGB#8, kfnd=\E[1~, kslt=\E[4~, khlp=\E[28~
+# - kclr=, kund=,
+# i'm not certain how to handle these
+# - does RGB require corresponding support in setab/f?
+# - kfnd, kslt, khlp alias khome, kend, kf15 respectively
+# - kclr, kund are empty?
