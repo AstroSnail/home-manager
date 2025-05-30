@@ -30,6 +30,8 @@
       fi
     fi
 
+    stty -ixon
+
     . ${./bash-prompt.bash}
   '';
   programs.bash.profileExtra = ''
