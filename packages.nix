@@ -79,6 +79,8 @@ in {
     ./ssh.nix
     ./urxvt.nix
     ./vim.nix
+    # NOTE: after re-enabling vscode, also add direnv and lua-language-server to packages
+    ./vscode.nix
     ./xterm.nix
     ./zutty.nix
   ];
@@ -125,7 +127,8 @@ in {
 
   programs.btop.enable = true;
   programs.chromium.enable = true;
-  #programs.direnv.enable = true;
+  programs.direnv.enable = true;
+  programs.direnv.enableBashIntegration = false;
   #programs.direnv.enableFishIntegration = false;
   #programs.direnv.nix-direnv.enable = true;
   #programs.eza.enable = true;
@@ -188,49 +191,6 @@ in {
     #soundfont ${pkgs.soundfont-generaluser}/share/soundfonts/GeneralUser-GS.sf2
   '';
   #programs.tmux.enable = true;
-  # NOTE: after re-enabling vscode, also add direnv and lua-language-server to packages
-  #programs.vscode.enable = true; # broken 2025-02-18
-  programs.vscode.mutableExtensionsDir = false;
-  programs.vscode.profiles.default.extensions = [
-    pkgs.vscode-extensions.ms-vsliveshare.vsliveshare
-    pkgs.vscode-extensions.sumneko.lua
-    pkgs.vscode-extensions.james-yu.latex-workshop
-    pkgs.vscode-extensions.ms-vscode.cpptools
-    pkgs.vscode-extensions.ms-vscode.hexeditor
-    pkgs.vscode-extensions.ms-vscode.cmake-tools
-    pkgs.vscode-extensions.twxs.cmake
-    pkgs.vscode-extensions.rust-lang.rust-analyzer
-    pkgs.vscode-extensions.mkhl.direnv
-    pkgs.vscode-extensions.editorconfig.editorconfig
-    pkgs.vscode-extensions.eamodio.gitlens
-    pkgs.vscode-extensions.jnoortheen.nix-ide
-    pkgs.vscode-extensions.continue.continue
-  ] ++ (pkgs.vscode-utils.extensionsFromVscodeMarketplace [
-    {
-      name = "cursorless";
-      publisher = "pokey";
-      version = "0.26.495";
-      sha256 = "sha256-VR1LMA86WRszU/66eP+aH7iAm4yxsMHhMPCIWFtYJfc=";
-    }
-    {
-      name = "parse-tree";
-      publisher = "pokey";
-      version = "0.28.2";
-      sha256 = "sha256-pqf3/GaKkrBBHPTGcfPHo3p4Ja5a/YrQ7dSOjP1Lc2o=";
-    }
-    {
-      name = "vscode-capnp";
-      publisher = "xmonader";
-      version = "1.0.0";
-      sha256 = "sha256-zIkiDaWWay+6U4aA4ioTy/9MUk9mD+NLHX7kjQ2FWnw=";
-    }
-    {
-      name = "second-local-lua-debugger-vscode";
-      publisher = "ismoh-games";
-      version = "0.3.8";
-      sha256 = "sha256-xuOIBBnVWNREAAkAXkdSEsdqM49g+ngmNKtgJWrATNA=";
-    }
-  ]);
   programs.yt-dlp.enable = true;
 
   #services.dunst.enable = true;
@@ -308,7 +268,7 @@ in {
     #pkgs.ltrace
     (pkgs.lua5_3.withPackages (ps: [ ps.lpeg ]))
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
-    #pkgs.lua-language-server
+    pkgs.lua-language-server
     #pkgs.lutris
     pkgs.man-pages
     pkgs.man-pages-posix
