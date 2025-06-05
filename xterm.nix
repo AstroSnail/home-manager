@@ -3,7 +3,7 @@
     (final: prev: {
       # overlaid under a different name because overriding xterm
       # directly seems to cause a large cascade of rebuilds
-      xterm-toolbar =
+      xterm-erry =
         prev.xterm.overrideAttrs (oldattrs: {
           # remove sixel-256.support.patch
           patches = [

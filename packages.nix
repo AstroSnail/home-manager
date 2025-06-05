@@ -379,7 +379,7 @@ in {
     #pkgs.xonotic
     #pkgs.xorg.xkill
     #pkgs.xterm # see ./xterm.nix
-    pkgs.xterm-toolbar
+    pkgs.xterm-erry
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli
