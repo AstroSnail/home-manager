@@ -43,7 +43,7 @@ in {
     fonts.names = [ "Dina" ];
     fonts.size = 10.0;
     position = "bottom";
-    statusCommand = "${pkgs.i3status}/bin/i3status";
+    statusCommand = "${pkgs.i3status}/bin/i3status | awk -f ${./i3status-wrapper.gawk}";
     extraConfig = ''
       modifier none
     '';
