@@ -33,6 +33,11 @@
     stty -ixon
 
     . ${./bash-prompt.bash}
+
+    nomsh() {
+      nom build --no-link --print-out-paths "$@"
+      nom shell "$@"
+    }
   '';
   programs.bash.profileExtra = ''
     PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
