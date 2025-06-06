@@ -12,7 +12,7 @@
     ext.ms-vscode.cpptools
     ext.ms-vscode.hexeditor
     ext.ms-vscode.cmake-tools
-    ext.twxs.cmake
+    #ext.twxs.cmake
     ext.rust-lang.rust-analyzer
     ext.mkhl.direnv
     ext.editorconfig.editorconfig
