@@ -1,7 +1,10 @@
+packadd! comment
+packadd! matchit
+packadd! nohlsearch
+
 source $VIMRUNTIME/defaults.vim
 autocmd! vimHints
 runtime ftplugin/man.vim
-packadd! matchit
 
 set hlsearch nowrap
 set formatoptions+=j keywordprg=:Man laststatus=2 showtabline=2
@@ -10,14 +13,13 @@ set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 set viminfo+=r/run/media,r/tmp
 
 " make scrolling reachable from usual navigation keys
-" for some reason <C-S-n/p> don't work?
-" TODO: investigate
+" <C-S-n> and <C-S-p> are aliases of <C-f> and <C-b> respectively
 noremap <C-j> <C-e>
-"noremap <C-S-j> <C-S-n>
-noremap <C-S-j> <C-d>
+noremap <C-S-j> <C-f>
+"noremap <C-S-j> <C-d>
 noremap <C-k> <C-y>
-"noremap <C-S-k> <C-S-p>
-noremap <C-S-k> <C-u>
+noremap <C-S-k> <C-b>
+"noremap <C-S-k> <C-u>
 
 " work around broken :terminal handling of numpad
 " keys when they're ambiguous with editpad keys
