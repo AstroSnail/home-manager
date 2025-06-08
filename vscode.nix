@@ -22,6 +22,7 @@
   ] ++ (pkgs.vscode-utils.extensionsFromVscodeMarketplace [
     # TODO: figure out auto-update for these
     # e.g. https://github.com/nix-community/nix-vscode-extensions
+    # also wanted: meronz.manpages
     #{
     #  name = "cursorless";
     #  publisher = "pokey";
