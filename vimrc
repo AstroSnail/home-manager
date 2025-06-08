@@ -6,19 +6,21 @@ source $VIMRUNTIME/defaults.vim
 autocmd! vimHints
 runtime ftplugin/man.vim
 
-set hlsearch nowrap
-set formatoptions+=j keywordprg=:Man laststatus=2 showtabline=2
+set hlsearch linebreak wildignorecase nowrap
+set formatoptions+=j keywordprg=:Man laststatus=2 showbreak=>\  showtabline=2
 set sidescroll=1 sidescrolloff=10
 set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 set viminfo+=r/run/media,r/tmp
 
 " make scrolling reachable from usual navigation keys
 " <C-S-n> and <C-S-p> are aliases of <C-f> and <C-b> respectively
-noremap <C-j> <C-e>
-noremap <C-S-j> <C-f>
+"noremap <C-j> <C-e>
+noremap <C-j> <C-f>
+"noremap <C-S-j> <C-f>
 "noremap <C-S-j> <C-d>
-noremap <C-k> <C-y>
-noremap <C-S-k> <C-b>
+"noremap <C-k> <C-y>
+noremap <C-k> <C-b>
+"noremap <C-S-k> <C-b>
 "noremap <C-S-k> <C-u>
 
 " work around broken :terminal handling of numpad
