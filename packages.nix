@@ -97,6 +97,18 @@ in {
     #    };
     #  });
     #})
+    (final: prev: {
+      yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: let
+        version = "2025.6.9";
+        hash = "sha256-dR9To7YTU1Ir+AX6MLvL0WZmEmU345cG6rT4w2jxEaw=";
+      in if lib.versionOlder prevAttrs.version version then {
+        inherit version;
+        src = final.fetchPypi {
+          pname = "yt_dlp";
+          inherit version hash;
+        };
+      } else {});
+    })
     #(final: prev: {
     #  direnv = prev.direnv.overrideAttrs (oldattrs: {
     #    installPhase = oldattrs.installPhase + ''
