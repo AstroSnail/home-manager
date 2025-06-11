@@ -234,6 +234,7 @@ in {
 
     #pkgs.anbox
     pkgs.appimage-run
+    pkgs.ares
     pkgs.ascii
     pkgs.bat
     pkgs.bc
