@@ -87,6 +87,32 @@ in {
 
   nixpkgs.overlays = [
     #(final: prev: {
+    #  direnv = prev.direnv.overrideAttrs (oldattrs: {
+    #    installPhase = oldattrs.installPhase + ''
+    #      runHook postInstall
+    #    '';
+    #    postInstall = ''
+    #      rm $out/share/fish/vendor_conf.d/direnv.fish
+    #    '';
+    #  });
+    #})
+    (final: prev: {
+      openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
+        patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
+      });
+    })
+    #(final: prev: {
+    #  prismlauncher = prev.prismlauncher.overrideAttrs (finalAttrs: prevAttrs: {
+    #    patches = [ ./prismlauncher-crack.patch ];
+    #  });
+    #})
+    # broken 2025-03-11
+    #(final: prev: {
+    #  vlc = prev.vlc.overrideAttrs (oldattrs: {
+    #    buildInputs = oldattrs.buildInputs ++ [ pkgs.projectm ];
+    #  });
+    #})
+    #(final: prev: {
     #  yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: {
     #    version = "git";
     #    src = final.fetchFromGitHub {
@@ -108,32 +134,6 @@ in {
           inherit version hash;
         };
       } else {});
-    })
-    #(final: prev: {
-    #  direnv = prev.direnv.overrideAttrs (oldattrs: {
-    #    installPhase = oldattrs.installPhase + ''
-    #      runHook postInstall
-    #    '';
-    #    postInstall = ''
-    #      rm $out/share/fish/vendor_conf.d/direnv.fish
-    #    '';
-    #  });
-    #})
-    # broken 2025-03-11
-    #(final: prev: {
-    #  vlc = prev.vlc.overrideAttrs (oldattrs: {
-    #    buildInputs = oldattrs.buildInputs ++ [ pkgs.projectm ];
-    #  });
-    #})
-    #(final: prev: {
-    #  prismlauncher = prev.prismlauncher.overrideAttrs (finalAttrs: prevAttrs: {
-    #    patches = [ ./prismlauncher-crack.patch ];
-    #  });
-    #})
-    (final: prev: {
-      openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
-        patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
-      });
     })
   ];
 
@@ -220,6 +220,7 @@ in {
   services.mpris-proxy.enable = true;
 
   home.packages = [
+    # should go in overlay? /shrug
     apexctl
     #ffmpeg-rav1e
     github-clone
@@ -350,8 +351,8 @@ in {
     pkgs.xdotool
     #pkgs.xonotic
     #pkgs.xorg.xkill
-    #pkgs.xterm # see ./xterm.nix
-    pkgs.xterm-erry
+    #pkgs.xterm
+    pkgs.xterm-erry # see ./xterm.nix
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli
