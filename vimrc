@@ -6,7 +6,7 @@ source $VIMRUNTIME/defaults.vim
 autocmd! vimHints
 runtime ftplugin/man.vim
 
-set hlsearch linebreak wildignorecase nowrap
+set breakindent hlsearch linebreak wildignorecase nowrap
 set formatoptions+=j keywordprg=:Man laststatus=2 showbreak=>\  showtabline=2
 set sidescroll=1 sidescrolloff=10
 set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
