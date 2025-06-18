@@ -30,8 +30,11 @@
       fi
     fi
 
+    # disable ^S magic so bash can use it
     stty -ixon
 
+    . ${./bash-indicator.bash}
+    # TODO: split prompt into prompt and title
     . ${./bash-prompt.bash}
 
     nomsh() {

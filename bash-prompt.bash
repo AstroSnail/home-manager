@@ -1,8 +1,9 @@
-# CSI 0 doesn't seem to have a corresponding terminfo code.
-# however, rxvt-unicode sets tsl/fsl in such a way that the
-# "status line" is actually CSI 2.
+# OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
+# however it's common practice to set tsl/fsl in such a way that the
+# "status line" is actually the window title.
+# TS should be preferred over tsl, since OSC 2 can't set the column.
 erry_set_title() {
-	printf '\e]0;%s\e\\' "${1}"
+	printf '\e]2;%s\e\\' "${1}"
 }
 
 erry_set_title_sanitize() {
