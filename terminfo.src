@@ -15,12 +15,14 @@
 # in spirit, it's a mishmash of xterm-new (features),
 # xterm-old (F-keys), xterm-vt220 (num- and edit-pad, and
 # compromise of modified keys), xterm-256color (colors) and
-# cherry-picking wherever i decided i liked it best.
+# cherry-picking whatever i decided i liked best.
+# TODO: pfkey/pfloc/pfx/pfxl/pln
+#       WS (putty+screen is cool, but
+#           why is WS commented out?)
 xterm-erry|Erry's custom xterm description,
-#	unwanted and not overriden
+#	unwanted and not overridden
 	kbeg@, kp5@,
 #	caps more like xterm-256color (with fixed setab/f)
-#	(see notes below)
 	setb@, setf@,
 	use=xterm+osc104, use=xterm+256color2,
 #	caps more like xterm-p371
@@ -33,7 +35,6 @@ xterm-erry|Erry's custom xterm description,
 	use=xterm+app,
 #	don't want kbeg, kp5, kf[1-4] from here
 #	but otherwise extremely convenient base
-	enacs@,
 	use=xterm+nofkeys,
 
 # notes:
