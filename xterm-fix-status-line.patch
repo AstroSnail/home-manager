@@ -1,0 +1,118 @@
+diff --git a/charproc.c b/charproc.c
+index b513827..f1c08d8 100644
+--- a/charproc.c
++++ b/charproc.c
+@@ -2609,11 +2609,14 @@ show_indicator_status(XtPointer closure, XtIntervalId * id GCC_UNUSED)
+ 	return;
+     }
+ 
+-    screen->status_active = True;
+-
+-    if (screen->status_shown <= 1) {
++    /* save main display unless status is already active */
++    if (!screen->status_active) {
+ 	SL_SAVE(0);
+     }
++    /* use status display attributes */
++    SL_RESTORE(1);
++
++    screen->status_active = True;
+     screen->cur_row = FirstRowNumber(screen);
+     screen->cur_col = 0;
+ 
+@@ -2765,6 +2768,8 @@ resize_status_line(XtermWidget xw)
+     xw->misc.resizeGravity = NorthWestGravity;
+ 
+     RequestResize(xw, MaxRows(screen), MaxCols(screen), True);
++    /* work around buggy interaction with tiling wms */
++    VTResize((Widget) xw);
+ 
+     xw->misc.resizeGravity = savedGravity;
+ }
+@@ -2784,25 +2789,46 @@ update_status_line(XtermWidget xw, int new_active, int new_type)
+     TRACE_SL("update_status_line");
+ 
+     if (new_active >= 0 && new_active <= 1) {
+-	screen->status_active = new_active;
+ 	if (old_active == new_active) {
+ 	    goto finish;
+ 	}
+ 	if (old_type < 2) {
+ 	    goto finish;
+ 	}
++	/* restrict active to status type 2 */
++	screen->status_active = new_active;
+ 	if (new_active && !old_active) {
+ 	    SL_SAVE(0);
+ 	}
+     } else if (new_type >= 0 && new_type <= 2) {
++	/* skip no-ops */
++	if (old_type == new_type) {
++	    goto finish;
++	}
+ 	screen->status_type = new_type;
+     } else {
+ 	goto finish;
+     }
+ 
+-    if (screen->status_type == 1) {
++    /* handle setting status type 0 separately */
++    if (screen->status_type == 0) {
++	if (screen->status_shown) {
++	    if (screen->status_active) {
++		SL_SAVE2();
++		screen->status_active = False;
++	    }
++	    screen->status_timeout = False;
++	    clear_status_line(xw);
++	    StatusInit(&screen->status_data[1]);
++	    resize_status_line(xw);	/* shrink... */
++	    screen->status_shown = screen->status_type;
++	    TRACE_SL("...updating shown");
++	}
++    } else if (screen->status_type == 1) {
+ 	int next_shown = screen->status_type;
+ 	if (screen->status_type != screen->status_shown) {
++	    /* give indicator fresh rendition */
++	    StatusInit(&screen->status_data[1]);
+ 	    if (screen->status_shown == 0) {
+ 		resize_status_line(xw);
+ 	    } else {
+@@ -2822,6 +2848,7 @@ update_status_line(XtermWidget xw, int new_active, int new_type)
+ 	    Boolean do_resize = False;
+ 
+ 	    if (screen->status_type == 0) {
++		/* dead code */
+ 		if (screen->status_shown >= 2) {
+ 		    SL_SAVE2();
+ 		}
+@@ -2829,11 +2856,9 @@ update_status_line(XtermWidget xw, int new_active, int new_type)
+ 		clear_status_line(xw);
+ 		StatusInit(&screen->status_data[1]);
+ 	    } else if (screen->status_shown == 0) {
+-		if (screen->status_type >= 2) {
+-		    SL_RESTORE2();
+-		}
+ 		do_resize = True;	/* grow... */
+ 	    } else {
++		/* dead code */
+ 		clear_status_line(xw);
+ 	    }
+ 	    if (do_resize) {
+@@ -2842,6 +2867,8 @@ update_status_line(XtermWidget xw, int new_active, int new_type)
+ 	    screen->status_shown = screen->status_type;
+ 	    TRACE_SL("...updating shown");
+ 	}
++	/* always restore to status display */
++	SL_RESTORE2();
+ 	show_writable_status(xw);
+     } else {
+ 	if (screen->status_shown) {
+@@ -2853,6 +2880,7 @@ update_status_line(XtermWidget xw, int new_active, int new_type)
+ 		SL_SAVE2();
+ 	    }
+ 	    if (screen->status_type == 0) {
++		/* dead code */
+ 		screen->status_timeout = False;
+ 		clear_status_line(xw);
+ 		StatusInit(&screen->status_data[1]);

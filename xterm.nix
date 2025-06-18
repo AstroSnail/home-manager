@@ -8,6 +8,7 @@
           # remove sixel-256.support.patch
           patches = [
             ./xterm-f1-f4.patch
+            ./xterm-fix-status-line.patch
           ];
           configureFlags = oldattrs.configureFlags ++ [
             "--enable-block-select"
@@ -41,6 +42,9 @@
     #"XTerm*VT100.cursorBlink" = true;
     #"XTerm*VT100.cursorUnderLine" = true;
     #"XTerm*VT100.showWrapMarks" = true;
+    "XTerm*VT100.colorBD" = "white"; # default bold makes bright white
+    "XTerm*VT100.colorBDMode" = true;
+    "XTerm*VT100.veryBoldColors" = 4;
 
     #"XTerm*VT100.faceName" =
     #  "x:-misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1";
@@ -55,6 +59,7 @@
     #"XTerm*VT100.visualBell" = true;
     #"XTerm*VT100.visualBellLine" = true;
 
+    # TODO: disable scrollbar only in alternate screen
     #"XTerm*VT100.scrollBar" = true;
     "XTerm*VT100.rightScrollBar" = true;
     "XTerm*VT100.scrollKey" = true;
