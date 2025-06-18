@@ -1,3 +1,5 @@
+vim9script
+
 packadd! comment
 packadd! matchit
 packadd! nohlsearch
@@ -6,33 +8,46 @@ source $VIMRUNTIME/defaults.vim
 autocmd! vimHints
 runtime ftplugin/man.vim
 
-set breakindent hlsearch linebreak wildignorecase nowrap
-set formatoptions+=j keywordprg=:Man laststatus=2 showbreak=>\  showtabline=2
-set sidescroll=1 sidescrolloff=10
+&breakindent = true
+&hlsearch = true
+&keywordprg = ":Man"
+&laststatus = 2
+&linebreak = true
+&showbreak = "> "
+&showtabline = 2
+&sidescroll = 1
+&sidescrolloff = 10
+&wildignorecase = true
+&wrap = false
+
+# let ..= isn't quite as convenient as set +=
+set formatoptions+=j
 set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 set viminfo+=r/run/media,r/tmp
 
-" make scrolling reachable from usual navigation keys
-" <C-S-n> and <C-S-p> are aliases of <C-f> and <C-b> respectively
-"noremap <C-j> <C-e>
-noremap <C-j> <C-f>
-"noremap <C-S-j> <C-f>
-"noremap <C-S-j> <C-d>
-"noremap <C-k> <C-y>
-noremap <C-k> <C-b>
-"noremap <C-S-k> <C-b>
-"noremap <C-S-k> <C-u>
+# make scrolling reachable from usual navigation keys
+# E/Y one line
+# D/U half page
+# F/B full page (-2 lines)
+# NOTE: <C-J> is LF, but this doesn't conflict
+#       with enter, which sends <C-M> (CR)
+noremap <C-J> <C-F>
+noremap <C-K> <C-B>
 
-" work around broken :terminal handling of numpad
-" keys when they're ambiguous with editpad keys
+# add undo step for <C-W>
+# defaults.vim covers <C-U> but not <C-W>
+inoremap <C-W> <C-G>u<C-W>
+
+# work around broken :terminal handling of numpad
+# keys when they're ambiguous with editpad keys
 tmap <kHome> <xHome>
 tmap <kEnd> <xEnd>
 tmap <kPageUp> <PageUp>
 tmap <kPageDown> <PageDown>
 
-" Netrw
-" work around broken netrw#own#PathJoin()
-let g:netrw_home = expand('~/.vim')
+# Netrw
+# work around broken netrw#own#PathJoin()
+g:netrw_home = expand('~/.vim')
 
-" EasyMotion
+# EasyMotion
 map gs <Plug>(easymotion-prefix)
