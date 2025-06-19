@@ -36,14 +36,8 @@ noremap <C-K> <C-B>
 
 # add undo step for <C-W>
 # defaults.vim covers <C-U> but not <C-W>
+# very annoying when editing and switching windows a lot
 inoremap <C-W> <C-G>u<C-W>
-
-# work around broken :terminal handling of numpad
-# keys when they're ambiguous with editpad keys
-tmap <kHome> <xHome>
-tmap <kEnd> <xEnd>
-tmap <kPageUp> <PageUp>
-tmap <kPageDown> <PageDown>
 
 # Netrw
 # work around broken netrw#own#PathJoin()
