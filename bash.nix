@@ -41,6 +41,9 @@
       nom build --no-link --print-out-paths "$@"
       nom shell "$@"
     }
+
+    # sound the bell to check that it's working
+    tput bel
   '';
   programs.bash.profileExtra = ''
     PATH=$PATH:${config.home.homeDirectory}/.foundry/bin

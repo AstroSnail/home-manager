@@ -15,10 +15,6 @@
             "--enable-status-line"
             "--enable-toolbar"
             #"--enable-trace"
-            # ncurses ships terminfo with xterm+kbs set to DEL when it's built
-            # on a linux system, but xterm default-enables backarrowKey at
-            # build time (ie backarrow=BS).
-            "--disable-backarrow-key"
           ];
         });
     })
@@ -68,23 +64,28 @@
     "XTerm*VT100.autoScrollLock" = true;
     "XTerm*VT100.cdXtraScroll" = true;
     #"XTerm.buffered" = true; # holy shit this causes SO MANY GLITCHES
-    #"XTerm*VT100.jumpScroll" = true;
-    #"XTerm*VT100.fastScroll" = false;
+    "XTerm*VT100.jumpScroll" = true;
+    "XTerm*VT100.fastScroll" = true;
     "XTerm*VT100.multiScroll" = true;
 
-    "XTerm*VT100.locale" = true;
-    "XTerm*VT100.eightBitInput" = false;
-    #"XTerm*VT100.modifyOtherKeys" = 2;
-    #"XTerm.ttyModes" = "erase ^h";
-    #"XTerm*VT100.backarrowKey" = false;
-
     "XTerm.keyboardType" = "vt220";
+    #"XTerm.ttyModes" = "erase ^h";
+    # ncurses ships terminfo with xterm+kbs set to DEL when it's built
+    # on a linux system, but xterm default-enables backarrowKey at
+    # build time (ie backarrow=BS).
+    "XTerm*VT100.backarrowKey" = false;
+    "XTerm*VT100.eightBitInput" = false;
+    "XTerm*VT100.locale" = true;
+    #"XTerm*VT100.modifyOtherKeys" = 2;
+
     "XTerm.omitTranslation" = [
       "shift-fonts" # gets in the way of shift+kp_add in vt220 keyboard mode
     ];
     # use left-shift to choose between pri and clip
-    # flawed: won't work correctly if shift is pressed before the window is focused
-    # workaround: release and re-press shift before releasing the mouse button
+    # flawed: this only works correctly when the window is focused and the
+    #         pointer is over the window.
+    # workaround: release and re-press shift before releasing the mouse
+    #             button, listen out for MinorError bells.
     "XTerm*VT100.translations" = ''
       #override \n\
       <KeyPress> Shift_L: set-select(on) \n\
