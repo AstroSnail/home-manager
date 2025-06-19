@@ -89,3 +89,14 @@ if &term =~ "^xterm"
 &t_fs = "\<Esc>\\"
 
 endif
+
+if &term == "xterm-erry"
+
+# vim, after reverting patch 9.1.1114, is perfectly capable of detecting
+# whether the terminal supports 16 million colors, but for some reason the
+# setting (sometimes!) doesn't apply until an action is performed by the user.
+# lacking another way of reading the XTGETTCAP RGB response, the next best
+# option is simply setting termguicolors when the terminal has the right name.
+&termguicolors = true
+
+endif

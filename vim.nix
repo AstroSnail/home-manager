@@ -2,6 +2,14 @@
 
 {
   nixpkgs.overlays = [
+    #(final: prev: {
+    #  vim-erry =
+    #    prev.vim-full.overrideAttrs (oldattrs: {
+    #      patches = oldattrs.patches ++ [
+    #        ./vim-termguicolors.patch
+    #      ];
+    #    });
+    #})
     (final: prev: {
       vimPlugins = prev.vimPlugins // {
         vim-erry = final.vimUtils.buildVimPlugin {
@@ -13,6 +21,7 @@
   ];
 
   programs.vim.enable = true;
+  #programs.vim.packageConfigurable = pkgs.vim-erry;
   programs.vim.plugins = lib.mkForce [ # remove vim-sensible
     pkgs.vimPlugins.vim-erry
     pkgs.vimPlugins.easymotion

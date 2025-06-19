@@ -1,0 +1,89 @@
+diff --git a/runtime/doc/options.txt b/runtime/doc/options.txt
+index 8073457a0..63a08f3c0 100644
+--- a/runtime/doc/options.txt
++++ b/runtime/doc/options.txt
+@@ -8642,6 +8642,15 @@ A jump table for the options with a short description can be found at |Q_op|.
+ 	When on, uses |highlight-guifg| and |highlight-guibg| attributes in
+ 	the terminal (thus using 24-bit color).
+ 
++	Will automatically be enabled, if Vim detects that it runs in a
++	capable terminal (when the terminal supports the RGB terminfo
++	capability or when the number of colors |t_Co| supported by the
++	terminal is 0x1000000, e.g. with $TERM=xterm-direct). Due to the async
++	nature of querying the terminal, enabling this automatically is
++	noticable. Use >
++		set notermguicolors
++<	to explicitly disable.
++
+ 	Requires a ISO-8613-3 compatible terminal.  If setting this option
+ 	does not work (produces a colorless UI) reading |xterm-true-color|
+ 	might help.
+diff --git a/runtime/doc/version9.txt b/runtime/doc/version9.txt
+index 1ef04bd2e..593ba6b88 100644
+--- a/runtime/doc/version9.txt
++++ b/runtime/doc/version9.txt
+@@ -41597,6 +41597,8 @@ Default values: ~
+   increased to 12pt to accommodate modern high-dpi monitors
+ - the default value of the 'keyprotocol' option has been updated and support
+   for the ghostty terminal emulator (using kitty protocol) has been added
++- 'termguicolors' is automatically enabled if the terminal supports the RGB
++  terminfo capability or supports 0x1000000 colors
+ 
+ Completion: ~
+ - allow to complete directories from 'cdpath' for |:cd| and similar commands,
+diff --git a/src/term.c b/src/term.c
+index 5c030ed20..fa922faee 100644
+--- a/src/term.c
++++ b/src/term.c
+@@ -1667,12 +1667,10 @@ set_color_count(int nr)
+ 	sprintf((char *)nr_colors, "%d", t_colors);
+     else
+ 	*nr_colors = NUL;
+-#if 0
+-# ifdef FEAT_TERMGUICOLORS
++#ifdef FEAT_TERMGUICOLORS
+     // xterm-direct, enable termguicolors, when it wasn't set yet
+     if (t_colors == 0x1000000 && !p_tgc_set)
+ 	set_option_value((char_u *)"termguicolors", 1L, NULL, 0);
+-# endif
+ #endif
+     set_string_option_direct((char_u *)"t_Co", -1, nr_colors, OPT_FREE, 0);
+ }
+@@ -1709,9 +1707,7 @@ static char *(key_names[]) =
+ # ifdef FEAT_TERMRESPONSE
+     // Do those ones first, both may cause a screen redraw.
+     "Co",
+-    // disabled, because it switches termguicolors, but that
+-    // is noticeable and confuses users
+-    // "RGB",
++    "RGB",
+ # endif
+     "ku", "kd", "kr", "kl",
+     "#2", "#4", "%i", "*7",
+@@ -7181,8 +7177,7 @@ got_code_from_term(char_u *code, int len)
+ # endif
+ 		may_adjust_color_count(val);
+ 	    }
+-# if 0
+-#  ifdef FEAT_TERMGUICOLORS
++# ifdef FEAT_TERMGUICOLORS
+ 	    // when RGB result comes back, it is supported when the result contains an '='
+ 	    else if (name[0] == 'R' && name[1] == 'G' && name[2] == 'B' && code[9] == '=')
+ 	    {
+@@ -7191,14 +7186,13 @@ got_code_from_term(char_u *code, int len)
+ 		// there are 8 bits per color channel
+ 		if (val == 8 && !p_tgc_set)
+ 		{
+-#   ifdef FEAT_EVAL
++#  ifdef FEAT_EVAL
+ 		    ch_log(NULL, "got_code_from_term(RGB): xterm-direct colors detected");
+-#   endif
++#  endif
+ 		    // RGB capability set, enable termguicolors
+ 		    set_option_value((char_u *)"termguicolors", 1L, NULL, 0);
+ 		}
+ 	    }
+-#  endif
+ # endif
+ 	    else
+ 	    {
