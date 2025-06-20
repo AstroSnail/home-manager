@@ -47,5 +47,11 @@
     #  version = "0.3.8";
     #  sha256 = "sha256-xuOIBBnVWNREAAkAXkdSEsdqM49g+ngmNKtgJWrATNA=";
     #}
+    {
+      name = "futhark-vscode";
+      publisher = "DIKU";
+      version = "0.1.3";
+      sha256 = "sha256-URikRSOUR/vdOKGP8/wopROAd18J81pxii8+DHd0sa0=";
+    }
   ]);
 }
