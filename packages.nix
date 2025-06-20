@@ -234,7 +234,7 @@ in {
 
     #pkgs.anbox
     pkgs.appimage-run
-    pkgs.ares
+    #pkgs.ares # broken 2025-06-20
     pkgs.ascii
     pkgs.bat
     pkgs.bc
