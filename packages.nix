@@ -151,6 +151,7 @@ in {
   programs.firefox.enable = true;
   programs.firefox.package = pkgs.firefox-esr;
   programs.fish.enable = true;
+  #programs.htop.enable = true; # TODO: port config to here
   #programs.irssi.enable = true;
   #programs.irssi.networks.tilde-chat.nick = "crcl";
   #programs.irssi.networks.tilde-chat.channels."#tilde.pt".autoJoin = false;
@@ -169,6 +170,7 @@ in {
   #  arrays = "1;39";
   #  objects = "1;39";
   #};
+  programs.less.enable = true;
   #programs.lesspipe.enable = true;
   #programs.nheko.enable = true;
   programs.nix-index.enable = true;
@@ -205,17 +207,18 @@ in {
   #programs.tmux.enable = true;
   programs.yt-dlp.enable = true;
 
+  #services.blueman-applet.enable = true;
   #services.dunst.enable = true;
   #services.dunst.settings.global.dmenu = "${pkgs.dmenu}/bin/dmenu -p dunst";
   #services.easyeffects.enable = true;
-  services.mako.enable = true;
-
-  #services.blueman-applet.enable = true;
   #services.fluidsynth.enable = true;
   #services.fluidsynth.soundFont = "${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2";
   services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2";
   #services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/titanic.sf2";
   services.fluidsynth.soundService = "pipewire-pulse";
+  services.gpg-agent.enable = true;
+  services.gpg-agent.pinentry.package = pkgs.pinentry-qt;
+  services.mako.enable = true;
   #services.megasync.enable = true;
   services.mpris-proxy.enable = true;
 
@@ -255,6 +258,7 @@ in {
     #pkgs.dos2unix
     #pkgs.dwarf-fortress # broken 2023-02-15
     #pkgs.espeak
+    #pkgs.evince
     pkgs.ffmpeg-full
     pkgs.file
     #pkgs.gamescope
@@ -265,6 +269,7 @@ in {
     #pkgs.gparted
     pkgs.grim
     #pkgs.gzdoom
+    pkgs.htop
     pkgs.imagemagick
     #pkgs.inetutils
     #pkgs.inkscape
