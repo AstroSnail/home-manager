@@ -23,6 +23,7 @@
   #home.shellAliases.less = "noexec";
   #home.shellAliases.ls = "noexec";
   #home.shellAliases.rm = "noexec";
+  home.shellAliases.rg = "rg --no-ignore --hidden";
 
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
