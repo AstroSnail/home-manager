@@ -39,9 +39,5 @@ noremap <C-K> <C-B>
 # very annoying when editing and switching windows a lot
 inoremap <C-W> <C-G>u<C-W>
 
-# Netrw
-# work around broken netrw#own#PathJoin()
-g:netrw_home = expand('~/.vim')
-
 # EasyMotion
 map gs <Plug>(easymotion-prefix)
