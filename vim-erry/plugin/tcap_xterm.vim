@@ -11,6 +11,13 @@ if &term =~ "^xterm"
 &ttybuiltin = false
 &term = &term
 
+# vim, after reverting patch 9.1.1114, is perfectly capable of detecting
+# whether the terminal supports 16 million colors, but for some reason the
+# setting (sometimes!) doesn't apply until an action is performed by the user.
+# lacking another way of reading the XTGETTCAP RGB response, the next best
+# option is simply setting termguicolors when the terminal has the right name.
+&termguicolors = true
+
 # vim supports several underline styles: normal, double, curly, dotted and
 # dashed. to achieve this, it uses termcap capabilities that define how to
 # start and end each style. us and ue are standard caps for starting and
@@ -87,16 +94,5 @@ if &term =~ "^xterm"
 # OSC 2 like vim expects.
 &t_ts = "\<Esc>]2;"
 &t_fs = "\<Esc>\\"
-
-endif
-
-if &term == "xterm-erry"
-
-# vim, after reverting patch 9.1.1114, is perfectly capable of detecting
-# whether the terminal supports 16 million colors, but for some reason the
-# setting (sometimes!) doesn't apply until an action is performed by the user.
-# lacking another way of reading the XTGETTCAP RGB response, the next best
-# option is simply setting termguicolors when the terminal has the right name.
-&termguicolors = true
 
 endif
