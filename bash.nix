@@ -43,7 +43,7 @@
     }
 
     # sound the bell to check that it's working
-    tput bel
+    #tput bel
   '';
   programs.bash.profileExtra = ''
     PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
