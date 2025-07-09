@@ -33,6 +33,8 @@
     # disable ^S magic so bash can use it
     stty -ixon
 
+    # TODO: guard by TERM
+    # e.g. ssh without tty sets TERM=dumb
     . ${./bash-indicator.bash}
     # TODO: split prompt into prompt and title
     . ${./bash-prompt.bash}

@@ -149,7 +149,7 @@ in {
   programs.fd.enable = true;
   programs.feh.enable = true;
   programs.firefox.enable = true;
-  programs.firefox.package = pkgs.firefox-esr;
+  programs.firefox.package = pkgs.firefox-esr-140;
   programs.fish.enable = true;
   #programs.htop.enable = true; # TODO: port config to here
   #programs.irssi.enable = true;
@@ -274,7 +274,7 @@ in {
     #pkgs.inetutils
     #pkgs.inkscape
     #pkgs.iotop
-    #pkgs.irssi
+    pkgs.irssi
     pkgs.jre
     #pkgs.kdenlive # replaced with kdepackages.kdenlive 2025-02-25
     #pkgs.killall

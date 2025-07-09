@@ -22,6 +22,9 @@
   ];
 
   xresources.properties = {
+    # some of these are redundant against UXTerm-color
+    # but they're so benign i might as well just config for plain XTerm
+
     # custom TERM assumes xterm has been configured in specific ways
     # e.g. patches above and keyboardType below
     "XTerm.termName" = "xterm-erry";
