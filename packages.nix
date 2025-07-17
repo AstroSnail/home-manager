@@ -188,7 +188,7 @@ in {
   programs.streamlink.settings.player = "mpv";
   programs.streamlink.settings.player-args = "--profile=vile";
   programs.streamlink.settings.twitch-low-latency = true;
-  programs.texlive.enable = true;
+  #programs.texlive.enable = true; # broken 2025-07-17
   programs.texlive.extraPackages = tpkgs: {
     inherit (tpkgs)
       scheme-medium cbfonts cleveref gfsartemisia lipsum listingsutf8 srcltx titlesec was
@@ -265,7 +265,7 @@ in {
     #pkgs.gdb
     #pkgs.gdmap # broken 2024-12-28
     #pkgs.ghostscript
-    pkgs.gimp
+    #pkgs.gimp # broken 2025-07-17
     #pkgs.gparted
     pkgs.grim
     #pkgs.gzdoom
@@ -317,7 +317,7 @@ in {
     #pkgs.piper
     #pkgs.polymc
     #pkgs.poppler_utils
-    pkgs.prismlauncher
+    #pkgs.prismlauncher # broken 2025-07-17
     #pkgs.protontricks
     pkgs.pv
     (pkgs.python3.withPackages (ps: [ ps.matplotlib ps.more-itertools ps.numpy ps.sympy ]))
