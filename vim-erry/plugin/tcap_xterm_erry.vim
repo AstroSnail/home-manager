@@ -1,11 +1,11 @@
 vim9script
 
-if &term =~ "^xterm"
+if &term == "xterm-erry"
 
 # prefer terminfo over builtin.
-# the builtin output descriptions are fine (inconsequential differences in me,
-# ue, ve and vs, more important fixes done below), but the input descriptions
-# can cause surprising problems (see #17331).
+# the builtin output descriptions are fine (inconsequential differences in me
+# and ue, more important fixes done below), but the input descriptions can
+# cause surprising problems (see #17331).
 # a change in ttybuiltin only takes effect after setting term too, even inside
 # vimrc.
 &ttybuiltin = false
@@ -18,11 +18,11 @@ if &term =~ "^xterm"
 # option is simply setting termguicolors when the terminal has the right name.
 &termguicolors = true
 
-# vim supports several underline styles: normal, double, curly, dotted and
+# vim supports several underline styles: normal, curly, double, dotted and
 # dashed. to achieve this, it uses termcap capabilities that define how to
 # start and end each style. us and ue are standard caps for starting and
 # ending normal underline respectively. as for the others, vim declares
-# extension caps: Us, Cs, ds and Ds to start each, Ce to end all.
+# extension caps: Cs, Us, ds and Ds to start each, Ce to end all.
 # despite the nonstandard use of these caps, vim may request their definitions
 # from termcap (e.g. if term=xterm and builtin_xterm doesn't define Cs, it's
 # taken from the termcap environment, if available).
@@ -40,11 +40,11 @@ if &term =~ "^xterm"
 # (that said, besides normal underline, curly underline seems geared towards
 # the gui, and the rest of the underline style repertoire seems overlooked in
 # the themes and syntax highlight files distributed with vim)
-&t_Ce = ""
 &t_Cs = ""
+&t_Us = "\<Esc>[21m"
 &t_ds = ""
 &t_Ds = ""
-&t_Us = "\<Esc>[21m"
+&t_Ce = ""
 
 # there are more conflicts, but they're relatively benign:
 # - CF, CV, IS, PS, RC, RF, RK, RT and Te are historical (obsolete)
@@ -78,9 +78,27 @@ if &term =~ "^xterm"
 # define them to their taste. comments in vim source code suggest setting the
 # cursor shape to a bar for SI, underline for SR, and block for EI. xterm
 # implements all of these cursor shapes, so we set them here.
-&t_EI = "\<Esc>[2 q"
-&t_SR = "\<Esc>[4 q"
 &t_SI = "\<Esc>[6 q"
+&t_SR = "\<Esc>[4 q"
+&t_EI = "\<Esc>[2 q"
+
+# vim supports setting whether the cursor should be visible and whether it
+# should blink. to achieve this, it uses termcap capabilities that define how
+# to start and end each mode. vi and vs are standard caps for making the
+# cursor invisible and very visible respectively (the distributed terminfo
+# database defines vs to make the cursor visible and blink). as for resetting
+# these modes, a single standard cap is provided which resets both: ve "make
+# cursor appear normal".
+# vim instead interprets ve to only reset the effect of vi, and declares an
+# extension cap VS to reset the effect of vs (assumed to only affect blinking
+# state). when provided a definition of ve that resets blinking, any blinking
+# cursor effect (e.g. through SI, SR and EI above, or through the :terminal)
+# is immediately reset.
+# blinking is nice in appropriate contexts, so fix these caps vim's way.
+&t_ve = "\<Esc>[?25h"
+&t_vi = "\<Esc>[?25l"
+&t_vs = "\<Esc>[?12h"
+&t_VS = "\<Esc>[?12l"
 
 # vim supports setting the terminal window title. to achieve this, it uses
 # termcap capabilities that define how to move to and return from the status
