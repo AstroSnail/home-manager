@@ -21,7 +21,7 @@ runtime ftplugin/man.vim
 &wildignorecase = true
 
 # let ..= isn't quite as convenient as set +=
-set formatoptions+=j
+set formatoptions+=roj
 set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 set viminfo+=r/run/media,r/tmp
 
