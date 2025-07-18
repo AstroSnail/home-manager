@@ -1,6 +1,7 @@
 vim9script
 
 packadd! comment
+packadd! editorconfig
 packadd! matchit
 packadd! nohlsearch
 
@@ -8,17 +9,16 @@ source $VIMRUNTIME/defaults.vim
 autocmd! vimHints
 runtime ftplugin/man.vim
 
+&autoindent = true
 &breakindent = true
 &hlsearch = true
+&joinspaces = false
 &keywordprg = ":Man"
 &laststatus = 2
 &linebreak = true
 &showbreak = "> "
 &showtabline = 2
-&sidescroll = 1
-&sidescrolloff = 10
 &wildignorecase = true
-&wrap = false
 
 # let ..= isn't quite as convenient as set +=
 set formatoptions+=j
