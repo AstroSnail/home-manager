@@ -15,8 +15,8 @@
   #home.sessionVariables.WINEARCH = "win64";
   home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
   #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
-  home.sessionVariables.LESS = "MRS";
-  home.sessionVariables.SYSTEMD_LESS = "MRS";
+  home.sessionVariables.LESS = "IMRS";
+  home.sessionVariables.SYSTEMD_LESS = "IMRS";
   home.sessionVariables.SYSTEMD_PAGERSECURE = "1";
 
   #home.shellAliases.cat = "noexec";
