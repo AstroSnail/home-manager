@@ -1,5 +1,6 @@
 vim9script
 
+g:erry_diary_method = "drop"
 g:erry_diary_path = expand("~/tulpa")
 
 export def New(mods: string, topic: string, date: string = "")
@@ -13,6 +14,6 @@ export def New(mods: string, topic: string, date: string = "")
 	var file_path = g:erry_diary_path
 		.. strftime("/%G-W%V/%F-", parsed_date)
 		.. topic
-	execute mods .. ' split ' .. file_path
+	execute mods .. ' ' .. g:erry_diary_method .. ' ' .. file_path
 	mkdir(expand("%:p:h"), "p")
 enddef
