@@ -39,5 +39,10 @@ noremap <C-K> <C-B>
 # very annoying when editing and switching windows a lot
 inoremap <C-W> <C-G>u<C-W>
 
+# edit git commit messages in the enclosing vim editor
+# (e.g. by running git commit in a :terminal)
+# uses terminal-api to spawn a window for the commit message
+$GIT_EDITOR = "vim-commit"
+
 # EasyMotion
 map gs <Plug>(easymotion-prefix)

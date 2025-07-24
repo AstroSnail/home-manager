@@ -31,6 +31,10 @@ let
   #  ];
   #  text = lib.readFile ./slurpgrim.sh;
   #};
+  vim-commit = pkgs.writeShellApplication {
+    name = "vim-commit";
+    text = lib.readFile ./vim-commit.sh;
+  };
   winelegacy = pkgs.writeShellApplication {
     name = "winelegacy";
     #runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
@@ -231,6 +235,7 @@ in {
     passmenu-patient
     #pscrcpy
     #rigsofrods
+    vim-commit
     winelegacy
     wine32
     wine64
