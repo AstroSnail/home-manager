@@ -1,27 +1,3 @@
-# OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
-# however it's common practice to set tsl/fsl in such a way that the
-# "status line" is actually the window title.
-# TS should be preferred over tsl, since OSC 2 can't set the column.
-erry_set_title() {
-	printf '\e]2;%s\e\\' "${1}"
-}
-
-erry_set_title_sanitize() {
-	local title fmt c0 pc0
-
-	title=${1}
-
-	# replace all C0 controls with their printable forms
-	for fmt in {0..3}{0..7}
-	do
-		printf -v c0 '%b' '\00'"${fmt}"
-		printf -v pc0 '^%b' '\01'"${fmt}"
-		title=${title//${c0}/${pc0}}
-	done
-
-	erry_set_title "${title}"
-}
-
 erry_show_pipestatus() {
 	local IFS p this_status
 
@@ -64,8 +40,6 @@ erry_gen_prompt_extra() {
 	tput sgr0
 	printf '=($(erry_show_pipestatus))\n'
 
-	# bash already sanitizes the expansion of \w
-	erry_set_title '\w'
 	tput -S <<-'!'
 		bold
 		setaf 2
@@ -87,9 +61,6 @@ erry_gen_prompt_extra() {
 	printf '.'
 }
 
-erry_prompt_extra=$(erry_gen_prompt_extra)
-erry_prompt_extra=${erry_prompt_extra%.}
-
 erry_show_prompt_extra() {
 	# save pipestatus so it's visible through
 	# command substitution (subshell)
@@ -101,14 +72,9 @@ erry_show_prompt_extra() {
 
 if [[ ${TERM} != dumb ]]
 then
+	erry_prompt_extra=$(erry_gen_prompt_extra)
+	erry_prompt_extra=${erry_prompt_extra%.}
+
 	PROMPT_COMMAND+=(erry_show_prompt_extra)
 	PS1='\$ '
-
-	# PS0 doesn't get an up-to-date BASH_COMMAND :<
-	# DEBUG trap will have to do
-	# TODO: append to trap
-	if [[ -n $(trap -p DEBUG) ]]
-	then printf 'DEBUG trap conflict!\n' >&2
-	fi
-	trap 'erry_set_title_sanitize "${BASH_COMMAND}"' DEBUG
 fi
