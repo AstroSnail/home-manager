@@ -12,12 +12,14 @@ runtime ftplugin/man.vim
 &autoindent = true
 &breakindent = true
 &hlsearch = true
+&ignorecase = true
 &joinspaces = false
 &keywordprg = ":Man"
 &laststatus = 2
 &linebreak = true
 &showbreak = "> "
 &showtabline = 2
+&smartcase = true
 &wildignorecase = true
 
 # let ..= isn't quite as convenient as set +=
