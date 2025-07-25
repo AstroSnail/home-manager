@@ -22,7 +22,7 @@ runtime ftplugin/man.vim
 &showbreak = "> "
 &showtabline = 2
 &smartcase = true
-&viminfo = "'100,<50,s10,h,r/run/media,r/tmp"
+&viminfo = "'100,<50,s10,h,r/nix,r/run/media,r/tmp"
 &wildignorecase = true
 
 # edit git commit messages in the enclosing vim editor
