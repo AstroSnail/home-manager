@@ -19,6 +19,9 @@ runtime ftplugin/man.vim
 &laststatus = 2
 &linebreak = true
 &listchars = "eol:$,tab:  |,space:.,extends:>,precedes:<,nbsp:+"
+# remove 'options' from sessionoptions, because it breaks mappings created by
+# vim9script packages (e.g. comment)
+&sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,terminal"
 &showbreak = "> "
 &showtabline = 2
 &smartcase = true
