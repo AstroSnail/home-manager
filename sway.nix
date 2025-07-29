@@ -109,7 +109,7 @@ in {
   wayland.windowManager.sway.extraConfig = ''
     titlebar_padding 4 2
     xwayland force
-    exec --no-startup-id systemctl --user restart pipewire.service
+    exec --no-startup-id sleep 1 && systemctl --user restart pipewire.service
     include ${./magicmode.conf}
     include /etc/sway/config.d/*
   '';
