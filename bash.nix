@@ -47,7 +47,6 @@
 
     # open a fortune cookie!
     # specifically, something vicious from vex~
-    printf '\n'
     fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
   '';
   programs.bash.profileExtra = ''
