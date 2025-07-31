@@ -1,11 +1,10 @@
 erry_show_pipestatus() {
-	local IFS p this_status
-
+	local p
 	for p in "${!erry_pipestatus[@]}"
 	do
 		if [[ ${erry_pipestatus[p]} -ne 0 ]]
 		then
-			this_status=
+			local this_status=
 			this_status+=$(tput bold)
 			this_status+=$(tput setaf 1)
 			this_status+=${erry_pipestatus[p]}
@@ -14,25 +13,39 @@ erry_show_pipestatus() {
 		fi
 	done
 
-	IFS=\|
+	local IFS=\|
 	printf %s "${erry_pipestatus[*]}"
 }
 
+# NOTE: output of this will be parsed as a printf format string!!!
+# make sure to get the right amount of backslashes, and avoid percent-signs
+# unless intended! (and i guess hope none of the tputs use them? ST \e\\ comes
+# to mind...)
 erry_gen_prompt_extra() {
-	# TODO: detect whether cursor is on the first column
-	# might use fish's trick: print ↵ or ⏎, then as many
-	# spaces as $COLUMNS - 1, then \r
-	# tip: stty size
-	# maybe optimize spaces-spam with cuf. but beware of xenl!
-	# or maybe use terminfo u6/u7, however:
-	# - how to parse u6?
-	# - how to deal with previously-unread stdin? discard?
-	#   (probably a good idea, but needs
-	#   care in case terminal doesn't respond)
-	printf '\n'
+	tput sgr0
+
+	# extra space in case of xenl: if the cursor started already at the
+	# last column, then the symbol gets written there, and the subsequent
+	# cursor movement cancels the eat-newline state, returning the cursor
+	# to the last column, where the final spaces to trigger wrapping will
+	# overwrite the symbol
+	printf '↵ '
+	# printf '⏎ '
+	# parameter left unset, will be passed to printf later
+	local cuf
+	cuf=$(tput cuf)
+	printf %s "${cuf/'%p1'/}"
+	# TODO: test non-xenl terminal
+	if tput xenl
+	then printf '  '
+	else printf ' '
+	fi
+	tput -S <<-'!'
+		cr
+		el
+	!
 
 	tput -S <<-'!'
-		sgr0
 		bold
 		setaf 2
 	!
@@ -46,7 +59,7 @@ erry_gen_prompt_extra() {
 	!
 	printf PWD
 	tput sgr0
-	printf '=\\w\n'
+	printf '=\\\\w\n'
 
 	tput -S <<-'!'
 		bold
@@ -65,7 +78,13 @@ erry_show_prompt_extra() {
 	# save pipestatus so it's visible through
 	# command substitution (subshell)
 	local erry_pipestatus=("${PIPESTATUS[@]}")
-	printf %s "${erry_prompt_extra@P}"
+
+	local cufs=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
+	local erry_prompt_extra_ready
+	printf -v erry_prompt_extra_ready "${erry_prompt_extra}" "${cufs}"
+
+	printf %s "${erry_prompt_extra_ready@P}"
+
 	# we don't need to restore $? as long as the command
 	# gets its own place in the $PROMPT_COMMAND array
 }

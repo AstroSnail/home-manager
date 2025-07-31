@@ -7,13 +7,13 @@ erry_set_title() {
 }
 
 erry_set_title_sanitize() {
-	local title oct c0 pc0
-
-	title=${1}
+	local title=${1}
 
 	# replace all C0 controls with their printable forms
+	local oct
 	for oct in {0..3}{0..7}
 	do
+		local c0 pc0
 		printf -v c0 '%b' '\00'"${oct}"
 		printf -v pc0 '%b' '\01'"${oct}"
 		title=${title//${c0}/^${pc0}}
