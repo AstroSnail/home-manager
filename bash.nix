@@ -1,4 +1,4 @@
-{ config, lib, options, ... }:
+{ config, lib, options, pkgs, ... }:
 
 {
   programs.bash.enable = true;
@@ -44,6 +44,10 @@
 
     # sound the bell to check that it's working
     #tput bel
+
+    # open a fortune cookie!
+    # specifically, something vicious from vex~
+    fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
   '';
   programs.bash.profileExtra = ''
     PATH=$PATH:${config.home.homeDirectory}/.foundry/bin

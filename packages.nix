@@ -101,6 +101,16 @@ in {
     #  });
     #})
     (final: prev: {
+      fortunes-vex = final.runCommand "fortunes-vex" {
+        fortune = final.fortune;
+        src = ./vex;
+      } ''
+        mkdir --parents "$out"/share/games/fortunes
+        cp "$src" "$out"/share/games/fortunes/vex
+        "$fortune"/bin/strfile -x "$out"/share/games/fortunes/vex
+      '';
+    })
+    (final: prev: {
       openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
         patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
       });
@@ -266,6 +276,7 @@ in {
     #pkgs.evince
     pkgs.ffmpeg-full
     pkgs.file
+    pkgs.fortune
     #pkgs.gamescope
     #pkgs.gdb
     #pkgs.gdmap # broken 2024-12-28

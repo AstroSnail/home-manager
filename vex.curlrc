@@ -1,0 +1,5 @@
+dump-header = -
+location
+output = vex-dragon.bsky.social.car
+silent
+url = "https://amanita.us-east.host.bsky.network/xrpc/com.atproto.sync.getRepo?did=did:plc:fhgaqizzcnfv43yx34wu3ms2"
