@@ -26,7 +26,7 @@
   #home.shellAliases.less = "noexec";
   #home.shellAliases.ls = "noexec";
   #home.shellAliases.rm = "noexec";
-  home.shellAliases.rg = "rg --no-ignore --hidden";
+  home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git'";
   home.shellAliases.startw = "sway --unsupported-gpu >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
 
   nixpkgs.config.allowUnfree = true;
