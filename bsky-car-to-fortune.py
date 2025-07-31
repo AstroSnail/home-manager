@@ -5,6 +5,7 @@
 
 # references:
 # https://docs.bsky.app/blog/repo-export
+# https://atproto.com/specs/repository
 # https://ipld.io/specs/transport/car/carv1/
 # other references scattered in the code
 
@@ -27,6 +28,7 @@ def decode_block(data):
         mul *= 0x80
     return off+want, data[off:off+want]
 
+# https://www.rfc-editor.org/rfc/rfc8949.html
 def decode_cbor_int(data, off, want):
     return off, want
 
@@ -58,10 +60,16 @@ def decode_cbor_map(data, off, want):
     return off, mapp
 
 def decode_cbor_tagged(data, off, want):
+    # https://ipld.io/specs/codecs/dag-cbor/spec/
     if want == 0x2A:
         n, val = decode_cbor(data[off:])
         off += n
-        cid = Cid(val)
+        assert type(val) is bytes
+        # semantically, the multibase code cares about the character, not the
+        # specific byte (sequence) used to store it. DAG-CBOR requires it to be
+        # NUL, standing for identity, so we don't fuss about decoding it.
+        assert val[0] == 0x00
+        cid = Cid(val[1:], "\x00")
         assert len(cid.extra) == 0
         return off, cid
 
@@ -110,59 +118,54 @@ def decode_cbor(data):
 
     return decode_cbor_table[major](data, off, want)
 
+# https://github.com/multiformats/cid
 class Cid:
-    def __init__(self, data):
+    def __init__(self, data, multibase):
         # https://github.com/multiformats/multibase
-        if data[0] == 0x00: # Multibase coding: identity
+        if multibase == "\x00": # Multibase coding: identity
             self.multibase = "none"
         else:
             raise NotImplementedError(f"CID multibase coding 0x{data[0]:x}")
 
         # https://github.com/multiformats/multicodec
-        if data[1] == 0x01: # CID version: CIDv1
+        if data[0] == 0x01: # CID version: CIDv1
             self.version = "cidv1"
         else:
             raise NotImplementedError(f"CID version 0x{data[1]:x}")
 
-        if data[2] == 0x55: # Content type: raw binary
+        if data[1] == 0x55: # Content type: raw binary
             self.content_type = "raw"
-        elif data[2] == 0x71: # Content type: DAG-CBOR
+        elif data[1] == 0x71: # Content type: DAG-CBOR
             self.content_type = "dag-cbor"
         else:
             raise NotImplementedError(f"CID content type 0x{data[2]:x}")
 
         # https://github.com/multiformats/multihash
-        if data[3] == 0x12: # Hash algorithm: SHA2-256
+        if data[2] == 0x12: # Hash algorithm: SHA2-256
             self.alg = "sha2-256"
         else:
             raise NotImplementedError(f"CID hash algorithm 0x{data[3]:x}")
 
-        want = data[4]
-        off = 5
+        want = data[3]
+        off = 4
 
         self.bits = want * 8
         self.hash = data[off:off+want]
+
+        self.data = data[:off+want]
         self.extra = data[off+want:]
 
-        # redundant data makes printing way simpler
-        self.redundant = data[1:off+want]
-
     def __str__(self):
-        # return f"Cid({self.multibase} - {self.version} - {self.content_type} - {self.alg}-{self.bits}-{self.hash.hex()})"
+        return f"Cid({self.multibase} - {self.version} - {self.content_type} - {self.alg}-{self.bits}-{self.hash.hex()})"
 
+    def __repr__(self):
         # "b" is the Multibase prefix for base32 lowercase
-        b32 = b"b" + base64.b32encode(self.redundant).strip(b"=").lower()
-        return b32.decode("utf-8")
-
-    # python quirk: printing a list of objects does not call __str__ on the
-    # objects. __repr__ is semantically incorrect for this task but it's the
-    # easiest workaround for this quirk.
-    __repr__ = __str__
+        return "b" + base64.b32encode(self.data).decode("utf-8").strip("=").lower()
 
 def flatten_tree(section_map, entries, data_cid):
     if data_cid is None:
         return
-    data = section_map[str(data_cid)]
+    data = section_map[repr(data_cid)]
     left = data["l"]
     flatten_tree(section_map, entries, left)
     prev_key = bytes()
@@ -171,9 +174,9 @@ def flatten_tree(section_map, entries, data_cid):
         keysuffix = entry["k"]
         key = prev_key[:prefixlen] + keysuffix
         prev_key = key
-        [collection, rkey] = key.split(b"/")
+        [collection, rkey] = key.decode("utf-8").split("/")
 
-        value = section_map[str(entry["v"])]
+        value = section_map[repr(entry["v"])]
 
         if not collection in entries:
             entries[collection] = []
@@ -202,16 +205,15 @@ def main():
 
     section_map = {}
     for section_data in sections_data:
-        # pretend it has a multibase code
-        section_cid = Cid(bytes([0x00]) + section_data)
+        section_cid = Cid(section_data, "\x00")
         section_rest = section_cid.extra
         section_len, section_val = decode_cbor(section_rest)
         assert len(section_rest[section_len:]) == 0
-        section_map[str(section_cid)] = section_val
+        section_map[repr(section_cid)] = section_val
 
     all_entries = []
     for root_cid in header["roots"]:
-        root = section_map[str(root_cid)]
+        root = section_map[repr(root_cid)]
         assert root["version"] == 3
         entries = {}
         flatten_tree(section_map, entries, root["data"])
@@ -220,7 +222,7 @@ def main():
     # print posts in fortune cookie format
     # rot13 for fun
     for entries in all_entries:
-        for post in entries[b"app.bsky.feed.post"]:
+        for post in entries["app.bsky.feed.post"]:
             print(codecs.encode(post[1]["text"], encoding="rot13"))
             print("%")
 
