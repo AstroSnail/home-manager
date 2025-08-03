@@ -6,7 +6,7 @@ vim9script
 # License:     This file is placed in the public domain.
 
 # Only do this when not done yet for this buffer
-if exists("b:did_ftplugin")
+if exists('b:did_ftplugin')
   finish
 endif
 b:did_ftplugin = 1

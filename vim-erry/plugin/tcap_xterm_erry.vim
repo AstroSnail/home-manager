@@ -1,6 +1,6 @@
 vim9script
 
-if &term == "xterm-erry"
+if &term == 'xterm-erry'
 
 # prefer terminfo over builtin.
 # the builtin output descriptions are fine (inconsequential differences in me
@@ -40,11 +40,11 @@ if &term == "xterm-erry"
 # (that said, besides normal underline, curly underline seems geared towards
 # the gui, and the rest of the underline style repertoire seems overlooked in
 # the themes and syntax highlight files distributed with vim)
-&t_Cs = ""
+&t_Cs = ''
 &t_Us = "\<Esc>[21m"
-&t_ds = ""
-&t_Ds = ""
-&t_Ce = ""
+&t_ds = ''
+&t_Ds = ''
+&t_Ce = ''
 
 # there are more conflicts, but they're relatively benign:
 # - CF, CV, IS, PS, RC, RF, RK, RT and Te are historical (obsolete)
