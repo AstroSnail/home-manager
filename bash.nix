@@ -18,10 +18,11 @@
     HISTTIMEFORMAT=
 
     # vim :terminal emulates xterm, and correctly changes TERM to xterm when it
-    # doesn't begin with xterm already.
-    # but that method doesn't handle more exotic xterm descriptions like
-    # xterm-vt220, which vim :terminal doesn't emulate.
-    # it should set TERM unconditionally!
+    # doesn't begin with xterm already, but that method doesn't handle more
+    # exotic xterm descriptions like xterm-vt220, which vim :terminal doesn't
+    # emulate. it should set TERM unconditionally!
+    # this check will correct TERM when running bash, but not when running a
+    # command directly!
     if [[ -n $VIM_TERMINAL ]]
     then
       if [[ $COLORS -ge 256 ]]
@@ -37,9 +38,10 @@
     . ${./bash-prompt.bash}
     . ${./bash-title.bash}
 
-    nomsh() {
-      nom build --no-link --print-out-paths "$@"
-      nom shell "$@"
+    nixsh() {
+      set -- "''${@/#/nixpkgs#}"
+      nix build --no-link --print-out-paths "$@"
+      nix shell "$@"
     }
 
     # sound the bell to check that it's working
