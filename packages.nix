@@ -37,20 +37,23 @@ let
   };
   winelegacy = pkgs.writeShellApplication {
     name = "winelegacy";
-    #runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
+    runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
     text = lib.readFile ./wine.sh;
   };
   wine32 = pkgs.writeShellApplication {
     name = "wine32";
-    #runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
+    runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
     text = lib.readFile ./wine.sh;
   };
   wine64 = pkgs.writeShellApplication {
     name = "wine64";
-    #runtimeInputs = [ pkgs.wineWowPackages.waylandFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.wineWowPackages.stagingFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.wineWowPackages.waylandFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.wineWowPackages.stagingFull pkgs.winetricks ];
+    runtimeInputs = [ pkgs.wineWowPackages.full pkgs.winetricks ];
     text = lib.readFile ./wine.sh;
   };
 
