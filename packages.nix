@@ -164,7 +164,7 @@ in {
   #programs.eza.enableBashIntegration = false;
   #programs.eza.enableFishIntegration = false;
   programs.fd.enable = true;
-  programs.feh.enable = true;
+  # programs.feh.enable = true;
   programs.firefox.enable = true;
   programs.firefox.package = pkgs.firefox-esr-140;
   programs.fish.enable = true;
