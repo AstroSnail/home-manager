@@ -73,7 +73,7 @@ def decode_cbor_tagged(data, off, want):
         assert len(cid.extra) == 0
         return off, cid
 
-    raise NotImplementedError(f"CBOR tagged 0x{want:x}")
+    raise NotImplementedError(f"CBOR tagged {want:#x}")
 
 def decode_cbor_value(data, off, want):
     if want == 0x14:
@@ -83,7 +83,7 @@ def decode_cbor_value(data, off, want):
     if want == 0x16:
         return off, None
 
-    raise NotImplementedError(f"CBOR value 0x{want:x}")
+    raise NotImplementedError(f"CBOR value {want:#x}")
 
 decode_cbor_table = [
         decode_cbor_int,
@@ -114,7 +114,7 @@ def decode_cbor(data):
             want *= 0x100
             want += data[i+1]
     else:
-        raise NotImplementedError(f"CBOR minor 0x{minor:x}")
+        raise NotImplementedError(f"CBOR minor {minor:#x}")
 
     return decode_cbor_table[major](data, off, want)
 
@@ -125,26 +125,26 @@ class Cid:
         if multibase == "\x00": # Multibase coding: identity
             self.multibase = "none"
         else:
-            raise NotImplementedError(f"CID multibase coding 0x{data[0]:x}")
+            raise NotImplementedError(f"CID multibase coding {multibase:#x}")
 
         # https://github.com/multiformats/multicodec
         if data[0] == 0x01: # CID version: CIDv1
             self.version = "cidv1"
         else:
-            raise NotImplementedError(f"CID version 0x{data[1]:x}")
+            raise NotImplementedError(f"CID version {data[0]:#x}")
 
         if data[1] == 0x55: # Content type: raw binary
             self.content_type = "raw"
         elif data[1] == 0x71: # Content type: DAG-CBOR
             self.content_type = "dag-cbor"
         else:
-            raise NotImplementedError(f"CID content type 0x{data[2]:x}")
+            raise NotImplementedError(f"CID content type {data[1]:#x}")
 
         # https://github.com/multiformats/multihash
         if data[2] == 0x12: # Hash algorithm: SHA2-256
             self.alg = "sha2-256"
         else:
-            raise NotImplementedError(f"CID hash algorithm 0x{data[3]:x}")
+            raise NotImplementedError(f"CID hash algorithm {data[2]:#x}")
 
         want = data[3]
         off = 4
