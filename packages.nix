@@ -33,10 +33,12 @@ let
   #};
   vim-commit = pkgs.writeShellApplication {
     name = "vim-commit";
+    runtimeInputs = [ vim-drop ];
     text = lib.readFile ./vim-commit.sh;
   };
   vim-drop = pkgs.writeShellApplication {
     name = "vim-drop";
+    runtimeInputs = [ config.programs.jq.package ];
     text = lib.readFile ./vim-drop.sh;
   };
   winelegacy = pkgs.writeShellApplication {
