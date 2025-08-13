@@ -35,6 +35,10 @@ let
     name = "vim-commit";
     text = lib.readFile ./vim-commit.sh;
   };
+  vim-drop = pkgs.writeShellApplication {
+    name = "vim-drop";
+    text = lib.readFile ./vim-drop.sh;
+  };
   winelegacy = pkgs.writeShellApplication {
     name = "winelegacy";
     # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
@@ -249,6 +253,7 @@ in {
     #pscrcpy
     #rigsofrods
     vim-commit
+    vim-drop
     winelegacy
     wine32
     wine64
