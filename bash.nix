@@ -23,9 +23,9 @@
     # emulate. it should set TERM unconditionally!
     # this check will correct TERM when running bash, but not when running a
     # command directly!
-    if [[ -n $VIM_TERMINAL ]]
+    if [[ -n ''${VIM_TERMINAL} ]]
     then
-      if [[ $COLORS -ge 256 ]]
+      if [[ ''${COLORS} -ge 256 ]]
       then TERM=xterm-256color
       else TERM=xterm
       fi
@@ -39,7 +39,7 @@
     . ${./bash-title.bash}
 
     nixsh() {
-      set -- "''${@/#/nixpkgs#}"
+      set -- "''${@/#/"''${HOME}/git/github.com/NixOS/nixpkgs#"}"
       nix build --no-link --print-out-paths "$@"
       nix shell "$@"
     }
