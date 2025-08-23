@@ -13,7 +13,7 @@
     ext.ms-vscode.hexeditor
     ext.ms-vscode.cmake-tools
     #ext.twxs.cmake
-    ext.rust-lang.rust-analyzer
+    # ext.rust-lang.rust-analyzer # broken 2025-08-14
     ext.mkhl.direnv
     ext.editorconfig.editorconfig
     ext.eamodio.gitlens
