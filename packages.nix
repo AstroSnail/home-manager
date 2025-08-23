@@ -217,6 +217,7 @@ in {
       scheme-medium cbfonts cleveref gfsartemisia lipsum listingsutf8 srcltx titlesec was
       pgfplots prooftrees svn-prov forest standalone ucs;
   };
+  # programs.thunderbird.enable = true;
   programs.timidity.enable = true;
   programs.timidity.extraConfig = ''
     soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2
@@ -244,6 +245,9 @@ in {
   services.mako.enable = true;
   #services.megasync.enable = true;
   services.mpris-proxy.enable = true;
+  services.protonmail-bridge.enable = true;
+  services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
+  services.protonmail-bridge.extraPackages = [ pkgs.pass ];
 
   home.packages = [
     # should go in overlay? /shrug
@@ -366,6 +370,7 @@ in {
     #pkgs.superTuxKart
     pkgs.syncplay
     pkgs.texstudio
+    pkgs.thunderbird
     #pkgs.turbovnc
     pkgs.unrar
     #pkgs.unzip
