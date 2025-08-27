@@ -3,10 +3,24 @@
 {
   #nixpkgs.overlays = [(_: pkgs: { openssh = pkgs.openssh.override { withFIDO = true; }; })];
   programs.ssh.enable = true;
-  programs.ssh.controlMaster = "auto";
-  programs.ssh.serverAliveInterval = 60;
-  programs.ssh.extraOptionOverrides = { ConnectTimeout = "10"; };
+  # programs.ssh.controlMaster = "auto";
+  # programs.ssh.serverAliveInterval = 60;
+  # programs.ssh.extraOptionOverrides = { ConnectTimeout = "10"; };
+  programs.ssh.enableDefaultConfig = false;
   programs.ssh.matchBlocks = {
+    default.host = "*";
+    default.forwardAgent = false;
+    default.serverAliveInterval = 60;
+    default.serverAliveCountMax = 3;
+    default.compression = false;
+    default.addKeysToAgent = "no";
+    default.hashKnownHosts = false;
+    default.userKnownHostsFile = "~/.ssh/known_hosts";
+    default.controlMaster = "auto";
+    default.controlPath = "~/.ssh/master-%r@%n:%p";
+    default.controlPersist = "no";
+    default.extraOptions.ConnectTimeout = "10";
+
     #snail.host = "snail";
     #snail.hostname = "192.168.1.65";
     #snail.port = 22;
