@@ -248,6 +248,7 @@ in {
   services.protonmail-bridge.enable = true;
   services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
   services.protonmail-bridge.extraPackages = [ pkgs.pass ];
+  systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
 
   home.packages = [
     # should go in overlay? /shrug
