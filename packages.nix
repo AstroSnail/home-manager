@@ -3,6 +3,11 @@
 let
   #nixBin = name: pkgs.writeScriptBin name (lib.readFile ./${name});
 
+  chromium-wl = pkgs.writeShellApplication {
+    name = "chromium-wl";
+    runtimeInputs = [ config.programs.chromium.package ];
+    text = lib.readFile ./chromium-wl.sh;
+  };
   github-clone = pkgs.writeShellApplication {
     name = "github-clone";
     runtimeInputs = [ pkgs.git ];
@@ -253,6 +258,7 @@ in {
   home.packages = [
     # should go in overlay? /shrug
     apexctl
+    chromium-wl
     #ffmpeg-rav1e
     github-clone
     noexec
