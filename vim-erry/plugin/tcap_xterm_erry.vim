@@ -16,7 +16,16 @@ if &term == 'xterm-erry'
 # setting (sometimes!) doesn't apply until an action is performed by the user.
 # lacking another way of reading the XTGETTCAP RGB response, the next best
 # option is simply setting termguicolors when the terminal has the right name.
-&termguicolors = true
+# &termguicolors = true
+# vim is also capable of detecting whether the terminal's background color is
+# light or dark in order to change the syntax palette appropriately, but much
+# like the previous problem it sometimes (much less often) doesn't apply it
+# immediately (reproducers include `vim --clean --cmd 'term bc'`, or a more
+# elaborate setup involving loading a session containing a regular file, a
+# :Man page and a :terminal).
+# &background = 'dark'
+# workarounds for both problems are provided above, but i decided that i can
+# tolerate bugs that only affect vim's appearance on startup.
 
 # vim supports several underline styles: normal, curly, double, dotted and
 # dashed. to achieve this, it uses termcap capabilities that define how to
@@ -107,7 +116,7 @@ if &term == 'xterm-erry'
 # that access a real status line, vim neglects to clear it before updating the
 # title, causing garbage to accumulate.
 # one possible solution is to append ce "clear to end of line" to ts, like so:
-#&t_ts = &t_ts .. &t_ce
+# &t_ts = &t_ts .. &t_ce
 # but if we have a window title it's probably better to just set ts and fs to
 # OSC 2 like vim expects.
 &t_ts = "\<Esc>]2;"
