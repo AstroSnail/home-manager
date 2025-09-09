@@ -7,14 +7,8 @@
   xdg.mimeApps.associations.added = {
     "x-scheme-handler/http" = [ "firefox-esr.desktop" ];
     "x-scheme-handler/https" = [ "firefox-esr.desktop" ];
-    "x-scheme-handler/chrome" = [ "firefox-esr.desktop" ];
     "text/html" = [ "firefox-esr.desktop" ];
-    "application/x-extension-htm" = [ "firefox-esr.desktop" ];
-    "application/x-extension-html" = [ "firefox-esr.desktop" ];
-    "application/x-extension-shtml" = [ "firefox-esr.desktop" ];
-    "application/xhtml+xml" = [ "firefox-esr.desktop" ];
-    "application/x-extension-xhtml" = [ "firefox-esr.desktop" ];
-    "application/x-extension-xht" = [ "firefox-esr.desktop" ];
+    "x-scheme-handler/chrome" = [ "firefox-esr.desktop" ];
 
     "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
     "x-scheme-handler/mid" = [ "thunderbird.desktop" ];
@@ -38,6 +32,9 @@
     "application/xhtml+xml" = [ "firefox-esr.desktop" ];
     "application/x-extension-xhtml" = [ "firefox-esr.desktop" ];
     "application/x-extension-xht" = [ "firefox-esr.desktop" ];
+
+    "x-scheme-handler/about" = [ "chromium-browser.desktop" ];
+    "x-scheme-handler/unknown" = [ "chromium-browser.desktop" ];
 
     "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
     "message/rfc822" = [ "thunderbird.desktop" ];
