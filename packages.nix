@@ -214,7 +214,6 @@ in {
   programs.ripgrep.enable = true;
   programs.streamlink.enable = true;
   programs.streamlink.settings.player = "mpv";
-  programs.streamlink.settings.player-args = "--profile=vile";
   programs.streamlink.settings.twitch-low-latency = true;
   #programs.texlive.enable = true; # broken 2025-07-17
   programs.texlive.extraPackages = tpkgs: {
