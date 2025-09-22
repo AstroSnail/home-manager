@@ -356,7 +356,8 @@ in {
     #pkgs.prismlauncher # broken 2025-07-17
     #pkgs.protontricks
     pkgs.pv
-    (pkgs.python3.withPackages (ps: [ ps.matplotlib ps.more-itertools ps.numpy ps.sympy ]))
+    # (pkgs.python3.withPackages (ps: [ ps.matplotlib ps.more-itertools ps.numpy ps.sympy ps.pycurl ps.certifi ]))
+    pkgs.python3
     #pkgs.qemu_full
     #pkgs.qrencode
     #pkgs.qpwgraph
