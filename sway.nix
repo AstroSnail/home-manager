@@ -7,6 +7,7 @@ let
     #"^pavucontrol$"
     #"^pcsx2$"
     "^qemu$"
+    "^wsstest$"
   ];
   floatingClasses = [
     "\\.exe$"
@@ -25,6 +26,7 @@ let
     #"^Steam$"
     #"^steam$"
     "^Terraria\\.bin\\.x86_64$"
+    "^Wsstest$"
     "^XLoad$"
     #"^XTerm$"
   ];
