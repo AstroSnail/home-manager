@@ -153,8 +153,8 @@ in {
     #})
     (final: prev: {
       yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: let
-        version = "2025.9.23";
-        hash = "sha256-koKtHerbTJCy5tO8+fNgq/iMXy5LqDba17UTh7CG11c=";
+        version = "2025.9.26";
+        hash = "sha256-wUiugjOsTObF+/b3D8w5DxOgD1naN3bTc8+IxTcL2oY=";
       in if lib.versionOlder prevAttrs.version version then {
         inherit version;
         src = final.fetchPypi {
