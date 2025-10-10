@@ -267,9 +267,9 @@ in {
     #rigsofrods
     vim-commit
     vim-drop
-    winelegacy
-    wine32
-    wine64
+    #winelegacy # broken by bisect
+    #wine32 # broken by bisect
+    #wine64 # broken by bisect
 
     #pkgs.anbox
     pkgs.appimage-run
@@ -331,7 +331,7 @@ in {
     #pkgs.megasync
     #pkgs.melonDS
     #pkgs.microsoft-edge
-    pkgs.minetest
+    #pkgs.minetest # broken by bisect
     pkgs.moreutils
     #pkgs.mumble # broken 2025-03-16
     pkgs.ncdu
