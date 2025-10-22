@@ -354,7 +354,7 @@ in {
     #pkgs.piper
     #pkgs.polymc
     #pkgs.poppler_utils
-    #pkgs.prismlauncher # broken 2025-07-17
+    pkgs.prismlauncher
     #pkgs.protontricks
     pkgs.pv
     # (pkgs.python3.withPackages (ps: [ ps.matplotlib ps.more-itertools ps.numpy ps.sympy ps.pycurl ps.certifi ]))
