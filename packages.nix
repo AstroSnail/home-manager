@@ -267,9 +267,9 @@ in {
     #rigsofrods
     vim-commit
     vim-drop
-    #winelegacy # broken by bisect
-    #wine32 # broken by bisect
-    #wine64 # broken by bisect
+    winelegacy
+    wine32
+    wine64
 
     #pkgs.anbox
     pkgs.appimage-run
