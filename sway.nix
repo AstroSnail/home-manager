@@ -20,6 +20,7 @@ let
     "^Ledger Live$"
     "^love$"
     "^MEGAsync$"
+    "^Minecraft\\*? "
     "^Minetest$"
     "^Mojosetup$"
     #"^\\.scrcpy-wrapped$"
