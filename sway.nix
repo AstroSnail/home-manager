@@ -23,6 +23,7 @@ let
     "^Minecraft\\*? "
     "^Minetest$"
     "^Mojosetup$"
+    "^org-prismlauncher-EntryPoint$"
     #"^\\.scrcpy-wrapped$"
     #"^Steam$"
     #"^steam$"
