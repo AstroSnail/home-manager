@@ -250,7 +250,7 @@ in {
   services.mako.enable = true;
   #services.megasync.enable = true;
   services.mpris-proxy.enable = true;
-  # services.protonmail-bridge.enable = true; # broken 2025-10-23
+  services.protonmail-bridge.enable = true;
   services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
   services.protonmail-bridge.extraPackages = [ pkgs.pass ];
   systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
@@ -302,7 +302,7 @@ in {
     #pkgs.gdb
     #pkgs.gdmap # broken 2024-12-28
     #pkgs.ghostscript
-    #pkgs.gimp # broken 2025-07-17
+    pkgs.gimp
     #pkgs.gparted
     pkgs.grim
     #pkgs.gzdoom
