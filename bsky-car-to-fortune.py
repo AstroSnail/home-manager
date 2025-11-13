@@ -223,8 +223,9 @@ def main():
     # rot13 for fun
     for entries in all_entries:
         for post in entries["app.bsky.feed.post"]:
-            print(codecs.encode(post[1]["text"], encoding="rot13"))
-            print("%")
+            if not "reply" in post[1]:
+                print(codecs.encode(post[1]["text"], encoding="rot13"))
+                print("%")
 
 if __name__ == "__main__":
     main()
