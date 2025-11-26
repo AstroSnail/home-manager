@@ -56,8 +56,8 @@
     "XTerm*VT100.faceSize" = "10";
 
     "XTerm*VT100.bellIsUrgent" = true;
-    #"XTerm*VT100.visualBell" = true;
-    #"XTerm*VT100.visualBellLine" = true;
+    "XTerm*VT100.visualBell" = true;
+    "XTerm*VT100.visualBellLine" = true;
 
     # TODO: disable scrollbar only in alternate screen
     #"XTerm*VT100.scrollBar" = true;
