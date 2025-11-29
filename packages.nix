@@ -172,6 +172,7 @@ in {
   programs.direnv.enableBashIntegration = false;
   #programs.direnv.enableFishIntegration = false;
   #programs.direnv.nix-direnv.enable = true;
+  programs.element-desktop.enable = true;
   #programs.eza.enable = true;
   #programs.eza.enableBashIntegration = false;
   #programs.eza.enableFishIntegration = false;
@@ -211,7 +212,7 @@ in {
     pkgs.obs-studio-plugins.obs-pipewire-audio-capture
     pkgs.obs-studio-plugins.wlrobs
   ];
-  programs.password-store.enable = true;
+  programs.password-store.enable = true; # see also services.pass-secret-service
   programs.ripgrep.enable = true;
   programs.streamlink.enable = true;
   programs.streamlink.settings.player = "mpv";
@@ -250,6 +251,7 @@ in {
   services.mako.enable = true;
   #services.megasync.enable = true;
   services.mpris-proxy.enable = true;
+  services.pass-secret-service.enable = true; # see also programs.password-store
   services.protonmail-bridge.enable = true;
   services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
   services.protonmail-bridge.extraPackages = [ pkgs.pass ];
