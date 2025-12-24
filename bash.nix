@@ -10,7 +10,7 @@
     " -o hashall"
     " -o noclobber"
     " -o notify"
-    " -o vi"
+    #" -o vi"
     "histreedit"
     "histverify"
   ];
