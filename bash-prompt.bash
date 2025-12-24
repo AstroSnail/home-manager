@@ -95,5 +95,5 @@ then
 	erry_prompt_extra=${erry_prompt_extra%.}
 
 	PROMPT_COMMAND+=(erry_show_prompt_extra)
-	PS1='\$ '
+	PS1=' '
 fi
