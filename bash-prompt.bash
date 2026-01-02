@@ -96,4 +96,5 @@ then
 
 	PROMPT_COMMAND+=(erry_show_prompt_extra)
 	PS1='\$ '
+	bind 'set emacs-mode-string' # to the empty string
 fi
