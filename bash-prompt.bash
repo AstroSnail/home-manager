@@ -1,3 +1,5 @@
+# shellcheck disable=SC2016
+
 erry_tput() {
 	local IFS=$'\n'
 	tput -S <<<"$*"

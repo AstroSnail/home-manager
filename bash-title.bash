@@ -1,3 +1,5 @@
+# shellcheck disable=SC1003
+
 # OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
 # however it's common practice to set tsl/fsl in such a way that the
 # "status line" is actually the window title.
