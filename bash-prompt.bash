@@ -1,3 +1,8 @@
+erry_tput() {
+	local IFS=$'\n'
+	tput -S <<<"$*"
+}
+
 erry_show_pipestatus() {
 	local p
 	for p in "${!erry_pipestatus[@]}"
@@ -5,8 +10,7 @@ erry_show_pipestatus() {
 		if [[ ${erry_pipestatus[p]} -ne 0 ]]
 		then
 			local this_status=
-			this_status+=$(tput bold)
-			this_status+=$(tput setaf 1)
+			this_status+=$(erry_tput 'bold' 'setaf 1')
 			this_status+=${erry_pipestatus[p]}
 			this_status+=$(tput sgr0)
 			erry_pipestatus[p]=${this_status}
@@ -17,61 +21,46 @@ erry_show_pipestatus() {
 	printf %s "${erry_pipestatus[*]}"
 }
 
-# NOTE: output of this will be parsed as a printf format string!!!
-# make sure to get the right amount of backslashes, and avoid percent-signs
-# unless intended! (and i guess hope none of the tputs use them? ST \e\\ comes
-# to mind...)
 erry_gen_prompt_extra() {
-	tput sgr0
+	local output=
+	output+=$(tput sgr0)
 
 	# extra space in case of xenl: if the cursor started already at the
 	# last column, then the symbol gets written there, and the subsequent
 	# cursor movement cancels the eat-newline state, returning the cursor
 	# to the last column, where the final spaces to trigger wrapping will
 	# overwrite the symbol
-	printf '↵ '
-	# printf '⏎ '
-	# parameter left unset, will be passed to printf later
-	local cuf
-	cuf=$(tput cuf)
-	printf %s "${cuf/'%p1'/}"
+	output+='↵ '
+	# output+='⏎ '
+	# parameter left unset, placeholder will be replaced later
+	output+=$(tput cuf)
 	# TODO: test non-xenl terminal
 	if tput xenl
-	then printf '  '
-	else printf ' '
+	then output+='  '
+	else output+=' '
 	fi
-	tput -S <<-'!'
-		cr
-		el
-	!
+	output+=$(erry_tput 'cr' 'el')
 
-	tput -S <<-'!'
-		bold
-		setaf 2
-	!
-	printf PIPESTATUS
-	tput sgr0
-	printf '=($(erry_show_pipestatus))\n'
+	output+=$(erry_tput 'bold' 'setaf 2')
+	output+=PIPESTATUS
+	output+=$(tput sgr0)
+	output+='=($(erry_show_pipestatus))\n'
 
-	tput -S <<-'!'
-		bold
-		setaf 2
-	!
-	printf PWD
-	tput sgr0
-	printf '=\\\\w\n'
+	output+=$(erry_tput 'bold' 'setaf 2')
+	output+=PWD
+	output+=$(tput sgr0)
+	output+='=\w\n'
 
-	tput -S <<-'!'
-		bold
-		setaf 2
-	!
-	printf SHLVL
-	tput sgr0
-	printf '=${SHLVL}\n'
+	output+=$(erry_tput 'bold' 'setaf 2')
+	output+=SHLVL
+	output+=$(tput sgr0)
+	output+='=${SHLVL}\n'
 
 	# preserve prior newline
 	# strip this dot after command substitution
-	printf '.'
+	output+=.
+
+	printf %s "${output}"
 }
 
 erry_show_prompt_extra() {
@@ -80,8 +69,7 @@ erry_show_prompt_extra() {
 	local erry_pipestatus=("${PIPESTATUS[@]}")
 
 	local cufs=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
-	local erry_prompt_extra_ready
-	printf -v erry_prompt_extra_ready "${erry_prompt_extra}" "${cufs}"
+	local erry_prompt_extra_ready=${erry_prompt_extra/'%p1%d'/${cufs}}
 
 	printf %s "${erry_prompt_extra_ready@P}"
 
