@@ -7,6 +7,7 @@
         prev.vim-full.overrideAttrs (oldattrs: {
           patches = oldattrs.patches ++ [
             ./vim-termguicolors.patch
+            ./vim-terminal-env.patch
           ];
         });
     })
