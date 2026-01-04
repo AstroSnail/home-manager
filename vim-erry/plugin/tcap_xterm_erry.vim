@@ -11,6 +11,16 @@ if &term == 'xterm-erry'
 &ttybuiltin = false
 &term = &term
 
+# vim :terminal sets the TERM environment variable to the value of the term
+# vim setting (unless it's a gui). :terminal emulates xterm, and correctly
+# changes TERM to xterm when it doesn't begin with xterm already, but that
+# method doesn't handle more exotic xterm descriptions like xterm-vt220, which
+# vim :terminal doesn't emulate. vim checks whether TERM start with xterm to
+# enable builtin xterm caps (n.b. not strictly, it also matches some related
+# terminal names but using those when i'm running a real xterm is
+# unsatisfying), so changing the terminal name to one that doesn't start with
+# xterm is undesirable. the only fix is to patch vim.
+
 # vim, after reverting patch 9.1.1114, is perfectly capable of detecting
 # whether the terminal supports 16 million colors, but for some reason the
 # setting (sometimes!) doesn't apply until an action is performed by the user.
@@ -26,6 +36,7 @@ if &term == 'xterm-erry'
 # &background = 'dark'
 # workarounds for both problems are provided above, but i decided that i can
 # tolerate bugs that only affect vim's appearance on startup.
+# workarounds involving redrawing after a terminal response seem unreliable.
 
 # vim supports several underline styles: normal, curly, double, dotted and
 # dashed. to achieve this, it uses termcap capabilities that define how to
@@ -86,7 +97,7 @@ if &term == 'xterm-erry'
 # vim doesn't supply defaults for these caps; instead, the user is intended to
 # define them to their taste. comments in vim source code suggest setting the
 # cursor shape to a bar for SI, underline for SR, and block for EI. xterm
-# implements all of these cursor shapes, so we set them here.
+# implements all of these cursor shapes, so set them here.
 &t_SI = "\<Esc>[6 q"
 &t_SR = "\<Esc>[4 q"
 &t_EI = "\<Esc>[2 q"
@@ -117,8 +128,8 @@ if &term == 'xterm-erry'
 # title, causing garbage to accumulate.
 # one possible solution is to append ce "clear to end of line" to ts, like so:
 # &t_ts = &t_ts .. &t_ce
-# but if we have a window title it's probably better to just set ts and fs to
-# OSC 2 like vim expects.
+# but if a window title is available it's probably better to just set ts and
+# fs to OSC 2 like vim expects.
 &t_ts = "\<Esc>]2;"
 &t_fs = "\<Esc>\\"
 
