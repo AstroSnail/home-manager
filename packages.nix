@@ -386,7 +386,7 @@ in {
     #pkgs.unzip
     #pkgs.usbutils
     #pkgs.vdpauinfo
-    pkgs.vesktop
+    # pkgs.vesktop # broken 2026-01-03
     #pkgs.vgmstream
     #pkgs.vlc
     #pkgs.vttest
