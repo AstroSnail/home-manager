@@ -14,7 +14,7 @@ erry_show_pipestatus() {
 			local this_status=
 			this_status+=$(erry_tput 'bold' 'setaf 1')
 			this_status+=${erry_pipestatus[p]}
-			this_status+=$(tput sgr0)
+			this_status+=$(erry_tput 'sgr0')
 			erry_pipestatus[p]=${this_status}
 		fi
 	done
@@ -25,7 +25,7 @@ erry_show_pipestatus() {
 
 erry_gen_prompt_extra() {
 	local output=
-	output+=$(tput sgr0)
+	output+=$(erry_tput 'sgr0')
 
 	# extra space in case of xenl: if the cursor started already at the
 	# last column, then the symbol gets written there, and the subsequent
@@ -35,7 +35,7 @@ erry_gen_prompt_extra() {
 	output+='↵ '
 	# output+='⏎ '
 	# parameter left unset, placeholder will be replaced later
-	output+=$(tput cuf)
+	output+=$(erry_tput 'cuf')
 	# TODO: test non-xenl terminal
 	if tput xenl
 	then output+='  '
@@ -45,17 +45,17 @@ erry_gen_prompt_extra() {
 
 	output+=$(erry_tput 'bold' 'setaf 2')
 	output+=PIPESTATUS
-	output+=$(tput sgr0)
+	output+=$(erry_tput 'sgr0')
 	output+='=($(erry_show_pipestatus))\n'
 
 	output+=$(erry_tput 'bold' 'setaf 2')
 	output+=PWD
-	output+=$(tput sgr0)
+	output+=$(erry_tput 'sgr0')
 	output+='=\w\n'
 
 	output+=$(erry_tput 'bold' 'setaf 2')
 	output+=SHLVL
-	output+=$(tput sgr0)
+	output+=$(erry_tput 'sgr0')
 	output+='=${SHLVL}\n'
 
 	# preserve prior newline
@@ -81,6 +81,7 @@ erry_show_prompt_extra() {
 
 if [[ ${TERM} != dumb ]]
 then
+	# save on tput calls
 	erry_prompt_extra=$(erry_gen_prompt_extra)
 	erry_prompt_extra=${erry_prompt_extra%.}
 

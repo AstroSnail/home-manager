@@ -8,33 +8,37 @@ erry_set_title() {
 	printf '\e]2;%s\e\\' "${1}"
 }
 
-erry_set_title_sanitize() {
-	local title=${1}
+erry_visual_escape() {
+	local output=${1}
 
 	# replace all C0 controls with their printable forms
 	local oct
 	for oct in {0..3}{0..7}
 	do
 		local c0 pc0
-		printf -v c0 '%b' '\00'"${oct}"
-		printf -v pc0 '%b' '\01'"${oct}"
-		title=${title//${c0}/^${pc0}}
+		printf -v c0 %b '\00'"${oct}"
+		printf -v pc0 %b '\01'"${oct}"
+		output=${output//${c0}/^${pc0}}
 	done
 	# and DEL
-	title=${title//$'\177'/^?}
+	output=${output//$'\177'/^?}
 
-	erry_set_title "${title}"
+	printf %s "${output}"
 }
 
 erry_show_prompt_title() {
-	printf %s "${erry_prompt_title@P}"
+	# bash already sanitizes the expansion of \w
+	local title='\w'
+	erry_set_title "${title@P}"
+}
+
+erry_show_command_title() {
+	local title=$(erry_visual_escape "${BASH_COMMAND}")
+	erry_set_title "${title}"
 }
 
 if [[ ${TERM} != dumb ]]
 then
-	# bash already sanitizes the expansion of \w
-	erry_prompt_title=$(erry_set_title '\w')
-
 	PROMPT_COMMAND+=(erry_show_prompt_title)
 
 	# PS0 doesn't get an up-to-date BASH_COMMAND :<
@@ -43,5 +47,5 @@ then
 	if [[ -n $(trap -p DEBUG) ]]
 	then printf 'DEBUG trap conflict!\n' >&2
 	fi
-	trap 'erry_set_title_sanitize "${BASH_COMMAND}"' DEBUG
+	trap 'erry_show_command_title' DEBUG
 fi
