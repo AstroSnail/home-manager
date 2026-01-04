@@ -38,12 +38,6 @@
     . ${./bash-prompt.bash}
     . ${./bash-title.bash}
 
-    nixsh() {
-      set -- "''${@/#/"''${HOME}/git/github.com/NixOS/nixpkgs#"}"
-      nix build --no-link --print-out-paths "$@"
-      nix shell "$@"
-    }
-
     # sound the bell to check that it's working
     # tput bel
 
@@ -51,7 +45,7 @@
     # specifically, something vicious from vex~
     fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
   '';
-  programs.bash.profileExtra = ''
-    PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
-  '';
+  # programs.bash.profileExtra = ''
+  #   PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
+  # '';
 }
