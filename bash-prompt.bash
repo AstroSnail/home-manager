@@ -1,17 +1,19 @@
 # shellcheck disable=SC2016
 
 erry_tput() {
-	local IFS=$'\n'
+	local IFS
+	IFS=$'\n'
 	tput -S <<<"$*"
 }
 
 erry_show_pipestatus() {
-	local p
+	local IFS p this_status
+
 	for p in "${!erry_pipestatus[@]}"
 	do
 		if [[ ${erry_pipestatus[p]} -ne 0 ]]
 		then
-			local this_status=
+			this_status=
 			this_status+=$(erry_tput 'bold' 'setaf 1')
 			this_status+=${erry_pipestatus[p]}
 			this_status+=$(erry_tput 'sgr0')
@@ -19,7 +21,7 @@ erry_show_pipestatus() {
 		fi
 	done
 
-	local IFS=\|
+	IFS=\|
 	printf %s "${erry_pipestatus[*]}"
 }
 
@@ -46,17 +48,20 @@ erry_gen_prompt_extra() {
 	output+=$(erry_tput 'bold' 'setaf 2')
 	output+=PIPESTATUS
 	output+=$(erry_tput 'sgr0')
-	output+='=($(erry_show_pipestatus))\n'
+	output+='=(@PIPESTATUS@)'
+	output+=$'\n'
 
 	output+=$(erry_tput 'bold' 'setaf 2')
 	output+=PWD
 	output+=$(erry_tput 'sgr0')
-	output+='=\w\n'
+	output+='=@PWD@'
+	output+=$'\n'
 
 	output+=$(erry_tput 'bold' 'setaf 2')
 	output+=SHLVL
 	output+=$(erry_tput 'sgr0')
-	output+='=${SHLVL}\n'
+	output+='=@SHLVL@'
+	output+=$'\n'
 
 	# preserve prior newline
 	# strip this dot after command substitution
@@ -66,14 +71,23 @@ erry_gen_prompt_extra() {
 }
 
 erry_show_prompt_extra() {
-	# save pipestatus so it's visible through
-	# command substitution (subshell)
-	local erry_pipestatus=("${PIPESTATUS[@]}")
+	local erry_pipestatus output replace
+	erry_pipestatus=("${PIPESTATUS[@]}")
+	output=${erry_prompt_extra}
 
-	local cufs=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
-	local erry_prompt_extra_ready=${erry_prompt_extra/'%p1%d'/${cufs}}
+	replace=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
+	output=${output/'%p1%d'/${replace}}
 
-	printf %s "${erry_prompt_extra_ready@P}"
+	replace=$(erry_show_pipestatus)
+	output=${output/@PIPESTATUS@/${replace}}
+
+	replace='\w'
+	output=${output/@PWD@/${replace@P}}
+
+	replace=${SHLVL}
+	output=${output/@SHLVL@/${replace}}
+
+	printf %s "${output}"
 
 	# we don't need to restore $? as long as the command
 	# gets its own place in the $PROMPT_COMMAND array

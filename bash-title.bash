@@ -9,13 +9,12 @@ erry_set_title() {
 }
 
 erry_visual_escape() {
-	local output=${1}
+	local output oct c0 pc0
+	output=${1}
 
 	# replace all C0 controls with their printable forms
-	local oct
 	for oct in {0..3}{0..7}
 	do
-		local c0 pc0
 		printf -v c0 %b '\00'"${oct}"
 		printf -v pc0 %b '\01'"${oct}"
 		output=${output//${c0}/^${pc0}}
@@ -28,12 +27,14 @@ erry_visual_escape() {
 
 erry_show_prompt_title() {
 	# bash already sanitizes the expansion of \w
-	local title='\w'
+	local title
+	title='\w'
 	erry_set_title "${title@P}"
 }
 
 erry_show_command_title() {
-	local title=$(erry_visual_escape "${BASH_COMMAND}")
+	local title
+	title=$(erry_visual_escape "${BASH_COMMAND}")
 	erry_set_title "${title}"
 }
 
@@ -44,6 +45,7 @@ then
 	# PS0 doesn't get an up-to-date BASH_COMMAND :<
 	# DEBUG trap will have to do
 	# TODO: append to trap
+	# TODO: does this check actually even work?
 	if [[ -n $(trap -p DEBUG) ]]
 	then printf 'DEBUG trap conflict!\n' >&2
 	fi
