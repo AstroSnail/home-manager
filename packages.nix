@@ -274,6 +274,7 @@ in {
     wine64
 
     #pkgs.anbox
+    pkgs.android-tools
     pkgs.appimage-run
     #pkgs.ares # broken 2025-06-20
     pkgs.ascii
