@@ -18,6 +18,24 @@ set listchars+=tab:\ \ \|,space:.,extends:>,precedes:<,nbsp:+
 set sessionoptions-=options # work around bug with the comment plugin
 set viminfo+=r/nix,r/run/media,r/tmp
 
+if &term =~ 'xterm.*'
+	# enable cursor shapes
+	&t_SI = "\<Esc>[6 q"
+	&t_SR = "\<Esc>[4 q"
+	&t_EI = "\<Esc>[2 q"
+	# fix underline styles
+	&t_Cs = ''
+	&t_Us = "\<Esc>[21m"
+	&t_ds = ''
+	&t_Ds = ''
+	&t_Ce = ''
+	# fix keypad mappings
+	tmap <kHome> <Home>
+	tmap <kEnd> <End>
+	tmap <kPageUp> <PageUp>
+	tmap <kPageDown> <PageDown>
+endif
+
 # scrolling reference:
 # CTRL-E/Y one line
 # CTRL-D/U half window height

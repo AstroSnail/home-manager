@@ -8,12 +8,12 @@
           pname = "xterm-erry";
           # remove sixel-256.support.patch
           patches = [
-            ./xterm-f1-f4.patch
-            ./xterm-fix-status-line.patch
+            # ./xterm-f1-f4.patch
+            # ./xterm-fix-status-line.patch
           ];
           configureFlags = oldattrs.configureFlags ++ [
             "--enable-block-select"
-            "--enable-status-line"
+            # "--enable-status-line"
             "--enable-toolbar"
             #"--enable-trace"
           ];
@@ -27,10 +27,11 @@
 
     # custom TERM assumes xterm has been configured in specific ways
     # e.g. patches above and keyboardType below
-    "XTerm.termName" = "xterm-erry";
-    "XTerm*VT100.decTerminalID" = 525;
-    "XTerm*VT100.decGraphicsID" = 340;
-    "XTerm*VT100.numColorRegisters" = 1024;
+    # "XTerm.termName" = "xterm-erry";
+    "XTerm.termName" = "xterm-256color";
+    # "XTerm*VT100.decTerminalID" = 525;
+    # "XTerm*VT100.decGraphicsID" = 340;
+    # "XTerm*VT100.numColorRegisters" = 1024;
 
     #"XTerm.toolBar" = true;
     "XTerm*menubar.borderWidth" = 1;
@@ -72,7 +73,7 @@
     "XTerm*VT100.fastScroll" = true;
     "XTerm*VT100.multiScroll" = true;
 
-    "XTerm.keyboardType" = "vt220";
+    # "XTerm.keyboardType" = "vt220";
     #"XTerm.ttyModes" = "erase ^h";
     # ncurses ships terminfo with xterm+kbs set to DEL when it's built
     # on a linux system, but xterm default-enables backarrowKey at
@@ -83,7 +84,7 @@
     #"XTerm*VT100.modifyOtherKeys" = 2;
 
     "XTerm.omitTranslation" = [
-      "shift-fonts" # gets in the way of shift+kp_add in vt220 keyboard mode
+      # "shift-fonts" # gets in the way of shift+kp_add in vt220 keyboard mode
     ];
     # use left-shift to choose between pri and clip
     # flawed: this only works correctly when the window is focused and the

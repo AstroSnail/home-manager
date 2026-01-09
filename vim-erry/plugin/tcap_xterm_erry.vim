@@ -1,5 +1,8 @@
 vim9script
 
+# historical script, i want to keep the comments around
+finish
+
 if &term == 'xterm-erry'
 
 # prefer terminfo over builtin.
