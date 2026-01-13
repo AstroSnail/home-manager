@@ -1,0 +1,140 @@
+commit be61afa181618fd6d35d0b2969c922b7982b702c
+Author: AstroSnail <astrosnail@protonmail.com>
+Date:   Fri Jan 9 16:35:24 2026 +0000
+
+    Reduce priority of recognizing keypad keys
+    
+    Problem:  In XTerm, typing Home, End, PgUp or PgDn on the editing pad
+              will cause vim to recognize <kHome>, <kEnd>, <kPageUp> or
+              <kPageDown> (keypad keys) instead of <Home>, <End>, <PageUp>
+              or <PageDown> (editing pad keys) respectively, affecting
+              `:map`pings and `:terminal`.
+    Cause:    The keypad termcaps are sorted before the editing pad ones in
+              termcodes, meaning vim will match the former if they are the
+              same.
+    Solution: Only recognize keypad keys when nothing else matches.
+    
+    fixes: #17331
+    
+    Signed-off-by: AstroSnail <astrosnail@protonmail.com>
+
+diff --git a/src/term.c b/src/term.c
+index 503ec3895..a710df0e6 100644
+--- a/src/term.c
++++ b/src/term.c
+@@ -6242,9 +6242,12 @@ check_termcode(
+ #endif
+ 	{
+ 	    int  mouse_index_found = -1;
++	    int keypad_index_found = -1;
++	    int keypad_slen_found;
+ 
+ 	    for (idx = 0; idx < tc_len; ++idx)
+ 	    {
++		int     is_keypad = FALSE;
+ 		/*
+ 		 * Ignore the entry if we are not at the start of
+ 		 * typebuf.tb_buf[]
+@@ -6270,16 +6273,16 @@ check_termcode(
+ 		     * key code.
+ 		     */
+ 		    if (termcodes[idx].name[0] == 'K'
+-				       && VIM_ISDIGIT(termcodes[idx].name[1]))
++				       && (VIM_ISDIGIT(termcodes[idx].name[1])
++						|| ASCII_ISUPPER(termcodes[idx].name[1])))
+ 		    {
+-			for (j = idx + 1; j < tc_len; ++j)
+-			    if (termcodes[j].len == slen &&
+-				    STRNCMP(termcodes[idx].code,
+-					    termcodes[j].code, slen) == 0)
+-			    {
+-				idx = j;
+-				break;
+-			    }
++			is_keypad = TRUE;
++			// Only use it when there is no other match.
++			if (keypad_index_found < 0)
++			{
++			    keypad_index_found = idx;
++			    keypad_slen_found = slen;
++			}
+ 		    }
+ 
+ 		    if (slen == 2 && len > 2
+@@ -6327,7 +6330,7 @@ check_termcode(
+ 			if (mouse_index_found < 0)
+ 			    mouse_index_found = idx;
+ 		    }
+-		    else
++		    else if (!is_keypad)
+ 		    {
+ 			key_name[0] = termcodes[idx].name[0];
+ 			key_name[1] = termcodes[idx].name[1];
+@@ -6389,13 +6392,33 @@ check_termcode(
+ 
+ 			    slen = j;
+ 			}
+-			key_name[0] = termcodes[idx].name[0];
+-			key_name[1] = termcodes[idx].name[1];
+-			break;
++			if (termcodes[idx].name[0] == 'K'
++					   && (VIM_ISDIGIT(termcodes[idx].name[1])
++						    || ASCII_ISUPPER(termcodes[idx].name[1])))
++			{
++			    is_keypad = TRUE;
++			    if (keypad_index_found < 0)
++			    {
++				keypad_index_found = idx;
++				keypad_slen_found = slen;
++			    }
++			}
++			if (!is_keypad)
++			{
++			    key_name[0] = termcodes[idx].name[0];
++			    key_name[1] = termcodes[idx].name[1];
++			    break;
++			}
+ 		    }
+ 		}
+ 	    }
+-	    if (idx == tc_len && mouse_index_found >= 0)
++	    if (idx == tc_len && keypad_index_found >= 0)
++	    {
++		key_name[0] = termcodes[keypad_index_found].name[0];
++		key_name[1] = termcodes[keypad_index_found].name[1];
++		slen = keypad_slen_found;
++	    }
++	    else if (idx == tc_len && mouse_index_found >= 0)
+ 	    {
+ 		key_name[0] = termcodes[mouse_index_found].name[0];
+ 		key_name[1] = termcodes[mouse_index_found].name[1];
+diff --git a/src/testdir/test_termcodes.vim b/src/testdir/test_termcodes.vim
+index 5c30f5a8d..43c75693e 100644
+--- a/src/testdir/test_termcodes.vim
++++ b/src/testdir/test_termcodes.vim
+@@ -2776,6 +2776,25 @@ func Test_home_key_works()
+   let &t_@7 = save_end
+ endfunc
+ 
++func Test_home_is_not_khome()
++  " kHome and Home (or xHome) might be defined to the same termcode (for
++  " example, when xterm-codes reports the same for both termcaps).
++  " It is better to choose Home than kHome.
++  let save_K1 = exists('&t_K1') ? &t_K1 : ''
++  let save_kh = exists('&t_kh') ? &t_kh : ''
++
++  let &t_K1 = "\<Esc>OH"       " <kHome>
++  let &t_kh = "\<Esc>O*H"      " <Home>
++
++  new
++  call feedkeys("i\<C-K>\<Esc>OH\<Esc>", 'tx')
++  call assert_equal("<Home>", getline(1))
++
++  bwipe!
++  let &t_K1 = save_K1
++  let &t_kh = save_kh
++endfunc
++
+ func Test_terminal_builtin_without_gui()
+   CheckNotMSWindows
+ 
