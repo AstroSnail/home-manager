@@ -345,7 +345,7 @@ in {
     #pkgs.nmap
     #pkgs.nodejs
     #pkgs.nvtopPackages.amd
-    pkgs.openrgb
+    # pkgs.openrgb # broken 2026-01-12
     #pkgs.openssl
     #pkgs.osu-lazer
     pkgs.p7zip
