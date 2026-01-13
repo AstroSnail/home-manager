@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./doom-upgrade.nix
+    # ./doom-upgrade.nix
     #./icynet-canvas.nix
     ./ipsave.nix
     #./weechat.nix
