@@ -29,11 +29,6 @@ if &term =~ 'xterm.*'
 	&t_ds = ''
 	&t_Ds = ''
 	&t_Ce = ''
-	# fix keypad mappings
-	tmap <kHome> <Home>
-	tmap <kEnd> <End>
-	tmap <kPageUp> <PageUp>
-	tmap <kPageDown> <PageDown>
 endif
 
 # scrolling reference:
