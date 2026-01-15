@@ -9,6 +9,7 @@
             ./vim-termguicolors.patch
             # ./vim-terminal-env.patch
             ./vim-19145.patch
+            # ./vim-19181.patch
           ];
         });
     })

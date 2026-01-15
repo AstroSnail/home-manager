@@ -1,0 +1,73 @@
+commit 6a0d5353c53ec9c4bdc1aa51363126c05dd400bf
+Author: AstroSnail <astrosnail@protonmail.com>
+Date:   Thu Jan 15 02:16:39 2026 +0000
+
+    Prevent overwriting editing keys with keypad keys
+    
+    Problem:  In XTerm, with 'xtermcodes' enabled (default), when the user
+              presses <Home> vim will see <kHome>. This affects `:map`pings
+              and `:terminal`, which care whether a keypress was <Home> or
+              <kHome>.
+    Cause:    Vim requests termcodes for keys like <Home>, <End>, <PageUp>,
+              <PageDown>, and their keypad counterparts <kHome>, etc. If
+              XTerm replies with the same termcode for <Home> and <kHome>,
+              vim will only keep <kHome> because it is requested after
+              <Home>.
+    Solution: When a termcode reply is a keypad key and it would replace a
+              different key, skip it.
+    
+    Signed-off-by: AstroSnail <astrosnail@protonmail.com>
+
+diff --git a/src/term.c b/src/term.c
+index 503ec3895..44fa2bd4a 100644
+--- a/src/term.c
++++ b/src/term.c
+@@ -7385,6 +7385,14 @@ got_code_from_term(char_u *code, int len)
+ # ifdef FEAT_EVAL
+ 		    ch_log(NULL, "got_code_from_term(): Entry %c%c did not change",
+ 							     name[0], name[1]);
++# endif
++		}
++		else if (i >= 0 && name[0] == 'K' && VIM_ISDIGIT(name[1]))
++		{
++		    // Would replace existing entry with keypad key - skip.
++# ifdef FEAT_EVAL
++		    ch_log(NULL, "got_code_from_term(): Skipping entry %c%c in favor of %c%c with matching keys %s",
++			    name[0], name[1], termcodes[i].name[0], termcodes[i].name[1], str);
+ # endif
+ 		}
+ 		else
+diff --git a/src/testdir/test_termcodes.vim b/src/testdir/test_termcodes.vim
+index 5c30f5a8d..d1a0baa4b 100644
+--- a/src/testdir/test_termcodes.vim
++++ b/src/testdir/test_termcodes.vim
+@@ -2776,6 +2776,29 @@ func Test_home_key_works()
+   let &t_@7 = save_end
+ endfunc
+ 
++func Test_avoid_keypad_if_ambiguous()
++  new
++  call feedkeys("\<Esc>P1+r6b68=1B4F48\<Esc>\\", 't') " kh <Home>
++  call feedkeys("\<Esc>P1+r4b31=1B4F48\<Esc>\\", 't') " K1 <kHome>
++  call feedkeys("i\<C-K>\<Esc>OH\<CR>\<Esc>", 't')
++  call feedkeys("\<Esc>P1+r4037=1B4F46\<Esc>\\", 't') " @7 <End>
++  call feedkeys("\<Esc>P1+r4b34=1B4F46\<Esc>\\", 't') " K4 <kEnd>
++  call feedkeys("i\<C-K>\<Esc>OF\<CR>\<Esc>", 't')
++  call feedkeys("\<Esc>P1+r6b50=1B5B357E\<Esc>\\", 't') " kP <PageUp>
++  call feedkeys("\<Esc>P1+r4b33=1B5B357E\<Esc>\\", 't') " K3 <kPageUp>
++  call feedkeys("i\<C-K>\<Esc>[5~\<CR>\<Esc>", 't')
++  call feedkeys("\<Esc>P1+r6b4e=1B5B367E\<Esc>\\", 't') " kN <PageDown>
++  call feedkeys("\<Esc>P1+r4b35=1B5B367E\<Esc>\\", 't') " K5 <kPageDown>
++  call feedkeys("i\<C-K>\<Esc>[6~\<CR>\<Esc>", 'tx')
++  call assert_equal([
++        \ '<Home>',
++        \ '<End>',
++        \ '<PageUp>',
++        \ '<PageDown>',
++        \ ''], getline(1, '$'))
++  bwipe!
++endfunc
++
+ func Test_terminal_builtin_without_gui()
+   CheckNotMSWindows
+ 
