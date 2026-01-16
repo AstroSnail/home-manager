@@ -3,7 +3,7 @@ vim9script
 g:erry_diary_method = 'drop'
 g:erry_diary_path = expand('~/tulpa')
 
-export def New(mods: string, topic: string, date: string = '')
+export def Edit(mods: string, topic: string, date: string = '')
 	# TODO: refactor into a different design where date
 	# may eval into a number directly (e.g. "localtime()")
 	# and make better tooling for dates
