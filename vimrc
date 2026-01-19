@@ -5,16 +5,16 @@ packadd! editorconfig
 packadd! matchit
 
 source $VIMRUNTIME/defaults.vim
+runtime ftplugin/man.vim
+autocmd! vimHints CmdwinEnter
 
-set autoindent breakindent hlsearch ignorecase nojoinspaces linebreak smartcase
+set autoindent autoread breakindent formatoptions=tcroqj hlsearch ignorecase
+set nojoinspaces laststatus=2 linebreak showtabline=2 smartcase nostartofline
 set wildignorecase
-set laststatus=2 showtabline=2
-&formatoptions = 'tcroqj'
+set sessionoptions-=options # work around bug with the comment plugin
 &keywordprg = ':Man'
 &listchars = 'eol:$,tab:  |,space:.,extends:>,precedes:<,nbsp:+'
 &showbreak = '> '
-set sessionoptions-=options # work around bug with the comment plugin
-set viminfo+=r/nix,r/run/media,r/tmp
 
 # enable cursor shapes
 &t_SI = "\<Esc>[6 q"
@@ -28,30 +28,20 @@ set viminfo+=r/nix,r/run/media,r/tmp
 &t_Ds = ''
 &t_Ce = ''
 
+# edit git commit messages in the enclosing vim editor
+# (e.g. by running git commit in a :terminal)
+# uses terminal-api to spawn a window for the commit message
 $GIT_EDITOR = 'vim-commit'
-
-# scrolling reference:
-# CTRL-E/Y one line
-# CTRL-D/U half window height
-# CTRL-F/B full window height (-2 lines)
-# NOTE: CTRL-J is LF, but this doesn't conflict
-#       with enter, which sends CTRL-M (CR)
-# noremap <C-J> <C-F>
-# noremap <C-K> <C-B>
 
 # add undo step for CTRL-W
 # helpful when editing and switching windows a lot
 # defaults.vim covers CTRL-U but not CTRL-W
 inoremap <C-W> <C-G>u<C-W>
 
-# like doom-emacs (much more useful than :sleep)
-map gs <Plug>(easymotion-prefix)
-
 # unhighlight searches with Meta-u, a bit like less
 # (supposing metaSendsEscape as a metaphor, because less really parses ESC-u)
 nmap <M-u> <Cmd>nohlsearch<CR>
 
-autocmd! vimHints CmdwinEnter
-
-# :Man comes from a ftplugin instead of a normal plugin
-runtime ftplugin/man.vim
+# like doom-emacs (much more useful than :sleep)
+map gs <Plug>(easymotion-prefix)
+g:EasyMotion_startofline = 0
