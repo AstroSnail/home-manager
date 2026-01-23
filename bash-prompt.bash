@@ -34,8 +34,9 @@ erry_gen_prompt_extra() {
 	# cursor movement cancels the eat-newline state, returning the cursor
 	# to the last column, where the final spaces to trigger wrapping will
 	# overwrite the symbol
-	output+='↵ '
-	# output+='⏎ '
+	# NOTE: enabling symbol requires subtracting 4 from COLUMNS below
+	# output+=$'\u21B5 ' # carriage return
+	# output+=$'\u23CE ' # return symbol
 	# parameter left unset, placeholder will be replaced later
 	output+=$(erry_tput 'cuf')
 	# TODO: test non-xenl terminal
@@ -75,7 +76,8 @@ erry_show_prompt_extra() {
 	erry_pipestatus=("${PIPESTATUS[@]}")
 	output=${erry_prompt_extra}
 
-	replace=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
+	replace=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
+	# replace=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
 	output=${output/'%p1%d'/${replace}}
 
 	replace=$(erry_show_pipestatus)
