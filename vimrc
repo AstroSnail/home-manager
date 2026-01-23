@@ -16,17 +16,19 @@ set sessionoptions-=options # work around bug with the comment plugin
 &listchars = 'eol:$,tab:  |,space:.,extends:>,precedes:<,nbsp:+'
 &showbreak = '> '
 
-# enable cursor shapes
-&t_SI = "\<Esc>[6 q"
-&t_SR = "\<Esc>[4 q"
-&t_EI = "\<Esc>[2 q"
+if &term =~ 'xterm.*'
+	# enable cursor shapes
+	&t_SI = "\<Esc>[6 q"
+	&t_SR = "\<Esc>[4 q"
+	&t_EI = "\<Esc>[2 q"
 
-# fix underline styles
-&t_Cs = ''
-&t_Us = "\<Esc>[21m"
-&t_ds = ''
-&t_Ds = ''
-&t_Ce = ''
+	# fix underline styles
+	&t_Cs = ''
+	&t_Us = "\<Esc>[21m"
+	&t_ds = ''
+	&t_Ds = ''
+	&t_Ce = ''
+endif
 
 # edit git commit messages in the enclosing vim editor
 # (e.g. by running git commit in a :terminal)
