@@ -9,9 +9,7 @@
 # https://ipld.io/specs/transport/car/carv1/
 # other references scattered in the code
 
-import base64
-import codecs
-import sys
+import base64, codecs, sys
 
 def decode_block(data):
     # block lengths are LEB128 (variable-length, little-endian)
