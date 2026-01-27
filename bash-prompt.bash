@@ -1,108 +1,75 @@
-# shellcheck disable=SC2016
+erry_gen_tput() {
+	declare -Ag erry_tput
 
-erry_tput() {
-	local IFS
-	IFS=$'\n'
-	tput -S <<<"$*"
+	erry_tput['cr']=$(tput cr)
+
+	# parameter left unset, placeholder will be replaced later
+	erry_tput['cuf']=$(tput cuf)
+
+	# ideally SGR 1;31
+	erry_tput['fR']=$(tput bold)
+	erry_tput['fR']+=$(tput setaf 1)
+
+	# ideally SGR 1;32
+	erry_tput['fG']=$(tput bold)
+	erry_tput['fG']+=$(tput setaf 2)
+
+	# ideally SGR 22;39, or SGR 0
+	erry_tput['fo']=$(tput sgr0)
+
+	# TODO: test non-xenl terminal
+	if tput xenl
+	then erry_tput['wrap']='  '
+	else erry_tput['wrap']=' '
+	fi
+	if ! tput am
+	then erry_tput['wrap']=$'\n'
+	fi
+}
+
+erry_fix_eol() {
+	local cuf n=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
+
+	if [[ ${erry_tput['wrap']} == $'\n' ]]
+	then cuf=
+	elif [[ -n ${erry_tput['cuf']} ]]
+	then cuf=${erry_tput['cuf']/'%p1%d'/${n}}
+	# no cuf? no problem! just spam spaces
+	else cuf=$(printf '%*s' "${n}" '')
+	fi
+
+	printf %s "${cuf}${erry_tput['wrap']}${erry_tput['cr']}"
 }
 
 erry_show_pipestatus() {
-	local IFS p this_status
+	# save pipestatus first
+	local pipestatus=("${PIPESTATUS[@]}")
 
-	for p in "${!erry_pipestatus[@]}"
+	local IFS=\| p
+
+	for p in "${!pipestatus[@]}"
 	do
-		if [[ ${erry_pipestatus[p]} -ne 0 ]]
-		then
-			this_status=
-			this_status+=$(erry_tput 'bold' 'setaf 1')
-			this_status+=${erry_pipestatus[p]}
-			this_status+=$(erry_tput 'sgr0')
-			erry_pipestatus[p]=${this_status}
+		if [[ ${pipestatus[p]} -ne 0 ]]
+		then pipestatus[p]=${erry_tput['fR']}${pipestatus[p]}${erry_tput['fo']}
 		fi
 	done
 
-	IFS=\|
-	printf %s "${erry_pipestatus[*]}"
+	printf '%s\n' "${erry_tput['fG']}PIPESTATUS${erry_tput['fo']}=(${pipestatus[*]})"
 }
 
-erry_gen_prompt_extra() {
-	local output=
-	output+=$(erry_tput 'sgr0')
-
-	# extra space in case of xenl: if the cursor started already at the
-	# last column, then the symbol gets written there, and the subsequent
-	# cursor movement cancels the eat-newline state, returning the cursor
-	# to the last column, where the final spaces to trigger wrapping will
-	# overwrite the symbol
-	# NOTE: enabling symbol requires subtracting 4 from COLUMNS below
-	# output+=$'\u21B5 ' # carriage return
-	# output+=$'\u23CE ' # return symbol
-	# parameter left unset, placeholder will be replaced later
-	output+=$(erry_tput 'cuf')
-	# TODO: test non-xenl terminal
-	if tput xenl
-	then output+='  '
-	else output+=' '
-	fi
-	output+=$(erry_tput 'cr' 'el')
-
-	output+=$(erry_tput 'bold' 'setaf 2')
-	output+=PIPESTATUS
-	output+=$(erry_tput 'sgr0')
-	output+='=(@PIPESTATUS@)'
-	output+=$'\n'
-
-	output+=$(erry_tput 'bold' 'setaf 2')
-	output+=PWD
-	output+=$(erry_tput 'sgr0')
-	output+='=@PWD@'
-	output+=$'\n'
-
-	output+=$(erry_tput 'bold' 'setaf 2')
-	output+=SHLVL
-	output+=$(erry_tput 'sgr0')
-	output+='=@SHLVL@'
-	output+=$'\n'
-
-	# preserve prior newline
-	# strip this dot after command substitution
-	output+=.
-
-	printf %s "${output}"
+erry_show_pwd() {
+	local pwd='\w'
+	printf '%s\n' "${erry_tput['fG']}PWD${erry_tput['fo']}=${pwd@P}"
 }
 
-erry_show_prompt_extra() {
-	# save pipestatus first
-	local erry_pipestatus=("${PIPESTATUS[@]}")
-
-	local output replace
-	output=${erry_prompt_extra}
-
-	replace=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
-	# replace=$((COLUMNS > 4 ? COLUMNS - 4 : 1))
-	output=${output/'%p1%d'/${replace}}
-
-	replace=$(erry_show_pipestatus)
-	output=${output/@PIPESTATUS@/${replace}}
-
-	replace='\w'
-	output=${output/@PWD@/${replace@P}}
-
-	replace=${SHLVL}
-	output=${output/@SHLVL@/${replace}}
-
-	printf %s "${output}"
-
-	# we don't need to restore $? as long as the command
-	# gets its own place in the $PROMPT_COMMAND array
+erry_show_shlvl() {
+	printf '%s\n' "${erry_tput['fG']}SHLVL${erry_tput['fo']}=${SHLVL}"
 }
 
-if [[ ${TERM} != dumb ]]
-then
-	# save on tput calls
-	erry_prompt_extra=$(erry_gen_prompt_extra)
-	erry_prompt_extra=${erry_prompt_extra%.}
-
-	PROMPT_COMMAND+=(erry_show_prompt_extra)
-	PS1='\$ '
-fi
+# save on tput calls
+erry_gen_tput 2>/dev/null
+PROMPT_COMMAND+=(erry_fix_eol)
+PROMPT_COMMAND+=(erry_show_pipestatus)
+PROMPT_COMMAND+=(erry_show_pwd)
+PROMPT_COMMAND+=(erry_show_shlvl)
+PS1='\$ '
