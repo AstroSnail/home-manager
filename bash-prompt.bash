@@ -72,8 +72,10 @@ erry_gen_prompt_extra() {
 }
 
 erry_show_prompt_extra() {
-	local erry_pipestatus output replace
-	erry_pipestatus=("${PIPESTATUS[@]}")
+	# save pipestatus first
+	local erry_pipestatus=("${PIPESTATUS[@]}")
+
+	local output replace
 	output=${erry_prompt_extra}
 
 	replace=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
