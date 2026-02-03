@@ -5,7 +5,7 @@
       # directly seems to cause a large cascade of rebuilds
       xterm-erry =
         prev.xterm.overrideAttrs (oldattrs: {
-          pname = "xterm-erry";
+          # pname = "xterm-erry"; # broken due to finalAttrs use
           # remove sixel-256.support.patch
           patches = [
             # ./xterm-f1-f4.patch
