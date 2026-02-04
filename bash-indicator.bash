@@ -4,8 +4,7 @@ erry_enable_indicator_status() {
 	printf '\e[1$~'
 }
 
-if [[ ${TERM} == xterm-erry ]]
-then
+if [[ ${TERM} == xterm-erry ]]; then
 	# run after every command
 	# (in case it changed the status type)
 	PROMPT_COMMAND+=(erry_enable_indicator_status)

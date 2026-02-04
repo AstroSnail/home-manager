@@ -13,8 +13,7 @@ erry_visual_escape() {
 	output=${1}
 
 	# replace all C0 controls with their printable forms
-	for oct in {0..3}{0..7}
-	do
+	for oct in {0..3}{0..7}; do
 		printf -v c0 %b '\00'"${oct}"
 		printf -v pc0 %b '\01'"${oct}"
 		output=${output//${c0}/^${pc0}}
@@ -38,16 +37,15 @@ erry_show_command_title() {
 	erry_set_title "${title}"
 }
 
-if [[ ${TERM} != dumb ]]
-then
+if [[ ${TERM} != dumb ]]; then
 	PROMPT_COMMAND+=(erry_show_prompt_title)
 
 	# PS0 doesn't get an up-to-date BASH_COMMAND :<
 	# DEBUG trap will have to do
 	# TODO: append to trap
 	# TODO: does this check actually even work?
-	if [[ -n $(trap -p DEBUG) ]]
-	then printf 'DEBUG trap conflict!\n' >&2
+	if [[ -n $(trap -p DEBUG) ]]; then
+		printf 'DEBUG trap conflict!\n' >&2
 	fi
 	trap 'erry_show_command_title' DEBUG
 fi

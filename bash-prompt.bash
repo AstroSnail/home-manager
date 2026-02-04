@@ -18,58 +18,56 @@ erry_gen_tput() {
 	erry_tput['fo']=$(tput sgr0)
 
 	# TODO: test non-xenl terminal
-	if tput xenl
-	then erry_tput['wrap']='  '
-	else erry_tput['wrap']=' '
+	if tput xenl; then
+		erry_tput['wrap']='  '
+	else
+		erry_tput['wrap']=' '
 	fi
-	if ! tput am
-	then erry_tput['wrap']=$'\n'
+	if ! tput am || [ "${TERM}" = dumb ]; then
+		erry_tput['wrap']=$'\n'
 	fi
 }
 
 erry_fix_eol() {
 	local cuf n=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
 
-	if [[ ${erry_tput['wrap']} == $'\n' ]]
-	then cuf=
-	elif [[ -n ${erry_tput['cuf']} ]]
-	then cuf=${erry_tput['cuf']/'%p1%d'/${n}}
-	# no cuf? no problem! just spam spaces
-	else cuf=$(printf '%*s' "${n}" '')
+	if [[ ${erry_tput['wrap']} == $'\n' ]]; then
+		cuf=
+	elif [[ -n ${erry_tput['cuf']} ]]; then
+		cuf=${erry_tput['cuf']/'%p1%d'/${n}}
+	else
+		# no cuf? no problem! just spam spaces
+		cuf=$(printf '%*s' "${n}" '')
 	fi
 
 	printf %s "${cuf}${erry_tput['wrap']}${erry_tput['cr']}"
 }
 
-erry_show_pipestatus() {
-	# save pipestatus first
+erry_show_prompt() {
 	local pipestatus=("${PIPESTATUS[@]}")
+	local output=()
+	local IFS
 
-	local IFS=\| p
-
-	for p in "${!pipestatus[@]}"
-	do
-		if [[ ${pipestatus[p]} -ne 0 ]]
-		then pipestatus[p]=${erry_tput['fR']}${pipestatus[p]}${erry_tput['fo']}
+	local p
+	for p in "${!pipestatus[@]}"; do
+		if [[ ${pipestatus[p]} -ne 0 ]]; then
+			pipestatus[p]=${erry_tput['fR']}${pipestatus[p]}${erry_tput['fo']}
 		fi
 	done
+	IFS=\|
+	output+=("${erry_tput['fG']}PIPESTATUS${erry_tput['fo']}=(${pipestatus[*]})")
 
-	printf '%s\n' "${erry_tput['fG']}PIPESTATUS${erry_tput['fo']}=(${pipestatus[*]})"
-}
-
-erry_show_pwd() {
 	local pwd='\w'
-	printf '%s\n' "${erry_tput['fG']}PWD${erry_tput['fo']}=${pwd@P}"
-}
+	output+=("${erry_tput['fG']}PWD${erry_tput['fo']}=${pwd@P}")
 
-erry_show_shlvl() {
-	printf '%s\n' "${erry_tput['fG']}SHLVL${erry_tput['fo']}=${SHLVL}"
+	output+=("${erry_tput['fG']}SHLVL${erry_tput['fo']}=${SHLVL}")
+
+	IFS=' '
+	printf '%s\n' "${output[*]}"
 }
 
 # save on tput calls
 erry_gen_tput 2>/dev/null
 PROMPT_COMMAND+=(erry_fix_eol)
-PROMPT_COMMAND+=(erry_show_pipestatus)
-PROMPT_COMMAND+=(erry_show_pwd)
-PROMPT_COMMAND+=(erry_show_shlvl)
+PROMPT_COMMAND+=(erry_show_prompt)
 PS1='\$ '

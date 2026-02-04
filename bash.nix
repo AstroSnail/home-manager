@@ -16,6 +16,7 @@
   ];
   programs.bash.initExtra = ''
     HISTTIMEFORMAT=
+    PROMPT_DIRTRIM=2
 
     # disable ^S magic so bash can use it
     stty -ixon
