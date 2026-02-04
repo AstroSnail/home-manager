@@ -12,12 +12,13 @@
   ];
 
   home.preferXdgDirectories = true;
-  #home.sessionVariables.WINEARCH = "win64";
+  home.sessionVariables.CARGO_TARGET_DIR = "${config.xdg.cacheHome}/cargo";
   home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
-  #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
   home.sessionVariables.LESS = "iMRS";
+  #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
   home.sessionVariables.SYSTEMD_LESS = "iMRS";
   home.sessionVariables.SYSTEMD_PAGERSECURE = "1";
+  # home.sessionVariables.WINEARCH = "win64";
 
   #home.shellAliases.cat = "noexec";
   #home.shellAliases.find = "noexec";
