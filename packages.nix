@@ -325,9 +325,9 @@ in {
     #pkgs.linux-manual
     #pkgs.lm_sensors
     #pkgs.ltrace
-    (pkgs.lua5_3.withPackages (ps: [ ps.lpeg ]))
+    # (pkgs.lua5_3.withPackages (ps: [ ps.lpeg ]))
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
-    pkgs.lua-language-server
+    # pkgs.lua-language-server
     #pkgs.lutris
     pkgs.man-pages
     pkgs.man-pages-posix
