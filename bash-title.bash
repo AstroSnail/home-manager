@@ -1,9 +1,10 @@
 # shellcheck disable=SC1003
 
-# OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
-# however it's common practice to set tsl/fsl in such a way that the
-# "status line" is actually the window title.
-# TS should be preferred over tsl, since OSC 2 can't set the column.
+# OSC 2 doesn't seem to have a *specific* corresponding terminfo code. However,
+# it's common practice to set tsl/fsl in such a way that the "status line" is
+# actually the window title. TS should be preferred over tsl, since OSC 2 can't
+# set the column and it implicitly clears the old contents.
+# Annoyingly, xterm terminfo descriptions don't include either.
 erry_set_title() {
 	printf '\e]2;%s\e\\' "${1}"
 }
@@ -37,7 +38,7 @@ erry_show_command_title() {
 	erry_set_title "${title}"
 }
 
-if [[ ${TERM} != dumb ]]; then
+if [[ ${TERM} == xterm* ]]; then
 	PROMPT_COMMAND+=(erry_show_prompt_title)
 
 	# PS0 doesn't get an up-to-date BASH_COMMAND :<

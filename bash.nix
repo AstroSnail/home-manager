@@ -21,7 +21,6 @@
     # disable ^S magic so bash can use it
     stty -ixon
 
-    # . ${./bash-indicator.bash}
     . ${./bash-prompt.bash}
     . ${./bash-title.bash}
 

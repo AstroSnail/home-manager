@@ -18,18 +18,18 @@ erry_gen_tput() {
 	erry_tput['fo']=$(tput sgr0)
 
 	# TODO: test non-xenl terminal
-	if tput xenl; then
+	if ! tput am || [[ ${TERM} == dumb ]]; then
+		erry_tput['wrap']=$'\n'
+	elif tput xenl; then
 		erry_tput['wrap']='  '
 	else
 		erry_tput['wrap']=' '
 	fi
-	if ! tput am || [ "${TERM}" = dumb ]; then
-		erry_tput['wrap']=$'\n'
-	fi
 }
 
 erry_fix_eol() {
-	local cuf n=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
+	local cuf n
+	n=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
 
 	if [[ ${erry_tput['wrap']} == $'\n' ]]; then
 		cuf=
@@ -37,6 +37,8 @@ erry_fix_eol() {
 		cuf=${erry_tput['cuf']/'%p1%d'/${n}}
 	else
 		# no cuf? no problem! just spam spaces
+		# could use cuf1 if available (non-destructive space)
+		# but i don't bother
 		cuf=$(printf '%*s' "${n}" '')
 	fi
 
@@ -57,7 +59,8 @@ erry_show_prompt() {
 	IFS=\|
 	output+=("${erry_tput['fG']}PIPESTATUS${erry_tput['fo']}=(${pipestatus[*]})")
 
-	local pwd='\w'
+	local pwd
+	pwd='\w'
 	output+=("${erry_tput['fG']}PWD${erry_tput['fo']}=${pwd@P}")
 
 	output+=("${erry_tput['fG']}SHLVL${erry_tput['fo']}=${SHLVL}")
@@ -67,6 +70,7 @@ erry_show_prompt() {
 }
 
 # save on tput calls
+# if you change TERM you should run this again
 erry_gen_tput 2>/dev/null
 PROMPT_COMMAND+=(erry_fix_eol)
 PROMPT_COMMAND+=(erry_show_prompt)
