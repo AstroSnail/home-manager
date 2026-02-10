@@ -28,7 +28,7 @@
   programs.vim.defaultEditor = true;
   programs.vim.plugins = lib.mkForce [ # remove vim-sensible
     pkgs.vimPlugins.vim-erry
-    pkgs.vimPlugins.easymotion
+    pkgs.vimPlugins.vim-easymotion
   ];
   programs.vim.extraConfig = ''
     source ${./vimrc}
