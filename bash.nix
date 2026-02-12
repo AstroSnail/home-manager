@@ -22,7 +22,6 @@
     stty -ixon
 
     . ${./bash-prompt.bash}
-    . ${./bash-title.bash}
 
     # sound the bell to check that it's working
     # tput bel

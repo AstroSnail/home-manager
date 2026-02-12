@@ -15,6 +15,7 @@ erry_gen_tput() {
 	erry_tput['fG']+=$(tput setaf 2)
 
 	# ideally SGR 22;39, or SGR 0
+	# might benefit from adding op?
 	erry_tput['fo']=$(tput sgr0)
 
 	# TODO: test non-xenl terminal
@@ -25,6 +26,14 @@ erry_gen_tput() {
 	else
 		erry_tput['wrap']=' '
 	fi
+
+	# OSC 2 doesn't seem to have a *specific* corresponding terminfo code. However,
+	# it's common practice to set tsl/fsl in such a way that the "status line" is
+	# actually the window title. TS should be preferred over tsl, since OSC 2 can't
+	# set the column and it implicitly clears the old contents.
+	# Annoyingly, xterm terminfo descriptions don't include either.
+	# Placeholder will be replaced later.
+	erry_tput['title']=$'\e]2;%s\e\\'
 }
 
 erry_fix_eol() {
@@ -45,7 +54,7 @@ erry_fix_eol() {
 	printf %s "${cuf}${erry_tput['wrap']}${erry_tput['cr']}"
 }
 
-erry_show_prompt() {
+erry_show_info() {
 	local pipestatus=("${PIPESTATUS[@]}")
 	local output=()
 	local IFS
@@ -69,9 +78,46 @@ erry_show_prompt() {
 	printf '%s\n' "${output[*]}"
 }
 
+erry_visual_escape() {
+	local output oct c0 pc0
+	output=${1}
+
+	# replace all C0 controls with their printable forms
+	for oct in {0..3}{0..7}; do
+		printf -v c0 %b '\00'"${oct}"
+		printf -v pc0 %b '\01'"${oct}"
+		output=${output//${c0}/^${pc0}}
+	done
+	# and DEL
+	output=${output//$'\177'/^?}
+
+	printf %s "${output}"
+}
+
+erry_set_title_prompt() {
+	# bash already sanitizes the expansion of \w
+	local title
+	title='\w'
+	printf %s "${erry_tput['title']/'%s'/${title@P}}"
+}
+
+erry_set_title_command() {
+	local thiscmd title
+	thiscmd=$(fc -ln -0)
+	thiscmd=${thiscmd#$'\t '}
+	title=$(erry_visual_escape "${thiscmd}")
+	printf %s "${erry_tput['title']/'%s'/${title}}"
+}
+
 # save on tput calls
 # if you change TERM you should run this again
 erry_gen_tput 2>/dev/null
 PROMPT_COMMAND+=(erry_fix_eol)
-PROMPT_COMMAND+=(erry_show_prompt)
+PROMPT_COMMAND+=(erry_show_info)
 PS1='\$ '
+
+if [[ ${TERM} == xterm* ]]; then
+	PROMPT_COMMAND+=(erry_set_title_prompt)
+	# shellcheck disable=SC2016
+	PS0='$(erry_set_title_command)'
+fi
