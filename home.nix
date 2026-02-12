@@ -16,22 +16,23 @@
   home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
   home.sessionVariables.LESS = "iMR";
   #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
-  home.sessionVariables.SYSTEMD_LESS = "iMR";
+  home.sessionVariables.SYSTEMD_LESS = "iMRS";
   home.sessionVariables.SYSTEMD_PAGERSECURE = "1";
   # home.sessionVariables.WINEARCH = "win64";
 
   #home.shellAliases.cat = "noexec";
+  home.shellAliases.fd = "fd --no-ignore --hidden";
   #home.shellAliases.find = "noexec";
   #home.shellAliases.grep = "noexec";
   #home.shellAliases.htop = "noexec";
   #home.shellAliases.less = "noexec";
   #home.shellAliases.ls = "noexec";
   #home.shellAliases.rm = "noexec";
-  home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git'";
+  home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
   home.shellAliases.startw = "sway --unsupported-gpu >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
 
   nixpkgs.config.allowUnfree = true;
-  nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
+  # nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
 
   dconf.settings = {
     "org/gnome/desktop/interface" = {
