@@ -1,4 +1,4 @@
-# shellcheck disable=SC1003
+# shellcheck disable=SC1003,SC2016
 
 # OSC 2 doesn't seem to have a *specific* corresponding terminfo code. However,
 # it's common practice to set tsl/fsl in such a way that the "status line" is
@@ -33,20 +33,14 @@ erry_show_prompt_title() {
 }
 
 erry_show_command_title() {
-	local title
-	title=$(erry_visual_escape "${BASH_COMMAND}")
+	local thiscmd title
+	thiscmd=$(fc -ln -0)
+	thiscmd=${thiscmd#$'\t '}
+	title=$(erry_visual_escape "${thiscmd}")
 	erry_set_title "${title}"
 }
 
 if [[ ${TERM} == xterm* ]]; then
 	PROMPT_COMMAND+=(erry_show_prompt_title)
-
-	# PS0 doesn't get an up-to-date BASH_COMMAND :<
-	# DEBUG trap will have to do
-	# TODO: append to trap
-	# TODO: does this check actually even work?
-	if [[ -n $(trap -p DEBUG) ]]; then
-		printf 'DEBUG trap conflict!\n' >&2
-	fi
-	trap 'erry_show_command_title' DEBUG
+	PS0='$(erry_show_command_title)'
 fi
