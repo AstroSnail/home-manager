@@ -27,13 +27,35 @@ erry_gen_tput() {
 		erry_tput['wrap']=' '
 	fi
 
-	# OSC 2 doesn't seem to have a *specific* corresponding terminfo code. However,
-	# it's common practice to set tsl/fsl in such a way that the "status line" is
-	# actually the window title. TS should be preferred over tsl, since OSC 2 can't
-	# set the column and it implicitly clears the old contents.
-	# Annoyingly, xterm terminfo descriptions don't include either.
-	# Placeholder will be replaced later.
-	erry_tput['title']=$'\e]2;%s\e\\'
+	# OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
+	# However, it's common practice to set tsl/fsl in such a way that the
+	# "status line" is actually the window title. TS should be preferred
+	# over tsl, since OSC 2 can't set the column. If we have a real status
+	# line then that's fine too.
+	# Some status lines (e.g. OSC 2) implicitly clear old contents when set.
+	# In case they don't, el may be used after tsl if eslok is set,
+	# otherwise dsl should be used *before* tsl.
+	if tput hs; then
+		erry_tput['title']=
+		if ! tput eslok; then
+			erry_tput['title']+=$(tput dsl)
+		fi
+		if ! erry_tput['title']+=$(tput TS); then
+			erry_tput['title']+=$(tput tsl 0)
+		fi
+		if tput eslok; then
+			erry_tput['title']+=$(tput el)
+		fi
+		# placeholder will be replaced later
+		erry_tput['title']+=%s
+		erry_tput['title']+=$(tput fsl)
+	elif [[ ${TERM} == xterm* ]]; then
+		# Annoyingly, xterm terminfo descriptions don't include a
+		# status/title line.
+		erry_tput['title']=$'\e]2;%s\e\\'
+	else
+		erry_tput['title']=
+	fi
 }
 
 erry_fix_eol() {
@@ -111,13 +133,10 @@ erry_set_title_command() {
 
 # save on tput calls
 # if you change TERM you should run this again
-erry_gen_tput 2>/dev/null
+erry_gen_tput >/dev/null 2>&1
 PROMPT_COMMAND+=(erry_fix_eol)
+PROMPT_COMMAND+=(erry_set_title_prompt)
 PROMPT_COMMAND+=(erry_show_info)
 PS1='\$ '
-
-if [[ ${TERM} == xterm* ]]; then
-	PROMPT_COMMAND+=(erry_set_title_prompt)
-	# shellcheck disable=SC2016
-	PS0='$(erry_set_title_command)'
-fi
+# shellcheck disable=SC2016
+PS0='$(erry_set_title_command)'
