@@ -70,7 +70,7 @@ erry_fix_eol() {
 		# no cuf? no problem! just spam spaces
 		# could use cuf1 if available (non-destructive space)
 		# but i don't bother
-		cuf=$(printf '%*s' "${n}" '')
+		printf -v cuf '%*s' "${n}" ''
 	fi
 
 	printf %s "${cuf}${erry_tput['wrap']}${erry_tput['cr']}"
@@ -100,22 +100,6 @@ erry_show_info() {
 	printf '%s\n' "${output[*]}"
 }
 
-erry_visual_escape() {
-	local output oct c0 pc0
-	output=${1}
-
-	# replace all C0 controls with their printable forms
-	for oct in {0..3}{0..7}; do
-		printf -v c0 %b '\00'"${oct}"
-		printf -v pc0 %b '\01'"${oct}"
-		output=${output//${c0}/^${pc0}}
-	done
-	# and DEL
-	output=${output//$'\177'/^?}
-
-	printf %s "${output}"
-}
-
 erry_set_title_prompt() {
 	# bash already sanitizes the expansion of \w
 	local title
@@ -124,10 +108,19 @@ erry_set_title_prompt() {
 }
 
 erry_set_title_command() {
-	local thiscmd title
-	thiscmd=$(fc -ln -0)
-	thiscmd=${thiscmd#$'\t '}
-	title=$(erry_visual_escape "${thiscmd}")
+	local title oct c0 pc0
+	title=$(fc -ln -0)
+	title=${title#$'\t '}
+
+	# replace all C0 controls with their printable forms
+	for oct in {0..3}{0..7}; do
+		printf -v c0 %b '\00'"${oct}"
+		printf -v pc0 %b '\01'"${oct}"
+		title=${title//${c0}/^${pc0}}
+	done
+	# and DEL
+	title=${title//$'\177'/^?}
+
 	printf %s "${erry_tput['title']/'%s'/${title}}"
 }
 
