@@ -18,6 +18,9 @@
     HISTTIMEFORMAT=
     PROMPT_DIRTRIM=2
 
+    # for spilling command output, to avoid slow command substitution
+    erry_tmpfile=$XDG_RUNTIME_DIR/bash/tmp.$$
+
     # disable ^S magic so bash can use it
     stty -ixon
 
@@ -30,7 +33,9 @@
     # specifically, something vicious from vex~
     fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
   '';
-  # programs.bash.profileExtra = ''
-  #   PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
-  # '';
+  programs.bash.profileExtra = ''
+    # PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
+
+    mkdir --parents "$XDG_RUNTIME_DIR/bash"
+  '';
 }

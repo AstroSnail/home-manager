@@ -108,11 +108,16 @@ erry_set_title_prompt() {
 }
 
 erry_set_title_command() {
-	local title oct c0 pc0
-	title=$(fc -ln -0)
+	local title
+	# title=$(fc -ln -0)
+	# hacky trick to avoid slow command substitution
+	fc -ln -0 >|"${erry_tmpfile:?}"
+	IFS= read -r -d '' title <"${erry_tmpfile}"
 	title=${title#$'\t '}
+	title=${title%$'\n'}
 
 	# replace all C0 controls with their printable forms
+	local oct c0 pc0
 	for oct in {0..3}{0..7}; do
 		printf -v c0 %b '\00'"${oct}"
 		printf -v pc0 %b '\01'"${oct}"
