@@ -62,9 +62,9 @@ let
   };
   wine64 = pkgs.writeShellApplication {
     name = "wine64";
-    # runtimeInputs = [ pkgs.wineWowPackages.waylandFull pkgs.winetricks ];
-    # runtimeInputs = [ pkgs.wineWowPackages.stagingFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.wineWowPackages.full pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.wineWow64Packages.waylandFull pkgs.winetricks ];
+    # runtimeInputs = [ pkgs.wineWow64Packages.stagingFull pkgs.winetricks ];
+    runtimeInputs = [ pkgs.wineWow64Packages.full pkgs.winetricks ];
     text = lib.readFile ./wine.sh;
   };
 
@@ -393,7 +393,7 @@ in {
     #pkgs.vttest
     #pkgs.wget
     #pkgs.winePackages.waylandFull
-    #pkgs.wineWowPackages.waylandFull
+    #pkgs.wineWow64Packages.waylandFull
     #pkgs.winetricks
     #pkgs.wl-clipboard
     pkgs.xdotool
