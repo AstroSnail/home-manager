@@ -26,11 +26,11 @@ erry_gen_tput() {
 
 	# TODO: test non-xenl terminal
 	if ! tput am || [[ ${TERM} == dumb ]]; then
-		erry_tput[wrap]=$'\n'
+		erry_tput[wrap]=
 	elif tput xenl; then
-		erry_tput[wrap]=$'  \r'
+		erry_tput[wrap]=$'  \r'$(tput el)
 	else
-		erry_tput[wrap]=$' \r'
+		erry_tput[wrap]=$' \r'$(tput el)
 	fi
 
 	# OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
@@ -65,22 +65,22 @@ erry_gen_tput() {
 }
 
 erry_fix_eol() {
-	local cuf n
+	local n
 	n=$((COLUMNS > 2 + erry_tput[eoln] ? COLUMNS - 2 - erry_tput[eoln] : 1))
 
-	if [[ ${erry_tput[wrap]} == $'\n' ]]; then
-		cuf=
+	if [[ -z ${erry_tput[wrap]} ]]; then
+		printf '\n'
 	elif [[ -n ${erry_tput[cuf]} ]]; then
+		local cuf
 		# this is technically wrong, but it works for cuf
 		cuf=${erry_tput[cuf]/'%p1%d'/${n}}
+		printf '%s%s%s' "${erry_tput[eol]}" "${cuf}" "${erry_tput[wrap]}"
 	else
 		# no cuf? no problem! just spam spaces
 		# could use cuf1 if available (non-destructive space)
 		# but i don't bother
-		printf -v cuf '%*s' "${n}" ''
+		printf '%s%*s%s' "${erry_tput[eol]}" "${n}" '' "${erry_tput[wrap]}"
 	fi
-
-	printf %s "${erry_tput[eol]}${cuf}${erry_tput[wrap]}"
 }
 
 erry_show_info() {
