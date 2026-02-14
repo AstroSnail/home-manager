@@ -1,16 +1,25 @@
 erry_gen_tput() {
 	declare -Ag erry_tput
 
-	# ideally SGR 1;31
-	erry_tput[fR]=$(tput bold)
-	erry_tput[fR]+=$(tput setaf 1)
+	erry_tput[Red]=$(tput bold)
+	erry_tput[Red]+=$(tput setaf 1)
 
-	# ideally SGR 1;32
-	erry_tput[fG]=$(tput bold)
-	erry_tput[fG]+=$(tput setaf 2)
+	erry_tput[Green]=$(tput bold)
+	erry_tput[Green]+=$(tput setaf 2)
 
-	# ideally SGR 22;39, or SGR 0
-	erry_tput[fo]=$(tput sgr0)
+	erry_tput[sgr0]=$(tput sgr0)
+
+	erry_tput[eol]=${erry_tput[Red]}
+	erry_tput[eol]+=$'\u21B5' # carriage return
+	# erry_tput[eol]+=$'\u23CE' # return symbol
+	erry_tput[eol]+=${erry_tput[sgr0]}
+	# extra space in case of xenl; without it, if the cursor started
+	# already at the last column, then the symbol gets written there, and
+	# the subsequent cursor movement cancels the eat-newline state,
+	# returning the cursor to the last column, where the final spaces to
+	# trigger wrapping will overwrite the symbol
+	erry_tput[eol]+=' '
+	erry_tput[eoln]=2 # number of columns, incl space, excl escape codes
 
 	# parameter left unset, placeholder will be replaced later
 	erry_tput[cuf]=$(tput cuf)
@@ -57,7 +66,7 @@ erry_gen_tput() {
 
 erry_fix_eol() {
 	local cuf n
-	n=$((COLUMNS > 2 ? COLUMNS - 2 : 1))
+	n=$((COLUMNS > 2 + erry_tput[eoln] ? COLUMNS - 2 - erry_tput[eoln] : 1))
 
 	if [[ ${erry_tput[wrap]} == $'\n' ]]; then
 		cuf=
@@ -71,7 +80,7 @@ erry_fix_eol() {
 		printf -v cuf '%*s' "${n}" ''
 	fi
 
-	printf %s "${cuf}${erry_tput[wrap]}"
+	printf %s "${erry_tput[eol]}${cuf}${erry_tput[wrap]}"
 }
 
 erry_show_info() {
@@ -82,17 +91,17 @@ erry_show_info() {
 	local p
 	for p in "${!pipestatus[@]}"; do
 		if [[ ${pipestatus[p]} -ne 0 ]]; then
-			pipestatus[p]=${erry_tput[fR]}${pipestatus[p]}${erry_tput[fo]}
+			pipestatus[p]=${erry_tput[Red]}${pipestatus[p]}${erry_tput[sgr0]}
 		fi
 	done
 	IFS=\|
-	output+=("${erry_tput[fG]}PIPESTATUS${erry_tput[fo]}=(${pipestatus[*]})")
+	output+=("${erry_tput[Green]}PIPESTATUS${erry_tput[sgr0]}=(${pipestatus[*]})")
 
 	local pwd
 	pwd='\w'
-	output+=("${erry_tput[fG]}PWD${erry_tput[fo]}=${pwd@P}")
+	output+=("${erry_tput[Green]}PWD${erry_tput[sgr0]}=${pwd@P}")
 
-	output+=("${erry_tput[fG]}SHLVL${erry_tput[fo]}=${SHLVL}")
+	output+=("${erry_tput[Green]}SHLVL${erry_tput[sgr0]}=${SHLVL}")
 
 	IFS=' '
 	printf '%s\n' "${output[*]}"
