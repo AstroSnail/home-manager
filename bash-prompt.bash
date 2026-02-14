@@ -1,11 +1,6 @@
 erry_gen_tput() {
 	declare -Ag erry_tput
 
-	erry_tput[cr]=$(tput cr)
-
-	# parameter left unset, placeholder will be replaced later
-	erry_tput[cuf]=$(tput cuf)
-
 	# ideally SGR 1;31
 	erry_tput[fR]=$(tput bold)
 	erry_tput[fR]+=$(tput setaf 1)
@@ -15,16 +10,18 @@ erry_gen_tput() {
 	erry_tput[fG]+=$(tput setaf 2)
 
 	# ideally SGR 22;39, or SGR 0
-	# might benefit from adding op?
 	erry_tput[fo]=$(tput sgr0)
+
+	# parameter left unset, placeholder will be replaced later
+	erry_tput[cuf]=$(tput cuf)
 
 	# TODO: test non-xenl terminal
 	if ! tput am || [[ ${TERM} == dumb ]]; then
 		erry_tput[wrap]=$'\n'
 	elif tput xenl; then
-		erry_tput[wrap]='  '
+		erry_tput[wrap]=$'  \r'
 	else
-		erry_tput[wrap]=' '
+		erry_tput[wrap]=$' \r'
 	fi
 
 	# OSC 2 doesn't seem to have a *specific* corresponding terminfo code.
@@ -36,25 +33,25 @@ erry_gen_tput() {
 	# In case they don't, el may be used after tsl if eslok is set,
 	# otherwise dsl should be used *before* tsl.
 	if tput hs; then
-		erry_tput[title]=
+		erry_tput[tsl]=
 		if ! tput eslok; then
-			erry_tput[title]+=$(tput dsl)
+			erry_tput[tsl]+=$(tput dsl)
 		fi
-		if ! erry_tput[title]+=$(tput TS); then
-			erry_tput[title]+=$(tput tsl 0)
+		if ! erry_tput[tsl]+=$(tput TS); then
+			erry_tput[tsl]+=$(tput tsl 0)
 		fi
 		if tput eslok; then
-			erry_tput[title]+=$(tput el)
+			erry_tput[tsl]+=$(tput el)
 		fi
-		# placeholder will be replaced later
-		erry_tput[title]+=%s
-		erry_tput[title]+=$(tput fsl)
+		erry_tput[fsl]=$(tput fsl)
 	elif [[ ${TERM} == xterm* ]]; then
 		# Annoyingly, xterm terminfo descriptions don't include a
 		# status/title line.
-		erry_tput[title]=$'\e]2;%s\e\\'
+		erry_tput[tsl]=$'\e]2;'
+		erry_tput[fsl]=$'\e\\'
 	else
-		erry_tput[title]=
+		erry_tput[tsl]=
+		erry_tput[fsl]=
 	fi
 }
 
@@ -65,6 +62,7 @@ erry_fix_eol() {
 	if [[ ${erry_tput[wrap]} == $'\n' ]]; then
 		cuf=
 	elif [[ -n ${erry_tput[cuf]} ]]; then
+		# this is technically wrong, but it works for cuf
 		cuf=${erry_tput[cuf]/'%p1%d'/${n}}
 	else
 		# no cuf? no problem! just spam spaces
@@ -73,7 +71,7 @@ erry_fix_eol() {
 		printf -v cuf '%*s' "${n}" ''
 	fi
 
-	printf %s "${cuf}${erry_tput[wrap]}${erry_tput[cr]}"
+	printf %s "${cuf}${erry_tput[wrap]}"
 }
 
 erry_show_info() {
@@ -101,32 +99,36 @@ erry_show_info() {
 }
 
 erry_set_title_prompt() {
-	# bash already sanitizes the expansion of \w
-	local title
-	title='\w'
-	printf %s "${erry_tput[title]/'%s'/${title@P}}"
+	if [[ -n ${erry_tput[tsl]} ]]; then
+		local title
+		title='\w'
+		# bash already sanitizes the expansion of \w
+		printf %s "${erry_tput[tsl]}${title@P}${erry_tput[fsl]}"
+	fi
 }
 
 erry_set_title_command() {
-	local title
-	# title=$(fc -ln -0)
-	# hacky trick to avoid slow command substitution
-	fc -ln -0 >|"${erry_tmpfile:?}"
-	IFS= read -r -d '' title <"${erry_tmpfile}"
-	title=${title#$'\t '}
-	title=${title%$'\n'}
+	if [[ -n ${erry_tput[tsl]} ]]; then
+		local title
+		# title=$(fc -ln -0)
+		# hacky trick to avoid slow command substitution
+		fc -ln -0 >|"${erry_tmpfile:?}"
+		IFS= read -r -d '' title <"${erry_tmpfile}"
+		title=${title#$'\t '}
+		title=${title%$'\n'}
 
-	# replace all C0 controls with their printable forms
-	local oct c0 pc0
-	for oct in {0..3}{0..7}; do
-		printf -v c0 %b '\00'"${oct}"
-		printf -v pc0 %b '\01'"${oct}"
-		title=${title//${c0}/^${pc0}}
-	done
-	# and DEL
-	title=${title//$'\177'/^?}
+		# replace all C0 controls with their printable forms
+		local oct c0 pc0
+		for oct in {0..3}{0..7}; do
+			printf -v c0 %b '\00'"${oct}"
+			printf -v pc0 %b '\01'"${oct}"
+			title=${title//${c0}/^${pc0}}
+		done
+		# and DEL
+		title=${title//$'\177'/^?}
 
-	printf %s "${erry_tput[title]/'%s'/${title}}"
+		printf %s "${erry_tput[tsl]}${title}${erry_tput[fsl]}"
+	fi
 }
 
 # save on tput calls
