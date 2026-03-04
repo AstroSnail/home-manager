@@ -5,10 +5,10 @@
   xdg.mime.enable = true;
   xdg.mimeApps.enable = true;
   xdg.mimeApps.associations.added = {
-    "x-scheme-handler/http" = [ "firefox-esr.desktop" ];
-    "x-scheme-handler/https" = [ "firefox-esr.desktop" ];
-    "text/html" = [ "firefox-esr.desktop" ];
-    "x-scheme-handler/chrome" = [ "firefox-esr.desktop" ];
+    "x-scheme-handler/http" = [ "firefox.desktop" ];
+    "x-scheme-handler/https" = [ "firefox.desktop" ];
+    "text/html" = [ "firefox.desktop" ];
+    "x-scheme-handler/chrome" = [ "firefox.desktop" ];
 
     "x-scheme-handler/mailto" = [ "thunderbird.desktop" ];
     "x-scheme-handler/mid" = [ "thunderbird.desktop" ];
@@ -22,16 +22,16 @@
     "x-scheme-handler/webcals" = [ "thunderbird.desktop" ];
   };
   xdg.mimeApps.defaultApplications = {
-    "x-scheme-handler/http" = [ "firefox-esr.desktop" ];
-    "x-scheme-handler/https" = [ "firefox-esr.desktop" ];
-    "x-scheme-handler/chrome" = [ "firefox-esr.desktop" ];
-    "text/html" = [ "firefox-esr.desktop" ];
-    "application/x-extension-htm" = [ "firefox-esr.desktop" ];
-    "application/x-extension-html" = [ "firefox-esr.desktop" ];
-    "application/x-extension-shtml" = [ "firefox-esr.desktop" ];
-    "application/xhtml+xml" = [ "firefox-esr.desktop" ];
-    "application/x-extension-xhtml" = [ "firefox-esr.desktop" ];
-    "application/x-extension-xht" = [ "firefox-esr.desktop" ];
+    "x-scheme-handler/http" = [ "firefox.desktop" ];
+    "x-scheme-handler/https" = [ "firefox.desktop" ];
+    "x-scheme-handler/chrome" = [ "firefox.desktop" ];
+    "text/html" = [ "firefox.desktop" ];
+    "application/x-extension-htm" = [ "firefox.desktop" ];
+    "application/x-extension-html" = [ "firefox.desktop" ];
+    "application/x-extension-shtml" = [ "firefox.desktop" ];
+    "application/xhtml+xml" = [ "firefox.desktop" ];
+    "application/x-extension-xhtml" = [ "firefox.desktop" ];
+    "application/x-extension-xht" = [ "firefox.desktop" ];
 
     "x-scheme-handler/about" = [ "chromium-browser.desktop" ];
     "x-scheme-handler/unknown" = [ "chromium-browser.desktop" ];

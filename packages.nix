@@ -179,7 +179,11 @@ in {
   programs.fd.enable = true;
   # programs.feh.enable = true;
   programs.firefox.enable = true;
-  programs.firefox.package = pkgs.firefox-esr-140;
+  programs.firefox.package =
+    # i'm howling at the moon
+    if lib.versionAtLeast pkgs.firefox-esr.version "142.0"
+    then pkgs.firefox-esr
+    else pkgs.firefox;
   programs.fish.enable = true;
   #programs.htop.enable = true; # TODO: port config to here
   #programs.irssi.enable = true;
