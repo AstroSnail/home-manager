@@ -1,8 +1,8 @@
 diff --git a/runtime/doc/options.txt b/runtime/doc/options.txt
-index 0b86c4190..23f92603e 100644
+index 327494d68..f72647060 100644
 --- a/runtime/doc/options.txt
 +++ b/runtime/doc/options.txt
-@@ -8933,6 +8933,15 @@ A jump table for the options with a short description can be found at |Q_op|.
+@@ -9076,6 +9076,15 @@ A jump table for the options with a short description can be found at |Q_op|.
  	When on, uses |highlight-guifg| and |highlight-guibg| attributes in
  	the terminal (thus using 24-bit color).
  
@@ -19,10 +19,10 @@ index 0b86c4190..23f92603e 100644
  	does not work (produces a colorless UI) reading |xterm-true-color|
  	might help.
 diff --git a/runtime/doc/version9.txt b/runtime/doc/version9.txt
-index c6c3247a3..1f0adc062 100644
+index 120c1960d..bdb6b44f1 100644
 --- a/runtime/doc/version9.txt
 +++ b/runtime/doc/version9.txt
-@@ -41666,6 +41666,8 @@ Default values: ~
+@@ -41678,6 +41678,8 @@ Default values: ~
    increased to 12pt to accommodate modern high-dpi monitors
  - the default value of the 'keyprotocol' option has been updated and support
    for the ghostty terminal emulator (using kitty protocol) has been added
@@ -32,10 +32,10 @@ index c6c3247a3..1f0adc062 100644
  - the default value for 'showcmd' is always enabled when using non-compatible
    mode (previously, it was off on UNIX systems) and consequently removed from
 diff --git a/src/term.c b/src/term.c
-index e23085837..0a6d364f7 100644
+index 39f63fa95..564f49681 100644
 --- a/src/term.c
 +++ b/src/term.c
-@@ -1682,12 +1682,10 @@ set_color_count(int nr)
+@@ -1688,12 +1688,10 @@ set_color_count(int nr)
  	sprintf((char *)nr_colors, "%d", t_colors);
      else
  	*nr_colors = NUL;
@@ -49,7 +49,7 @@ index e23085837..0a6d364f7 100644
  #endif
      set_string_option_direct((char_u *)"t_Co", -1, nr_colors, OPT_FREE, 0);
  }
-@@ -1724,9 +1722,7 @@ static char *(key_names[]) =
+@@ -1730,9 +1728,7 @@ static char *(key_names[]) =
  # ifdef FEAT_TERMRESPONSE
      // Do those ones first, both may cause a screen redraw.
      "Co",
@@ -60,7 +60,7 @@ index e23085837..0a6d364f7 100644
  # endif
      "ku", "kd", "kr", "kl",
      "#2", "#4", "%i", "*7",
-@@ -7347,8 +7343,7 @@ got_code_from_term(char_u *code, int len)
+@@ -7393,8 +7389,7 @@ got_code_from_term(char_u *code, int len)
  # endif
  		may_adjust_color_count(val);
  	    }
@@ -70,7 +70,7 @@ index e23085837..0a6d364f7 100644
  	    // when RGB result comes back, it is supported when the result contains an '='
  	    else if (name[0] == 'R' && name[1] == 'G' && name[2] == 'B' && code[9] == '=')
  	    {
-@@ -7357,14 +7352,13 @@ got_code_from_term(char_u *code, int len)
+@@ -7403,14 +7398,13 @@ got_code_from_term(char_u *code, int len)
  		// there are 8 bits per color channel
  		if (val == 8 && !p_tgc_set)
  		{
@@ -88,15 +88,15 @@ index e23085837..0a6d364f7 100644
  	    else
  	    {
 diff --git a/src/version.c b/src/version.c
-index f7466e493..49a44fbaa 100644
+index e0bf8c7c7..0e87f68fb 100644
 --- a/src/version.c
 +++ b/src/version.c
-@@ -2167,8 +2167,6 @@ static int included_patches[] =
-     1116,
+@@ -959,6 +959,8 @@ static int included_patches[] =
+  */
+ static char *(extra_patches[]) =
+ {   /* Add your patch description below this line */
++/**/
++    "auto tgc",
  /**/
-     1115,
--/**/
--    1114,
- /**/
-     1113,
- /**/
+     NULL
+ };
