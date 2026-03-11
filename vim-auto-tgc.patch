@@ -91,12 +91,8 @@ diff --git a/src/version.c b/src/version.c
 index e0bf8c7c7..0e87f68fb 100644
 --- a/src/version.c
 +++ b/src/version.c
-@@ -959,6 +959,8 @@ static int included_patches[] =
-  */
- static char *(extra_patches[]) =
+@@ -961,2 +961,4 @@ static int included_patches[] =
  {   /* Add your patch description below this line */
 +/**/
 +    "auto tgc",
  /**/
-     NULL
- };
