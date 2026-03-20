@@ -8,7 +8,8 @@
           patches = oldattrs.patches ++ [
             ./vim-auto-tgc.patch
             # ./vim-terminal-env.patch
-            # ./vim-19181.patch
+            ./vim-fix-cpo-no-k.patch
+            ./vim-fix-xtermcodes-keypad.patch
           ];
         });
     })
