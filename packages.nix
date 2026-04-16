@@ -277,6 +277,7 @@ in {
     wine32
     wine64
 
+    pkgs._7zz
     #pkgs.anbox
     pkgs.android-tools
     pkgs.appimage-run
@@ -352,7 +353,7 @@ in {
     # pkgs.openrgb # broken 2026-01-12
     #pkgs.openssl
     #pkgs.osu-lazer
-    pkgs.p7zip
+    # pkgs.p7zip
     #pkgs.pagemon
     pkgs.pavucontrol
     #pkgs.pciutils
