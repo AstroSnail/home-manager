@@ -284,8 +284,8 @@ in {
     pkgs.ascii
     pkgs.bat
     pkgs.bc
-    #pkgs.bchunk
-    #pkgs.bintools
+    pkgs.bchunk
+    pkgs.bintools
     #pkgs.blender
     #pkgs.briar-desktop
     #pkgs.chessx
