@@ -388,7 +388,7 @@ in {
     pkgs.texstudio
     pkgs.thunderbird
     #pkgs.turbovnc
-    pkgs.unrar
+    # pkgs.unrar
     #pkgs.unzip
     #pkgs.usbutils
     #pkgs.vdpauinfo
