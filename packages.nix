@@ -184,6 +184,8 @@ in {
     if lib.versionAtLeast pkgs.firefox-esr.version "142.0"
     then pkgs.firefox-esr
     else pkgs.firefox;
+  # TODO: migrate to ${config.xdg.configHome}/mozilla/firefox
+  programs.firefox.configPath = "${config.home.homeDirectory}/.mozilla/firefox";
   programs.fish.enable = true;
   #programs.htop.enable = true; # TODO: port config to here
   #programs.irssi.enable = true;
@@ -217,6 +219,7 @@ in {
     pkgs.obs-studio-plugins.wlrobs
   ];
   programs.password-store.enable = true; # see also services.pass-secret-service
+  programs.password-store.settings.PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
   programs.ripgrep.enable = true;
   programs.streamlink.enable = true;
   programs.streamlink.settings.player = "mpv";
@@ -236,7 +239,7 @@ in {
     #soundfont ${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2
     #soundfont ${pkgs.soundfont-arachno}/share/soundfonts/arachno.sf2
     #soundfont ${pkgs.soundfont-ydp-grand}/share/soundfonts/YDP-GrandPiano.sf2
-    #soundfont ${pkgs.soundfont-generaluser}/share/soundfonts/GeneralUser-GS.sf2
+    #soundfont ${pkgs.soundfont-generaluser-gs}/share/soundfonts/GeneralUser-GS.sf2
   '';
   #programs.tmux.enable = true;
   programs.yt-dlp.enable = true;

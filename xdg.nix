@@ -52,6 +52,7 @@
   };
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
+  xdg.userDirs.setSessionVariables = true;
 
   # replace tildes with absolute home dir
   xdg.cacheHome = "${config.home.homeDirectory}/.cache";
