@@ -3,31 +3,31 @@
 let
   #nixBin = name: pkgs.writeScriptBin name (lib.readFile ./${name});
 
-  chromium-wl = pkgs.writeShellApplication {
-    name = "chromium-wl";
-    runtimeInputs = [ config.programs.chromium.package ];
-    text = lib.readFile ./chromium-wl.sh;
-  };
+  # chromium-wl = pkgs.writeShellApplication {
+  #   name = "chromium-wl";
+  #   runtimeInputs = [ config.programs.chromium.package ];
+  #   text = lib.readFile ./chromium-wl.sh;
+  # };
   github-clone = pkgs.writeShellApplication {
     name = "github-clone";
     runtimeInputs = [ pkgs.git ];
     text = lib.readFile ./github-clone.sh;
   };
-  noexec = pkgs.writeShellApplication {
-    name = "noexec";
-    text = lib.readFile ./noexec.sh;
-  };
+  # noexec = pkgs.writeShellApplication {
+  #   name = "noexec";
+  #   text = lib.readFile ./noexec.sh;
+  # };
   passmenu-patient = pkgs.writeShellApplication {
     name = "passmenu-patient";
     #runtimeInputs = [ pkgs.dmenu-wayland pkgs.pass pkgs.ydotool ];
     runtimeInputs = [ pkgs.dmenu pkgs.pass pkgs.xdotool pkgs.ydotool ];
     text = lib.readFile ./passmenu-patient.bash;
   };
-  pscrcpy = pkgs.writeShellApplication {
-    name = "pscrcpy";
-    runtimeInputs = [ pkgs.scrcpy ];
-    text = lib.readFile ./pscrcpy.sh;
-  };
+  # pscrcpy = pkgs.writeShellApplication {
+  #   name = "pscrcpy";
+  #   runtimeInputs = [ pkgs.scrcpy ];
+  #   text = lib.readFile ./pscrcpy.sh;
+  # };
   #slurpgrim = pkgs.writeShellApplication {
   #  name = "slurpgrim";
   #  runtimeInputs = [
@@ -68,7 +68,12 @@ let
     text = lib.readFile ./wine.sh;
   };
 
-  apexctl = pkgs.callPackage ./apexctl { };
+  apexctl = pkgs.callPackage (pkgs.fetchFromGitHub {
+    owner = "AstroSnail";
+    repo = "apexctl";
+    rev = "b1e894cd7d7aa067f5dfa492e88c99708163c7d1";
+    hash = "sha256-v23F+XjCMtaXxe2OHmHzlRvtmSdB8yS2Fh3LPo8Hp2s=";
+  }) { };
 
   #ffmpeg-rav1e = pkgs.ffmpeg-full.override {
   #  rav1e = pkgs.rav1e;
@@ -267,10 +272,10 @@ in {
   home.packages = [
     # should go in overlay? /shrug
     apexctl
-    chromium-wl
+    # chromium-wl
     #ffmpeg-rav1e
     github-clone
-    noexec
+    # noexec
     passmenu-patient
     #pscrcpy
     #rigsofrods
