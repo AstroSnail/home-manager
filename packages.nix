@@ -380,6 +380,7 @@ in {
     pkgs.sameboy
     #pkgs.scanmem
     #pkgs.scrot
+    pkgs.signal-desktop
     #pkgs.shellcheck
     pkgs.slurp
     #pkgs.socat
