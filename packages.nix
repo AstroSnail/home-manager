@@ -91,6 +91,8 @@ let
   #rigsofrods = pkgs.rigsofrods;
   # TODO figure out how to compile
 
+  udpfsd = pkgs.callPackage ./udpfsd { };
+
 in {
   imports = [
     ./bash.nix
@@ -279,6 +281,7 @@ in {
     passmenu-patient
     #pscrcpy
     #rigsofrods
+    udpfsd
     vim-commit
     vim-drop
     winelegacy
