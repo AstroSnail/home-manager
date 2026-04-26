@@ -67,4 +67,6 @@
   xdg.userDirs.publicShare = "${config.home.homeDirectory}/Public";
   xdg.userDirs.templates = "${config.home.homeDirectory}/Templates";
   xdg.userDirs.videos = "${config.home.homeDirectory}/Videos";
+
+  # xdg.portal.enable = true;
 }

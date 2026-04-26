@@ -8,15 +8,14 @@
           patches = oldattrs.patches ++ [
             ./vim-auto-tgc.patch
             # ./vim-terminal-env.patch
-            # ./vim-fix-cpo-no-k.patch
-            # ./vim-fix-xtermcodes-keypad.patch
           ];
         });
     })
     (final: prev: {
       vimPlugins = prev.vimPlugins // {
         vim-erry = final.vimUtils.buildVimPlugin {
-          name = "vim-erry";
+          pname = "vim-erry";
+          version = "0.1.0";
           src = ./vim-erry;
         };
       };
