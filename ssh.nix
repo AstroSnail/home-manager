@@ -58,15 +58,7 @@
   # };
 
   # OVH Gravelines
-  # programs.ssh.settings."sea" = {
-  #   HostName = "fd57:337f:9040:1::5ea";
-  #   # HostName = "2001:41d0:304:200::4150";
-  #   Port = 22;
-  #   User = "ubuntu";
-  #   IdentitiesOnly = true;
-  # };
-
-  programs.ssh.settings."vps-04b3828b" = {
+  programs.ssh.settings."sea" = {
     HostName = "vps-04b3828b.vps.ovh.net";
     Port = 22;
     User = "ubuntu";
@@ -74,7 +66,7 @@
     AddressFamily = "inet6";
   };
 
-  programs.ssh.settings."vps-04b3828b-v4" = {
+  programs.ssh.settings."sea-v4" = {
     HostName = "vps-04b3828b.vps.ovh.net";
     Port = 22;
     User = "ubuntu";
@@ -83,7 +75,7 @@
   };
 
   # OVH Beauharnois
-  programs.ssh.settings."vps-c7e9a3a0" = {
+  programs.ssh.settings."sea2" = {
     HostName = "vps-c7e9a3a0.vps.ovh.ca";
     Port = 22;
     User = "debian";
@@ -91,7 +83,7 @@
     AddressFamily = "inet6";
   };
 
-  programs.ssh.settings."vps-c7e9a3a0-v4" = {
+  programs.ssh.settings."sea2-v4" = {
     HostName = "vps-c7e9a3a0.vps.ovh.ca";
     Port = 22;
     User = "debian";
