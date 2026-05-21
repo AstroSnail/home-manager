@@ -34,9 +34,8 @@
   # };
 
   programs.ssh.settings."soon" = {
-    # HostName = "192.168.1.75";
-    # HostName = "192.168.1.76";
-    HostName = "fd57:337f:9040:1:2:3:4:5";
+    HostName = "192.168.1.64";
+    # HostName = "fd57:337f:9040:1:2:3:4:5";
     Port = 22;
     User = "erry";
     IdentitiesOnly = true;
@@ -59,13 +58,13 @@
   # };
 
   # OVH Gravelines
-  programs.ssh.settings."sea" = {
-    HostName = "fd57:337f:9040:1::5ea";
-    # HostName = "2001:41d0:304:200::4150";
-    Port = 22;
-    User = "ubuntu";
-    IdentitiesOnly = true;
-  };
+  # programs.ssh.settings."sea" = {
+  #   HostName = "fd57:337f:9040:1::5ea";
+  #   # HostName = "2001:41d0:304:200::4150";
+  #   Port = 22;
+  #   User = "ubuntu";
+  #   IdentitiesOnly = true;
+  # };
 
   programs.ssh.settings."vps-04b3828b" = {
     HostName = "vps-04b3828b.vps.ovh.net";
