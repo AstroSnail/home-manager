@@ -3,117 +3,131 @@
 {
   #nixpkgs.overlays = [(_: pkgs: { openssh = pkgs.openssh.override { withFIDO = true; }; })];
   programs.ssh.enable = true;
-  # programs.ssh.controlMaster = "auto";
-  # programs.ssh.serverAliveInterval = 60;
-  # programs.ssh.extraOptionOverrides = { ConnectTimeout = "10"; };
   programs.ssh.enableDefaultConfig = false;
-  programs.ssh.matchBlocks = {
-    default.host = "*";
-    default.forwardAgent = false;
-    default.serverAliveInterval = 60;
-    default.serverAliveCountMax = 3;
-    default.compression = false;
-    default.addKeysToAgent = "no";
-    default.hashKnownHosts = false;
-    default.userKnownHostsFile = "~/.ssh/known_hosts";
-    default.controlMaster = "auto";
-    default.controlPath = "~/.ssh/master-%r@%n:%p";
-    default.controlPersist = "no";
-    default.extraOptions.ConnectTimeout = "10";
 
-    #snail.host = "snail";
-    #snail.hostname = "192.168.1.65";
-    #snail.port = 22;
-    #snail.user = "astro";
-    #snail.identitiesOnly = true;
-
-    #git.host = "git.astrosnail.pt.eu.org";
-    #git.hostname = "192.168.1.65";
-    #git.port = 22;
-    #git.user = "git";
-    #git.identitiesOnly = true;
-
-    soon.host = "soon";
-    #soon.hostname = "192.168.1.75";
-    #soon.hostname = "192.168.1.76";
-    soon.hostname = "fd57:337f:9040:1:2:3:4:5";
-    soon.port = 22;
-    soon.user = "erry";
-    soon.identitiesOnly = true;
-
-    sea.host = "sea";
-    sea.hostname = "fd57:337f:9040:1::5ea";
-    #sea.hostname = "2001:41d0:304:200::4150";
-    sea.port = 22;
-    sea.user = "ubuntu";
-    sea.identitiesOnly = true;
-
-    vps.host = "vps-04b3828b";
-    vps.hostname = "vps-04b3828b.vps.ovh.net";
-    vps.port = 22;
-    vps.user = "ubuntu";
-    vps.identitiesOnly = true;
-    vps.addressFamily = "inet6";
-
-    vps-4.host = "vps-04b3828b-v4";
-    vps-4.hostname = "vps-04b3828b.vps.ovh.net";
-    vps-4.port = 22;
-    vps-4.user = "ubuntu";
-    vps-4.identitiesOnly = true;
-    vps-4.addressFamily = "inet";
-
-    smol.host = "smol";
-    #smol.hostname = "192.168.1.73";
-    #smol.hostname = "192.168.1.74";
-    smol.hostname = "fd57:337f:9040:1:1:1:1:2";
-    smol.port = 22;
-    smol.user = "kit";
-    smol.identitiesOnly = true;
-
-    soon-prime.host = "soon-prime";
-    soon-prime.hostname = "fd57:337f:9040:1:5:4:3:2";
-    soon-prime.port = 22;
-    soon-prime.user = "izzy";
-    soon-prime.identitiesOnly = true;
-
-    sunrise.host = "sunrise";
-    sunrise.hostname = "2a01:4f8:c0c:1013::1";
-    sunrise.port = 22;
-    sunrise.user = "root";
-    sunrise.identitiesOnly = true;
-
-    sunrise-v4.host = "sunrise-v4";
-    sunrise-v4.hostname = "162.55.184.64";
-    sunrise-v4.port = 22;
-    sunrise-v4.user = "root";
-    sunrise-v4.identitiesOnly = true;
-
-    vps2.host = "vps-c7e9a3a0";
-    vps2.hostname = "vps-c7e9a3a0.vps.ovh.ca";
-    vps2.port = 22;
-    vps2.user = "debian";
-    vps2.identitiesOnly = true;
-    vps2.addressFamily = "inet6";
-
-    vps2-4.host = "vps-c7e9a3a0-v4";
-    vps2-4.hostname = "vps-c7e9a3a0.vps.ovh.ca";
-    vps2-4.port = 22;
-    vps2-4.user = "debian";
-    vps2-4.identitiesOnly = true;
-    vps2-4.addressFamily = "inet";
-
-    github.host = "github.com";
-    github.hostname = "github.com";
-    github.port = 22;
-    github.user = "git";
-    github.identitiesOnly = true;
-    #github.addressFamily = "inet6"; # ????
-
-    ubi.host = "ubi.pt";
-    ubi.hostname = "unix.ubi.pt";
-    ubi.port = 22;
-    ubi.user = "a43501";
-    ubi.identitiesOnly = true;
-    ubi.proxyJump = "soon-prime";
+  programs.ssh.settings."*" = {
+    ForwardAgent = false;
+    AddKeysToAgent = "no";
+    Compression = false;
+    ServerAliveInterval = 60;
+    ServerAliveCountMax = 3;
+    HashKnownHosts = false;
+    UserKnownHostsFile = "~/.ssh/known_hosts";
+    ControlMaster = "auto";
+    ControlPath = "~/.ssh/master-%r@%n:%p";
+    ControlPersist = "no";
+    ConnectTimeout = 10;
   };
+
+  # programs.ssh.settings."snail" = {
+  #   HostName = "192.168.1.65";
+  #   Port = 22;
+  #   User = "astro";
+  #   IdentitiesOnly = true;
+  # };
+
+  # programs.ssh.settings."git.astrosnail.pt.eu.org" = {
+  #   HostName = "192.168.1.65";
+  #   Port = 22;
+  #   User = "git";
+  #   IdentitiesOnly = true;
+  # };
+
+  programs.ssh.settings."soon" = {
+    # HostName = "192.168.1.75";
+    # HostName = "192.168.1.76";
+    HostName = "fd57:337f:9040:1:2:3:4:5";
+    Port = 22;
+    User = "erry";
+    IdentitiesOnly = true;
+  };
+
+  # programs.ssh.settings."smol" = {
+  #   # HostName = "192.168.1.73";
+  #   # HostName = "192.168.1.74";
+  #   HostName = "fd57:337f:9040:1:1:1:1:2";
+  #   Port = 22;
+  #   User = "kit";
+  #   IdentitiesOnly = true;
+  # };
+
+  # programs.ssh.settings."soon-prime" = {
+  #   HostName = "fd57:337f:9040:1:5:4:3:2";
+  #   Port = 22;
+  #   User = "izzy";
+  #   IdentitiesOnly = true;
+  # };
+
+  # OVH Gravelines
+  programs.ssh.settings."sea" = {
+    HostName = "fd57:337f:9040:1::5ea";
+    # HostName = "2001:41d0:304:200::4150";
+    Port = 22;
+    User = "ubuntu";
+    IdentitiesOnly = true;
+  };
+
+  programs.ssh.settings."vps-04b3828b" = {
+    HostName = "vps-04b3828b.vps.ovh.net";
+    Port = 22;
+    User = "ubuntu";
+    IdentitiesOnly = true;
+    AddressFamily = "inet6";
+  };
+
+  programs.ssh.settings."vps-04b3828b-v4" = {
+    HostName = "vps-04b3828b.vps.ovh.net";
+    Port = 22;
+    User = "ubuntu";
+    IdentitiesOnly = true;
+    AddressFamily = "inet";
+  };
+
+  # OVH Beauharnois
+  programs.ssh.settings."vps-c7e9a3a0" = {
+    HostName = "vps-c7e9a3a0.vps.ovh.ca";
+    Port = 22;
+    User = "debian";
+    IdentitiesOnly = true;
+    AddressFamily = "inet6";
+  };
+
+  programs.ssh.settings."vps-c7e9a3a0-v4" = {
+    HostName = "vps-c7e9a3a0.vps.ovh.ca";
+    Port = 22;
+    User = "debian";
+    IdentitiesOnly = true;
+    AddressFamily = "inet";
+  };
+
+  # Hetzner Nürnberg
+  programs.ssh.settings."sunrise" = {
+    HostName = "2a01:4f8:c0c:1013::1";
+    Port = 22;
+    User = "root";
+    IdentitiesOnly = true;
+  };
+
+  programs.ssh.settings."sunrise-v4" = {
+    HostName = "162.55.184.64";
+    Port = 22;
+    User = "root";
+    IdentitiesOnly = true;
+  };
+
+  programs.ssh.settings."github.com" = {
+    HostName = "github.com";
+    Port = 22;
+    User = "git";
+    IdentitiesOnly = true;
+    # AddressFamily = "inet6"; # ????
+  };
+
+  # programs.ssh.settings."ubi.pt" = {
+  #   HostName = "unix.ubi.pt";
+  #   Port = 22;
+  #   User = "a43501";
+  #   IdentitiesOnly = true;
+  #   ProxyJump = "soon-prime";
+  # };
 }
