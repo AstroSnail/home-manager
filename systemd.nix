@@ -4,7 +4,7 @@
   imports = [
     # ./doom-upgrade.nix
     #./icynet-canvas.nix
-    ./ipsave.nix
+    # ./ipsave.nix
     #./weechat.nix
   ];
 
