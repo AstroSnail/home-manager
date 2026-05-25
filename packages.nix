@@ -57,8 +57,6 @@ let
     hash = "sha256-v23F+XjCMtaXxe2OHmHzlRvtmSdB8yS2Fh3LPo8Hp2s=";
   }) { };
 
-  udpfsd = pkgs.callPackage ./udpfsd { };
-
 in {
   imports = [
     ./bash.nix
@@ -219,7 +217,6 @@ in {
     github-clone
     # noexec
     passmenu-patient
-    udpfsd
     vim-commit
     vim-drop
     winelegacy
