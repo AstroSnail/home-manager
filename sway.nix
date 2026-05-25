@@ -134,7 +134,6 @@ in {
   # wayland.windowManager.sway.config.output."KIT 41001561224e 0x00000002" = {
   #   mode = "640x400@85Hz";
   #   position = "0 1080";
-  #   #color_profile = "icc ${./srgb_3.2.icc}";
   #   background = "${config.xdg.userDirs.pictures}/2af1ea3e5195f698b4dfeb1f32b31afc.png fill #8F8F8F";
   # };
   #wayland.windowManager.sway.config.output."Integrated Tech Express Inc HDMI2VGAV121 0x0000FF36" = {

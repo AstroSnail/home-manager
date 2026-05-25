@@ -3,10 +3,7 @@
 {
   imports = [
     # ./doom-upgrade.nix
-    #./icynet-canvas.nix
-    # ./ipsave.nix
-    #./weechat.nix
   ];
 
-  systemd.user.startServices = "suggest";
+  # systemd.user.startServices = "suggest";
 }

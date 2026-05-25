@@ -3,11 +3,6 @@
 let
   #nixBin = name: pkgs.writeScriptBin name (lib.readFile ./${name});
 
-  # chromium-wl = pkgs.writeShellApplication {
-  #   name = "chromium-wl";
-  #   runtimeInputs = [ config.programs.chromium.package ];
-  #   text = lib.readFile ./chromium-wl.sh;
-  # };
   github-clone = pkgs.writeShellApplication {
     name = "github-clone";
     runtimeInputs = [ pkgs.git ];
@@ -23,19 +18,6 @@ let
     runtimeInputs = [ pkgs.dmenu pkgs.pass pkgs.xdotool pkgs.ydotool ];
     text = lib.readFile ./passmenu-patient.bash;
   };
-  # pscrcpy = pkgs.writeShellApplication {
-  #   name = "pscrcpy";
-  #   runtimeInputs = [ pkgs.scrcpy ];
-  #   text = lib.readFile ./pscrcpy.sh;
-  # };
-  #slurpgrim = pkgs.writeShellApplication {
-  #  name = "slurpgrim";
-  #  runtimeInputs = [
-  #    pkgs.grim
-  #    pkgs.slurp
-  #  ];
-  #  text = lib.readFile ./slurpgrim.sh;
-  #};
   vim-commit = pkgs.writeShellApplication {
     name = "vim-commit";
     runtimeInputs = [ vim-drop ];
@@ -74,22 +56,6 @@ let
     rev = "b1e894cd7d7aa067f5dfa492e88c99708163c7d1";
     hash = "sha256-v23F+XjCMtaXxe2OHmHzlRvtmSdB8yS2Fh3LPo8Hp2s=";
   }) { };
-
-  #ffmpeg-rav1e = pkgs.ffmpeg-full.override {
-  #  rav1e = pkgs.rav1e;
-  #};
-
-  #rigsofrods = pkgs.rigsofrods.overrideAttrs (_: rec {
-  #  version = "2022.04";
-  #  src = pkgs.fetchFromGitHub {
-  #    owner = "RigsOfRods";
-  #    repo = "rigs-of-rods";
-  #    rev = version;
-  #    sha256 = "sha256-QExh7ujPvKL9UOByNKvhKgmhpmAOt+OsoZeH50Brww0=";
-  #  };
-  #});
-  #rigsofrods = pkgs.rigsofrods;
-  # TODO figure out how to compile
 
   udpfsd = pkgs.callPackage ./udpfsd { };
 
@@ -136,26 +102,10 @@ in {
         patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
       });
     })
-    #(final: prev: {
-    #  prismlauncher = prev.prismlauncher.overrideAttrs (finalAttrs: prevAttrs: {
-    #    patches = [ ./prismlauncher-crack.patch ];
-    #  });
-    #})
     # broken 2025-03-11
     #(final: prev: {
     #  vlc = prev.vlc.overrideAttrs (oldattrs: {
     #    buildInputs = oldattrs.buildInputs ++ [ pkgs.projectm ];
-    #  });
-    #})
-    #(final: prev: {
-    #  yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: {
-    #    version = "git";
-    #    src = final.fetchFromGitHub {
-    #      owner = "yt-dlp";
-    #      repo = "yt-dlp";
-    #      rev = "7237c8dca0590aa7438ade93f927df88c9381ec7";
-    #      sha256 = "sha256-wCj2kFkJLGbVIQ5obvA0Q++bSHbwFD/BvdGXsNGR6Zw=";
-    #    };
     #  });
     #})
     (final: prev: {
@@ -195,14 +145,6 @@ in {
   programs.firefox.configPath = "${config.home.homeDirectory}/.mozilla/firefox";
   programs.fish.enable = true;
   #programs.htop.enable = true; # TODO: port config to here
-  #programs.irssi.enable = true;
-  #programs.irssi.networks.tilde-chat.nick = "crcl";
-  #programs.irssi.networks.tilde-chat.channels."#tilde.pt".autoJoin = false;
-  #programs.irssi.networks.tilde-chat.server.address = "eu.tilde.chat";
-  #programs.irssi.networks.tilde-chat.server.port = 6697;
-  #programs.irssi.networks.tilde-chat.server.autoConnect = false;
-  #programs.irssi.networks.tilde-chat.server.ssl.enable = true;
-  #programs.irssi.networks.tilde-chat.server.ssl.verify = true;
   programs.jq.enable = true;
   #programs.jq.colors = {
   #  null = "1;30";
@@ -274,13 +216,9 @@ in {
   home.packages = [
     # should go in overlay? /shrug
     apexctl
-    # chromium-wl
-    #ffmpeg-rav1e
     github-clone
     # noexec
     passmenu-patient
-    #pscrcpy
-    #rigsofrods
     udpfsd
     vim-commit
     vim-drop

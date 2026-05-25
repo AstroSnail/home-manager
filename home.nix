@@ -4,7 +4,6 @@
   imports = [
     ./packages.nix
     ./i3status.nix
-    ./i3.nix
     ./sway.nix
     ./systemd.nix
     # ./terminfo.nix
