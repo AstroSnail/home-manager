@@ -209,6 +209,10 @@ in {
   services.protonmail-bridge.enable = true;
   services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
   services.protonmail-bridge.extraPackages = [ pkgs.pass ];
+  services.wayvnc.enable = true;
+  # TODO: unix socket
+  services.wayvnc.settings.address = "::1";
+  services.wayvnc.settings.port = 5900;
   systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
 
   home.packages = [

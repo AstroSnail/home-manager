@@ -106,9 +106,9 @@ in {
   wayland.windowManager.sway.config.keybindings."Mod1+Escape" = "mode magic";
   wayland.windowManager.sway.config.window.border = 1;
   wayland.windowManager.sway.config.window.titlebar = true;
-  wayland.windowManager.sway.config.window.commands = [
-    { criteria.all = true; command = "title_window_icon yes"; }
-  ];
+  # wayland.windowManager.sway.config.window.commands = [
+  #   { criteria.all = true; command = "title_window_icon yes"; }
+  # ];
   #wayland.windowManager.sway.config.workspaceLayout = "tabbed";
   wayland.windowManager.sway.extraConfig = ''
     titlebar_padding 4 2
@@ -148,6 +148,12 @@ in {
   #wayland.windowManager.sway.config.output."CL@ CM 3316" = {
   #  background = "#8F8F8F solid_color";
   #};
+  wayland.windowManager.sway.config.output."HEADLESS-1" = {
+    # mode = "1200x900"; # 4:3
+    mode = "1200x960"; # 5:4
+    # mode = "1200x675"; # 16:9
+    background = "${config.xdg.userDirs.pictures}/2af1ea3e5195f698b4dfeb1f32b31afc.png fill #8F8F8F";
+  };
   wayland.windowManager.sway.config.workspaceOutputAssign = [
     {
       output = "DP-3";
