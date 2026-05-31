@@ -99,10 +99,13 @@ in {
     #xkb_options = "caps:escape,compose:menu-altgr";
     xkb_variant = "altgr-weur";
     xkb_options = "caps:escape,compose:menu";
+    # ideally something like "apex" but it isn't quite right. just use pc105 for now
     xkb_model = "pc105";
   };
-  wayland.windowManager.sway.config.input."type:pointer".accel_profile = "flat";
-  wayland.windowManager.sway.config.input."type:pointer".pointer_accel = "0";
+  wayland.windowManager.sway.config.input."1133:50504:Logitech_USB_Receiver_Mouse" = {
+    accel_profile = "flat";
+    pointer_accel = "0";
+  };
   wayland.windowManager.sway.config.keybindings."Mod1+Escape" = "mode magic";
   wayland.windowManager.sway.config.window.border = 1;
   wayland.windowManager.sway.config.window.titlebar = true;
@@ -112,11 +115,11 @@ in {
   #wayland.windowManager.sway.config.workspaceLayout = "tabbed";
   wayland.windowManager.sway.extraConfig = ''
     titlebar_padding 4 2
-    xwayland force
-    exec --no-startup-id sleep 1 && systemctl --user restart pipewire.service
     include ${./magicmode.conf}
     include /etc/sway/config.d/*
   '';
+    # xwayland force
+    # exec --no-startup-id sleep 1 && systemctl --user restart pipewire.service
   #wayland.windowManager.sway.config.output."*".background = "${config.xdg.userDirs.pictures}/draw.icynet.eu-canvas.png center #8F8F8F";
   #wayland.windowManager.sway.config.output."*".background = "${config.xdg.userDirs.pictures}/Fac6kyRUEAAMtiJ.jpg fill #8F8F8F";
   #wayland.windowManager.sway.config.output."*".background = "${config.xdg.userDirs.pictures}/FnQswpzX0AIt0uP.jpg fill #8F8F8F";
@@ -151,7 +154,7 @@ in {
   wayland.windowManager.sway.config.output."HEADLESS-1" = {
     # mode = "1200x960"; # 5:4
     # mode = "1200x900"; # 4:3
-    # mode = "1200x800"; # fits in 1280x800
+    mode = "1200x800"; # fits in 1280x800
     # mode = "1200x675"; # 16:9
     background = "${config.xdg.userDirs.pictures}/2af1ea3e5195f698b4dfeb1f32b31afc.png fill #8F8F8F";
   };
