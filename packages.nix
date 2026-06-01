@@ -156,9 +156,9 @@ in {
   programs.less.enable = true;
   #programs.lesspipe.enable = true;
   #programs.nheko.enable = true;
-  programs.nix-index.enable = true;
-  programs.nix-index.enableBashIntegration = false;
-  programs.nix-index.enableFishIntegration = false;
+  # programs.nix-index.enable = true;
+  # programs.nix-index.enableBashIntegration = false;
+  # programs.nix-index.enableFishIntegration = false;
   programs.obs-studio.enable = true;
   programs.obs-studio.plugins = [
     pkgs.obs-studio-plugins.obs-livesplit-one
