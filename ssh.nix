@@ -95,14 +95,14 @@
   programs.ssh.settings."sunrise" = {
     HostName = "2a01:4f8:c0c:1013::1";
     Port = 22;
-    User = "root";
+    User = "erry";
     IdentitiesOnly = true;
   };
 
   programs.ssh.settings."sunrise-v4" = {
     HostName = "162.55.184.64";
     Port = 22;
-    User = "root";
+    User = "erry";
     IdentitiesOnly = true;
   };
 
