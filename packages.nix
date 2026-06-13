@@ -178,16 +178,16 @@ in {
       pgfplots prooftrees svn-prov forest standalone ucs;
   };
   # programs.thunderbird.enable = true;
-  programs.timidity.enable = true;
-  programs.timidity.extraConfig = ''
-    soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2
-    #soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/FluidR3_GM.sf2
-    #soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/FluidR3_GS.sf2
-    #soundfont ${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2
-    #soundfont ${pkgs.soundfont-arachno}/share/soundfonts/arachno.sf2
-    #soundfont ${pkgs.soundfont-ydp-grand}/share/soundfonts/YDP-GrandPiano.sf2
-    #soundfont ${pkgs.soundfont-generaluser-gs}/share/soundfonts/GeneralUser-GS.sf2
-  '';
+  # programs.timidity.enable = true;
+  # programs.timidity.extraConfig = ''
+  #   soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2
+  #   #soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/FluidR3_GM.sf2
+  #   #soundfont /nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/FluidR3_GS.sf2
+  #   #soundfont ${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2
+  #   #soundfont ${pkgs.soundfont-arachno}/share/soundfonts/arachno.sf2
+  #   #soundfont ${pkgs.soundfont-ydp-grand}/share/soundfonts/YDP-GrandPiano.sf2
+  #   #soundfont ${pkgs.soundfont-generaluser-gs}/share/soundfonts/GeneralUser-GS.sf2
+  # '';
   #programs.tmux.enable = true;
   programs.yt-dlp.enable = true;
 
@@ -197,9 +197,9 @@ in {
   #services.easyeffects.enable = true;
   #services.fluidsynth.enable = true;
   #services.fluidsynth.soundFont = "${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2";
-  services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2";
+  # services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/SGM-V2.01.sf2";
   #services.fluidsynth.soundFont = "/nix/var/nix/profiles/per-user/erry/soundfonts/share/soundfonts/titanic.sf2";
-  services.fluidsynth.soundService = "pipewire-pulse";
+  # services.fluidsynth.soundService = "pipewire-pulse";
   services.gpg-agent.enable = true;
   services.gpg-agent.pinentry.package = pkgs.pinentry-qt;
   services.mako.enable = true;
