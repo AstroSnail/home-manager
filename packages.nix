@@ -214,7 +214,8 @@ in {
   services.wayvnc.settings.address = "::1";
   services.wayvnc.settings.port = 5900;
   services.wayvnc.settings.xkb_layout = "us";
-  services.wayvnc.settings.xkb_options = "caps:escape,compose:menu";
+  # services.wayvnc.settings.xkb_options = "caps:escape,compose:menu";
+  services.wayvnc.settings.xkb_options = "compose:menu";
   services.wayvnc.settings.xkb_variant = "altgr-weur";
   systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
 
