@@ -14,7 +14,7 @@
     HashKnownHosts = false;
     UserKnownHostsFile = "~/.ssh/known_hosts";
     ControlMaster = "auto";
-    ControlPath = "~/.ssh/master-%r@%n:%p";
+    ControlPath = "~/.ssh/master-%r@[%h]:%p";
     ControlPersist = "no";
     ConnectTimeout = 10;
   };
