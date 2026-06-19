@@ -355,7 +355,7 @@ in {
     #pkgs.winePackages.waylandFull
     #pkgs.wineWow64Packages.waylandFull
     #pkgs.winetricks
-    #pkgs.wl-clipboard
+    pkgs.wl-clipboard
     pkgs.xdotool
     #pkgs.xonotic
     #pkgs.xorg.xkill
