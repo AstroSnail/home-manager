@@ -24,7 +24,7 @@
     # disable ^S magic so bash can use it
     stty -ixon
 
-    . ${./bash-prompt.bash}
+    source ${./bash-prompt.bash}
 
     # sound the bell to check that it's working
     # tput bel
@@ -38,4 +38,6 @@
 
     mkdir --parents "$XDG_RUNTIME_DIR/bash"
   '';
+  programs.bash.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
+  programs.bash.shellAliases.startvnc = "source ${./startvnc.bash}";
 }

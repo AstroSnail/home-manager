@@ -28,7 +28,6 @@
   #home.shellAliases.ls = "noexec";
   #home.shellAliases.rm = "noexec";
   home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
-  home.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
 
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
