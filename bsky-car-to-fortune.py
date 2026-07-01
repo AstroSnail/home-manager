@@ -221,6 +221,7 @@ def main():
     # rot13 for fun
     for entries in all_entries:
         for post in entries["app.bsky.feed.post"]:
+            # TODO: allow replies if both root and parent are vex's
             if not "reply" in post[1]:
                 print(codecs.encode(post[1]["text"], encoding="rot13"))
                 print("%")
