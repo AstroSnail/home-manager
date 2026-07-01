@@ -26,6 +26,7 @@
   #home.shellAliases.htop = "noexec";
   #home.shellAliases.less = "noexec";
   #home.shellAliases.ls = "noexec";
+  home.shellAliases.nix-locate = "nix run -- github:nix-community/nix-index-database";
   #home.shellAliases.rm = "noexec";
   home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
 
