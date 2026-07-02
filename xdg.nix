@@ -20,6 +20,7 @@
     "application/x-extension-rss" = [ "thunderbird.desktop" ];
     "x-scheme-handler/webcal" = [ "thunderbird.desktop" ];
     "x-scheme-handler/webcals" = [ "thunderbird.desktop" ];
+    "x-scheme-handler/net.thunderbird" = [ "thunderbird.desktop" ];
   };
   xdg.mimeApps.defaultApplications = {
     "x-scheme-handler/http" = [ "firefox.desktop" ];
@@ -49,6 +50,7 @@
     "text/calendar" = [ "thunderbird.desktop" ];
     "application/x-extension-ics" = [ "thunderbird.desktop" ];
     "x-scheme-handler/webcals" = [ "thunderbird.desktop" ];
+    "x-scheme-handler/net.thunderbird" = [ "thunderbird.desktop" ];
   };
   xdg.userDirs.enable = true;
   xdg.userDirs.createDirectories = true;
