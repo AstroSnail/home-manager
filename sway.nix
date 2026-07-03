@@ -152,10 +152,10 @@ in {
   #  background = "#8F8F8F solid_color";
   #};
   wayland.windowManager.sway.config.output."HEADLESS-1" = {
-    mode = "1200x960"; # 5:4
+    # mode = "1200x960"; # 5:4
     # mode = "1200x900"; # 4:3
     # mode = "1200x800"; # fits in 1280x800
-    # mode = "1200x675"; # 16:9
+    mode = "1200x675"; # 16:9
     background = "${config.xdg.userDirs.pictures}/2af1ea3e5195f698b4dfeb1f32b31afc.png fill #8F8F8F";
   };
   wayland.windowManager.sway.config.workspaceOutputAssign = [
