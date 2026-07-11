@@ -168,7 +168,7 @@ in {
   programs.password-store.enable = true; # see also services.pass-secret-service
   programs.password-store.settings.PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
   programs.ripgrep.enable = true;
-  programs.streamlink.enable = true;
+  # programs.streamlink.enable = true; # broken 2026-07-11
   programs.streamlink.settings.player = "mpv";
   programs.streamlink.settings.twitch-low-latency = true;
   #programs.texlive.enable = true; # broken 2025-07-17
