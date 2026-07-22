@@ -183,6 +183,12 @@ def flatten_tree(section_map, entries, data_cid):
         tree = entry["t"]
         flatten_tree(section_map, entries, tree)
 
+vex_posts = []
+def is_vex_thread(post):
+    return (not "reply" in post) or (post["reply"]["parent"]["uri"] in vex_posts)
+
+vex_posts_prefix = "at://did:plc:fhgaqizzcnfv43yx34wu3ms2/app.bsky.feed.post/"
+
 def main():
     car_data = sys.stdin.buffer.read()
     car_length = len(car_data)
@@ -221,8 +227,10 @@ def main():
     # rot13 for fun
     for entries in all_entries:
         for post in entries["app.bsky.feed.post"]:
-            # TODO: allow replies if both root and parent are vex's
-            if not "reply" in post[1]:
+            # assumes we're processing vex's posts
+            # assumes vex only ever replies to past posts
+            if is_vex_thread(post[1]):
+                vex_posts.append(vex_posts_prefix + post[0])
                 print(codecs.encode(post[1]["text"], encoding="rot13"))
                 print("%")
 
