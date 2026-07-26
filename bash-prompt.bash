@@ -84,8 +84,8 @@ erry_fix_eol() {
 }
 
 erry_show_info() {
-	local pipestatus=("${PIPESTATUS[@]}")
-	local output=()
+	declare -a pipestatus=("${PIPESTATUS[@]}")
+	declare -a output
 	local IFS
 
 	local p
@@ -119,10 +119,7 @@ erry_set_title_prompt() {
 erry_set_title_command() {
 	if [[ -n ${erry_tput[tsl]} ]]; then
 		local title
-		# title=$(fc -ln -0)
-		# hacky trick to avoid slow command substitution
-		fc -ln -0 >|"${erry_tmpfile:?}"
-		IFS= read -r -d '' title <"${erry_tmpfile}"
+		title=${ fc -ln -0; }
 		title=${title#$'\t '}
 		title=${title%$'\n'}
 
@@ -149,4 +146,4 @@ PROMPT_COMMAND+=(erry_show_info)
 PS1='\$ '
 # shellcheck disable=SC2016
 # CR syncs column in the terminal and in the kernel's cooked mode
-PS0='$(erry_set_title_command)\r'
+PS0='${ erry_set_title_command; }\r'

@@ -18,9 +18,6 @@
     HISTTIMEFORMAT=
     PROMPT_DIRTRIM=2
 
-    # for spilling command output, to avoid slow command substitution
-    erry_tmpfile=$XDG_RUNTIME_DIR/bash/tmp.$$
-
     # disable ^S magic so bash can use it
     stty -ixon
 
