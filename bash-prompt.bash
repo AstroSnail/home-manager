@@ -148,4 +148,5 @@ PROMPT_COMMAND+=(erry_set_title_prompt)
 PROMPT_COMMAND+=(erry_show_info)
 PS1='\$ '
 # shellcheck disable=SC2016
-PS0='$(erry_set_title_command)'
+# CR syncs column in the terminal and in the kernel's cooked mode
+PS0='$(erry_set_title_command)\r'
