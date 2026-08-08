@@ -14,6 +14,7 @@
 
     "URxvt.urgentOnBell" = true;
 
+    # "URxvt.saveLines" = 0;
     "URxvt.scrollBar" = false;
     "URxvt.scrollBar_right" = true;
     "URxvt.scrollColor" = xres."*Foreground";

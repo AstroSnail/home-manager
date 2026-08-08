@@ -65,6 +65,7 @@
     "XTerm*VT100.visualBellLine" = true;
 
     # Scrolling settings
+    # "XTerm*VT100.saveLines" = 0;
     "XTerm*VT100.scrollKey" = true;
     "XTerm*VT100.scrollTtyOutput" = false;
     # "XTerm*VT100.allowScrollLock" = true;

@@ -10,5 +10,7 @@
     #"Zutty.dwfont" = ""; # idk
 
     "Zutty.bellIsUrgent" = true;
+
+    # "Zutty.saveLines" = 0;
   };
 }
