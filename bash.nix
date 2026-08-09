@@ -5,12 +5,14 @@
   programs.bash.historySize = -1;
   programs.bash.historyFile = "${config.xdg.dataHome}/bash_history";
   programs.bash.historyFileSize = null;
-  programs.bash.historyControl = [ "ignoreboth" ];
-  programs.bash.shellOptions = options.programs.bash.shellOptions.default ++ [
-    " -o hashall"
+  programs.bash.historyControl = [ "ignoredups" "ignorespace" ];
+  programs.bash.shellOptions = [
+    # " -o hashall"
     " -o noclobber"
-    " -o notify"
-    #" -o vi"
+    # " -o notify"
+    # " -o vi"
+    "checkjobs"
+    "histappend"
     "histreedit"
     "histverify"
   ];
@@ -32,8 +34,6 @@
   '';
   programs.bash.profileExtra = ''
     # PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
-
-    mkdir --parents "$XDG_RUNTIME_DIR/bash"
   '';
   programs.bash.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
   programs.bash.shellAliases.startvnc = "source ${./startvnc.bash}";
