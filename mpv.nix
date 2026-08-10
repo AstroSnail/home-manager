@@ -3,7 +3,6 @@
 {
   home.shellAliases.diveo = "mpv --profile=diveo";
   home.shellAliases.duaio = "mpv --profile=duaio";
-  home.shellAliases.vile = "mpv --profile=vile";
 
   nixpkgs.overlays = [
     (final: prev: {
