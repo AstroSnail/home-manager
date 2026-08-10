@@ -14,13 +14,13 @@
 
     "URxvt.urgentOnBell" = true;
 
-    # "URxvt.saveLines" = 0;
-    "URxvt.scrollBar" = false;
-    "URxvt.scrollBar_right" = true;
-    "URxvt.scrollColor" = xres."*Foreground";
-    "URxvt.scrollstyle" = "xterm";
-    "URxvt.scrollTtyKeypress" = true;
-    "URxvt.scrollTtyOutput" = false;
-    "URxvt.scrollWithBuffer" = true;
+    "URxvt.saveLines" = 0;
+    # "URxvt.scrollBar" = false;
+    # "URxvt.scrollBar_right" = true;
+    # "URxvt.scrollColor" = xres."*Foreground";
+    # "URxvt.scrollstyle" = "xterm";
+    # "URxvt.scrollTtyKeypress" = true;
+    # "URxvt.scrollTtyOutput" = false;
+    # "URxvt.scrollWithBuffer" = true;
   };
 }

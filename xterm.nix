@@ -14,7 +14,7 @@
           configureFlags = oldattrs.configureFlags ++ [
             "--enable-block-select"
             # "--enable-status-line"
-            # "--enable-toolbar"
+            "--enable-toolbar"
             # "--enable-trace"
           ];
         });
@@ -33,8 +33,8 @@
 
     # Widget settings
     # "XTerm.toolBar" = true;
-    "XTerm*menubar.borderWidth" = 1;
-    "XTerm*VT100.borderWidth" = 0;
+    # "XTerm*menubar.borderWidth" = 1;
+    "XTerm*VT100.borderWidth" = 0; # xterm with toolbar has extra border
     # TODO: disable scrollbar only in alternate screen
     # "XTerm*VT100.scrollBar" = true;
     # "XTerm*VT100.rightScrollBar" = true;
@@ -65,12 +65,22 @@
     "XTerm*VT100.visualBellLine" = true;
 
     # Scrolling settings
-    # "XTerm*VT100.saveLines" = 0;
-    "XTerm*VT100.scrollKey" = true;
-    "XTerm*VT100.scrollTtyOutput" = false;
+    "XTerm*VT100.saveLines" = 0;
+    # "XTerm*VT100.scrollKey" = true;
+    # "XTerm*VT100.scrollTtyOutput" = false;
+    # allowScrollLock is not terribly useful on its own. if saveLines >= 1 and
+    # is full, xterm scrolls anyway with a glitchy effect. if saveLines == 0
+    # then it stops scrolling but output trashes the last line. autoScrollLock,
+    # together with turning off scrollTtyOutput, makes xterm hold onto the
+    # screen even as saveLines fills up, but it requires saveLines >= 1 and a
+    # scroll action both to engage and disengage it. allowScrollLock: true,
+    # autoScrollLock: true, saveLines: 1 and scrollTtyOutput: false all almost
+    # work extremely well together, but turning off scroll-lock doesn't
+    # disengage autoScrollLock, it needs a scroll-down to return to the bottom.
+    # the real solution is to learn to use a pager like less.
     # "XTerm*VT100.allowScrollLock" = true;
-    "XTerm*VT100.autoScrollLock" = true;
-    "XTerm*VT100.cdXtraScroll" = true;
+    # "XTerm*VT100.autoScrollLock" = true;
+    # "XTerm*VT100.cdXtraScroll" = true;
     # "XTerm.buffered" = true; # holy shit this causes SO MANY GLITCHES
     # "XTerm*VT100.jumpScroll" = true;
     # "XTerm*VT100.fastScroll" = true;
@@ -83,14 +93,20 @@
     # on a linux system, but xterm default-enables backarrowKey at
     # build time (ie backarrow=BS).
     "XTerm*VT100.backarrowKey" = false;
-    # "XTerm*VT100.eightBitInput" = false;
+    "XTerm*VT100.eightBitInput" = false;
     "XTerm*VT100.locale" = true;
-    "XTerm*VT100.metaSendsEscape" = true;
+    # "XTerm*VT100.metaSendsEscape" = true;
     # "XTerm*VT100.modifyOtherKeys" = 2;
 
     # Translation settings
     "XTerm.omitTranslation" = [
-      # "shift-fonts" # gets in the way of shift+kp_add in vt220 keyboard mode
+      # no saveLines? no scroll needed
+      "paging"
+      "reset"
+      "scroll-lock"
+      "wheel-mouse"
+      # gets in the way of shift+kp_add in vt220 keyboard mode
+      # "shift-fonts"
     ];
     # use left-shift to choose between pri and clip
     # flawed: this only works correctly when the window is focused and the

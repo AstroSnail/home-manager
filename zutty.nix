@@ -11,6 +11,6 @@
 
     "Zutty.bellIsUrgent" = true;
 
-    # "Zutty.saveLines" = 0;
+    "Zutty.saveLines" = 0;
   };
 }
