@@ -62,6 +62,7 @@
     # Bell settings
     "XTerm*VT100.bellIsUrgent" = true;
     "XTerm*VT100.visualBell" = true;
+    "XTerm*VT100.visualBellDelay" = 200;
     "XTerm*VT100.visualBellLine" = true;
 
     # Scrolling settings
