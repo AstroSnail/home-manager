@@ -11,6 +11,8 @@
   ];
 
   home.preferXdgDirectories = true;
+  home.shell.enableShellIntegration = false;
+
   home.sessionVariables.CARGO_TARGET_DIR = "${config.xdg.cacheHome}/cargo";
   home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
   home.sessionVariables.LESS = "iMR";

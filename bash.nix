@@ -1,40 +1,64 @@
 { config, lib, options, pkgs, ... }:
 
-{
-  programs.bash.enable = true;
-  programs.bash.historySize = -1;
-  programs.bash.historyFile = "${config.xdg.dataHome}/bash_history";
-  programs.bash.historyFileSize = null;
-  programs.bash.historyControl = [ "ignoredups" "ignorespace" ];
-  programs.bash.shellOptions = [
-    # " -o hashall"
-    " -o noclobber"
-    # " -o notify"
-    # " -o vi"
-    "checkjobs"
-    "histappend"
-    "histreedit"
-    "histverify"
-  ];
-  programs.bash.initExtra = ''
-    HISTTIMEFORMAT=
-    PROMPT_DIRTRIM=2
+lib.mkMerge [
+  {
+    programs.bash.enable = true;
 
-    # disable ^S magic so bash can use it
-    stty -ixon
+    programs.bash.historyControl = [ "ignoredups" "ignorespace" ];
+    programs.bash.historyFile = "${config.xdg.dataHome}/bash_history";
+    programs.bash.historyFileSize = null;
+    programs.bash.historySize = -1;
 
-    source ${./bash-prompt.bash}
+    programs.bash.shellOptions = [
+      # " -o hashall"
+      " -o noclobber"
+      # " -o notify"
+      # " -o vi"
+      "checkjobs"
+      "histappend"
+      "histreedit"
+      "histverify"
+    ];
 
-    # sound the bell to check that it's working
-    # tput bel
+    programs.bash.initExtra = ''
+      HISTTIMEFORMAT=
+      PROMPT_DIRTRIM=2
+    '';
+  }
 
-    # open a fortune cookie!
-    # specifically, something vicious from vex~
-    fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
-  '';
-  programs.bash.profileExtra = ''
-    # PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
-  '';
-  programs.bash.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
-  programs.bash.shellAliases.startvnc = "source ${./startvnc.bash}";
-}
+  {
+    # programs.bash.profileExtra = ''
+    #   # PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
+    # '';
+
+    programs.bash.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
+    programs.bash.shellAliases.startvnc = "source ${./startvnc.bash}";
+
+    programs.bash.initExtra = ''
+      source ${./bash-prompt.bash}
+
+      # disable ^S magic so bash can use it
+      stty -ixon
+
+      # sound the bell to check that it's working
+      # tput bel
+
+      # open a fortune cookie!
+      # specifically, something vicious from vex~
+      fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
+    '';
+  }
+
+  {
+    programs.bash.enableCompletion = true;
+    # works around old problems in a very annoying way
+    programs.bash.enableVteIntegration = false;
+    # default config is doomed to be perpetually out of date
+    programs.dircolors.enable = false;
+
+    programs.bash.initExtra = ''
+      eval "$(${lib.getExe' pkgs.coreutils "dircolors"})"
+      source ${pkgs.vte}/etc/profile.d/vte.sh
+    '';
+  }
+]

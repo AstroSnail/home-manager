@@ -124,7 +124,7 @@ in {
   programs.btop.enable = true;
   programs.chromium.enable = true;
   programs.direnv.enable = true;
-  programs.direnv.enableBashIntegration = false;
+  # programs.direnv.enableBashIntegration = false;
   #programs.direnv.enableFishIntegration = false;
   #programs.direnv.nix-direnv.enable = true;
   programs.element-desktop.enable = true;
@@ -202,6 +202,7 @@ in {
   # services.fluidsynth.soundService = "pipewire-pulse";
   services.gpg-agent.enable = true;
   services.gpg-agent.pinentry.package = pkgs.pinentry-qt;
+  services.gpg-agent.enableBashIntegration = true;
   services.mako.enable = true;
   #services.megasync.enable = true;
   services.mpris-proxy.enable = true;
