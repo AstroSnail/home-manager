@@ -31,6 +31,7 @@
   home.shellAliases.nix-locate = "nix run -- github:nix-community/nix-index-database";
   #home.shellAliases.rm = "noexec";
   home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
+  home.shellAliases.uncntrl = ''{ sed 's/[[:cntrl:]]/^&/g;s/$/^/' | tr '\000-\037\177' '@-_?'; }'';
 
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
