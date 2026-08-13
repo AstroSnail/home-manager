@@ -313,7 +313,7 @@ in {
     #pkgs.pagemon
     pkgs.pavucontrol
     #pkgs.pciutils
-    pkgs.pcsx2
+    # pkgs.pcsx2 # broken 2026-08-13
     #pkgs.pcsxr
     #pkgs.piper
     #pkgs.polymc
