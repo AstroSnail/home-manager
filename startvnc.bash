@@ -16,7 +16,7 @@ sleep 1
 
 WAYLAND_DISPLAY=wayland-1 \
 </dev/null >|~/.local/share/wayvnc-o.txt 2>|~/.local/share/wayvnc-e.txt \
-wayvnc --gpu --max-fps="${fps}" &
+wayvnc --max-fps="${fps}" &
 
 erry_pulse_tunnel=$(pactl load-module module-tunnel-sink server=::1)
 erry_pulse_exit() {
