@@ -21,17 +21,22 @@
   home.sessionVariables.SYSTEMD_PAGERSECURE = "1";
   # home.sessionVariables.WINEARCH = "win64";
 
-  #home.shellAliases.cat = "noexec";
+  # home.shellAliases.cat = "noexec"; # bat
+  # home.shellAliases.find = "noexec"; # fd
+  # home.shellAliases.grep = "noexec"; # rg
+  # home.shellAliases.htop = "noexec"; # btop
+  # home.shellAliases.less = "noexec"; # bat
+  # home.shellAliases.ls = "noexec"; # eza
+  # home.shellAliases.rm = "noexec"; # rip
+
   home.shellAliases.fd = "fd --no-ignore --hidden";
-  #home.shellAliases.find = "noexec";
-  #home.shellAliases.grep = "noexec";
-  #home.shellAliases.htop = "noexec";
-  #home.shellAliases.less = "noexec";
-  #home.shellAliases.ls = "noexec";
-  home.shellAliases.nix-locate = "nix run -- github:nix-community/nix-index-database";
-  #home.shellAliases.rm = "noexec";
   home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
-  home.shellAliases.uncntrl = ''{ sed 's/[[:cntrl:]]/^&/g;s/$/^/' | tr '\000-\037\177' '@-_?'; }'';
+
+  home.shellAliases.caretify = "sed --null-data --file=${./caretify.sed}";
+  home.shellAliases.nix-locate = "nix run -- github:nix-community/nix-index-database";
+
+  home.shellAliases.startvnc = ". ${./startvnc.sh}";
+  home.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
 
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];

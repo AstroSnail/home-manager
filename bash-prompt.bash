@@ -1,3 +1,19 @@
+erry_caretify() {
+	# convert C0 control characters (and DEL) to caret notation.
+	# expected to be used like ${| REPLY=${input}; erry_caretify; }
+	local oct c0 pc0
+	# this loop alone takes over 200 microseconds! even if input is short
+	for oct in {0..3}{0..7}; do
+		printf -v c0 '%b' '\00'"${oct}"
+		printf -v pc0 '^%b' '\01'"${oct}"
+		REPLY=${REPLY//"${c0}"/${pc0}}
+	done
+	# bash expands $'...' in declare -f output, which is ugly
+	# so i don't use it
+	printf -v c0 '\177'
+	REPLY=${REPLY//"${c0}"/^?}
+}
+
 erry_prompt_command() {
 	# (1) if we're not at the beginning of the line (for example, the
 	# previous command printed its last line without eol, or ended with an
@@ -32,7 +48,8 @@ erry_prompt_command() {
 
 	for p in "${!pipestatus[@]}"; do
 		if [[ ${pipestatus[p]} -ne 0 ]]; then
-			printf -v pipestatus[p] '\e[1;31m%s\e[m' "${pipestatus[p]}"
+			printf -v pipestatus[p] '\e[1;31m%s\e[m' \
+				"${pipestatus[p]}"
 		fi
 	done
 
@@ -53,24 +70,11 @@ erry_ps0() {
 	# BASH_COMMAND isn't updated in time for PS0, so list it from fc
 	# instead and massage its output. it prints control characters
 	# verbatim, so we sanitize it ourselves.
-
-	local cmd oct c0 pc0
+	local cmd
 	cmd=${ fc -ln -0; }
 	# tab space
 	cmd=${cmd#'	 '}
-
-	# replace all C0 controls with their printable forms
-	# this loop alone takes over 200 microseconds! even if cmd is short
-	for oct in {0..3}{0..7}; do
-		printf -v c0 '%b' '\00'"${oct}"
-		printf -v pc0 '^%b' '\01'"${oct}"
-		cmd=${cmd//"${c0}"/${pc0}}
-	done
-	# and DEL (not C0, but using a variable like this leads to more
-	# readable output in declare -f)
-	printf -v c0 '\177'
-	cmd=${cmd//"${c0}"/^?}
-
+	cmd=${| REPLY=${cmd}; erry_caretify; }
 	# CR syncs column in the terminal and in the kernel's cooked mode
 	printf '\e]2;%s\e\\\r' "${cmd}"
 }

@@ -31,9 +31,6 @@ lib.mkMerge [
     #   # PATH=$PATH:${config.home.homeDirectory}/.foundry/bin
     # '';
 
-    programs.bash.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
-    programs.bash.shellAliases.startvnc = "source ${./startvnc.bash}";
-
     programs.bash.initExtra = ''
       source ${./bash-prompt.bash}
 
