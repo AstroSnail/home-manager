@@ -4,8 +4,8 @@
   nixpkgs.overlays = [
     (final: prev: {
       vim-erry =
-        prev.vim-full.overrideAttrs (oldattrs: {
-          patches = oldattrs.patches ++ [
+        prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: {
+          patches = (prevAttrs.patches or []) ++ [
             ./vim-auto-tgc.patch
             # ./vim-terminal-env.patch
           ];

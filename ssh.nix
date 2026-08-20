@@ -17,6 +17,7 @@
     ControlPath = "~/.ssh/control-%r@[%h]:%p";
     ControlPersist = "no";
     ConnectTimeout = 10;
+    # SendEnv = [ "VTE_VERSION" ];
   };
 
   # programs.ssh.settings."soon" = {

@@ -4,14 +4,14 @@
       # overlaid under a different name because overriding xterm
       # directly seems to cause a large cascade of rebuilds
       xterm-erry =
-        prev.xterm.overrideAttrs (oldattrs: {
+        prev.xterm.overrideAttrs (finalAttrs: prevAttrs: {
           # pname = "xterm-erry"; # broken due to finalAttrs use
           # remove sixel-256.support.patch
           patches = [
             # ./xterm-f1-f4.patch
             # ./xterm-fix-status-line.patch
           ];
-          configureFlags = oldattrs.configureFlags ++ [
+          configureFlags = prevAttrs.configureFlags ++ [
             "--enable-block-select"
             # "--enable-status-line"
             "--enable-toolbar"
@@ -32,9 +32,12 @@
     # "XTerm*VT100.numColorRegisters" = 1024;
 
     # Widget settings
-    # "XTerm.toolBar" = true;
+    "XTerm.toolBar" = true;
+    # approximate gtk dark toolbar backgrounds
+    "XTerm.form.background" = "gray21";
+    "XTerm*menubar*background" = "gray19";
     # "XTerm*menubar.borderWidth" = 1;
-    "XTerm*VT100.borderWidth" = 0; # xterm with toolbar has extra border
+    "XTerm*VT100.borderWidth" = 0; # xterm built with toolbar has extra border
     # TODO: disable scrollbar only in alternate screen
     # "XTerm*VT100.scrollBar" = true;
     # "XTerm*VT100.rightScrollBar" = true;
@@ -78,7 +81,8 @@
     # autoScrollLock: true, saveLines: 1 and scrollTtyOutput: false all almost
     # work extremely well together, but turning off scroll-lock doesn't
     # disengage autoScrollLock, it needs a scroll-down to return to the bottom.
-    # the real solution is to learn to use a pager like less.
+    # the real solution is to learn to use a pager like less. an alternative
+    # solution is to use xon/xoff, but is it worth losing ctrl-s and ctrl-q?
     # "XTerm*VT100.allowScrollLock" = true;
     # "XTerm*VT100.autoScrollLock" = true;
     # "XTerm*VT100.cdXtraScroll" = true;
@@ -103,7 +107,7 @@
     "XTerm.omitTranslation" = [
       # no saveLines? no scroll needed
       "paging"
-      "reset"
+      # "reset"
       "scroll-lock"
       "wheel-mouse"
       # gets in the way of shift+kp_add in vt220 keyboard mode

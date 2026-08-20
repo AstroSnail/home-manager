@@ -13,30 +13,37 @@
   home.preferXdgDirectories = true;
   home.shell.enableShellIntegration = false;
 
-  home.sessionVariables.CARGO_TARGET_DIR = "${config.xdg.cacheHome}/cargo";
-  home.sessionVariables.GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
-  home.sessionVariables.LESS = "iMR";
-  #home.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
-  home.sessionVariables.SYSTEMD_LESS = "iMRS";
-  home.sessionVariables.SYSTEMD_PAGERSECURE = "1";
-  # home.sessionVariables.WINEARCH = "win64";
+  home.sessionVariables = {
+    CARGO_TARGET_DIR = "${config.xdg.cacheHome}/cargo";
+    GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
+    LESS = "iMR";
+    # MOZ_ENABLE_WAYLAND = "0";
+    SYSTEMD_LESS = "iMRS";
+    SYSTEMD_PAGERSECURE = "1";
+    # WINEARCH = "win64";
+  };
 
-  # home.shellAliases.cat = "noexec"; # bat
-  # home.shellAliases.find = "noexec"; # fd
-  # home.shellAliases.grep = "noexec"; # rg
-  # home.shellAliases.htop = "noexec"; # btop
-  # home.shellAliases.less = "noexec"; # bat
-  # home.shellAliases.ls = "noexec"; # eza
-  # home.shellAliases.rm = "noexec"; # rip
+  home.shellAliases = {
+    # cat = "noexec"; # bat
+    # find = "noexec"; # fd
+    # grep = "noexec"; # rg
+    # htop = "noexec"; # btop
+    # less = "noexec"; # bat
+    # ls = "noexec"; # eza
+    # rm = "noexec"; # rip
 
-  home.shellAliases.fd = "fd --no-ignore --hidden";
-  home.shellAliases.rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
+    cp = "cp --interactive --preserve=timestamps";
+    fd = "fd --no-ignore --hidden";
+    ls = "ls --classify=auto --color=auto";
+    mv = "mv --interactive";
+    rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
 
-  home.shellAliases.caretify = "sed --null-data --file=${./caretify.sed}";
-  home.shellAliases.nix-locate = "nix run -- github:nix-community/nix-index-database";
+    caretify = "sed --null-data --file=${./caretify.sed}";
+    nix-locate = "nix run -- github:nix-community/nix-index-database";
 
-  home.shellAliases.startvnc = ". ${./startvnc.sh}";
-  home.shellAliases.startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
+    startvnc = ". ${./startvnc.sh}";
+    startw = "sway --unsupported-gpu </dev/null >|~/.local/share/sway-o.txt 2>|~/.local/share/sway-e.txt";
+  };
 
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];

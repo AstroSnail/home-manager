@@ -1,0 +1,13 @@
+diff --git a/src/vtedefines.hh b/src/vtedefines.hh
+index 23827c96..6fe3edf4 100644
+--- a/src/vtedefines.hh
++++ b/src/vtedefines.hh
+@@ -141,7 +141,7 @@
+ 
+ #define VTE_VERSION_NUMERIC ((VTE_MAJOR_VERSION) * 10000 + (VTE_MINOR_VERSION) * 100 + (VTE_MICRO_VERSION))
+ 
+-#define VTE_TERMINFO_NAME "xterm-256color"
++#define VTE_TERMINFO_NAME "vte-256color"
+ 
+ #define VTE_MIN_CURSOR_BLINK_CYCLE (50 /* ms */)
+ #define VTE_MIN_CURSOR_BLINK_TIMEOUT (50 /* ms */)

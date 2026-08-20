@@ -21,7 +21,7 @@ lib.mkMerge [
     ];
 
     programs.bash.initExtra = ''
-      HISTTIMEFORMAT=
+      HISTTIMEFORMAT='%F %T '
       PROMPT_DIRTRIM=2
     '';
   }
@@ -34,7 +34,7 @@ lib.mkMerge [
     programs.bash.initExtra = ''
       source ${./bash-prompt.bash}
 
-      # disable ^S magic so bash can use it
+      # make CTRL-S usable in bash
       stty -ixon
 
       # sound the bell to check that it's working

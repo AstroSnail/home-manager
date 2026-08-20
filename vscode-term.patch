@@ -1,0 +1,15 @@
+diff --git a/src/vs/platform/terminal/node/terminalProcess.ts b/src/vs/platform/terminal/node/terminalProcess.ts
+index d8d166dc7fa..ab67698b396 100644
+--- a/src/vs/platform/terminal/node/terminalProcess.ts
++++ b/src/vs/platform/terminal/node/terminalProcess.ts
+@@ -149,9 +149,7 @@ export class TerminalProcess extends Disposable implements ITerminalChildProcess
+ 		if (isWindows) {
+ 			name = path.basename(this.shellLaunchConfig.executable || '');
+ 		} else {
+-			// Using 'xterm-256color' here helps ensure that the majority of Linux distributions will use a
+-			// color prompt as defined in the default ~/.bashrc file.
+-			name = 'xterm-256color';
++			name = 'vscode';
+ 		}
+ 		this._initialCwd = cwd;
+ 		this._properties[ProcessPropertyType.InitialCwd] = this._initialCwd;

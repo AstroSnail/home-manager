@@ -70,6 +70,8 @@ erry_ps0() {
 	# BASH_COMMAND isn't updated in time for PS0, so list it from fc
 	# instead and massage its output. it prints control characters
 	# verbatim, so we sanitize it ourselves.
+	# TODO: fc can't see commands excluded from history by HISTCONTROL or
+	# HISTIGNORE. what then?
 	local cmd
 	cmd=${ fc -ln -0; }
 	# tab space

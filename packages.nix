@@ -69,7 +69,8 @@ in {
     ./urxvt.nix
     ./vim.nix
     # NOTE: after re-enabling vscode, also add direnv and lua-language-server to packages
-    ./vscode.nix
+    # ./vscode.nix
+    ./vscodium.nix
     ./xterm.nix
     ./zutty.nix
   ];
@@ -107,6 +108,11 @@ in {
     #  });
     #})
     (final: prev: {
+     vte = prev.vte.overrideAttrs (finalAttrs: prevAttrs: {
+       patches = (prevAttrs.patches or []) ++ [ ./vte-term.patch ];
+     });
+    })
+    (final: prev: {
       yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: let
         version = "2026.1.29";
         hash = "sha256-ErSJ6xaCjMP/8XI/JEmS666KW/Gtdcjp8B1ymuI367k=";
@@ -134,14 +140,10 @@ in {
   programs.fd.enable = true;
   # programs.feh.enable = true;
   programs.firefox.enable = true;
-  programs.firefox.package =
-    # i'm howling at the moon
-    if lib.versionAtLeast pkgs.firefox-esr.version "142.0"
-    then pkgs.firefox-esr
-    else pkgs.firefox;
+  programs.firefox.package = pkgs.firefox-esr;
   # TODO: migrate to ${config.xdg.configHome}/mozilla/firefox
   programs.firefox.configPath = "${config.home.homeDirectory}/.mozilla/firefox";
-  programs.fish.enable = true;
+  # programs.fish.enable = true;
   #programs.htop.enable = true; # TODO: port config to here
   programs.jq.enable = true;
   #programs.jq.colors = {
@@ -290,6 +292,7 @@ in {
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
     # pkgs.lua-language-server
     #pkgs.lutris
+    pkgs.lxterminal
     pkgs.man-pages
     pkgs.man-pages-posix
     #pkgs.megasync
