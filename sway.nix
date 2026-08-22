@@ -53,32 +53,32 @@ in {
     '';
   }];
   wayland.windowManager.sway.config.colors.focused = {
-    border = "#e5e5e5"; # gray90
-    background = "#285577"; # default
-    text = "#ffffff"; # default
-    indicator = "#2e9ef4"; # default
-    childBorder = "#e5e5e5"; # gray90
+    border = "#e5e5e5"; # x11 gray90
+    background = "#285577"; # i3 default
+    text = "#ffffff"; # x11 white
+    indicator = "#2e9ef4"; # i3 default
+    childBorder = "#e5e5e5"; # x11 gray90
   };
   wayland.windowManager.sway.config.colors.focusedInactive = {
-    border = "#7f7f7f"; # gray50
-    background = "#5f676a"; # default
-    text = "#ffffff"; # default
-    indicator = "#484e50"; # default
-    childBorder = "#7f7f7f"; # gray50
+    border = "#7f7f7f"; # x11 gray50
+    background = "#000000"; # x11 black
+    text = "#ffffff"; # x11 white
+    indicator = "#2e9ef4"; # like focused
+    childBorder = "#7f7f7f"; # x11 gray50
   };
   wayland.windowManager.sway.config.colors.unfocused = {
-    border = "#333333"; # gray20
-    background = "#222222"; # default
-    text = "#888888"; # default
-    indicator = "#292d2e"; # default (unused?)
-    childBorder = "#333333"; # gray20
+    border = "#7f7f7f"; # x11 gray50
+    background = "#000000"; # x11 black
+    text = "#999999"; # x11 gray60
+    indicator = "#2e9ef4"; # like focused (unused?)
+    childBorder = "#7f7f7f"; # x11 gray50
   };
   wayland.windowManager.sway.config.colors.urgent = {
-    border = "#cd0000"; # red3
-    background = "#900000"; # default
-    text = "#ffffff"; # default
-    indicator = "#cd0000"; # red3
-    childBorder = "#cd0000"; # red3
+    border = "#cd0000"; # x11 red3
+    background = "#8b0000"; # x11 red4
+    text = "#ffffff"; # x11 white
+    indicator = "#cd0000"; # x11 red3
+    childBorder = "#cd0000"; # x11 red3
   };
   wayland.windowManager.sway.config.floating.criteria = [
     { app_id = lib.concatStringsSep "|" floatingAppIds; }
