@@ -34,10 +34,11 @@
     # Widget settings
     "XTerm.toolBar" = true;
     # approximate gtk dark toolbar backgrounds
-    "XTerm.form.background" = "gray21";
+    "XTerm*form.background" = "gray21";
     "XTerm*menubar*background" = "gray19";
     # "XTerm*menubar.borderWidth" = 1;
     "XTerm*VT100.borderWidth" = 0; # xterm built with toolbar has extra border
+    "XTerm*Tek4014.borderWidth" = 0; # do i care about the tek window?
     # TODO: disable scrollbar only in alternate screen
     # "XTerm*VT100.scrollBar" = true;
     # "XTerm*VT100.rightScrollBar" = true;
@@ -98,9 +99,9 @@
     # on a linux system, but xterm default-enables backarrowKey at
     # build time (ie backarrow=BS).
     "XTerm*VT100.backarrowKey" = false;
-    "XTerm*VT100.eightBitInput" = false;
+    # "XTerm*VT100.eightBitInput" = false;
     "XTerm*VT100.locale" = true;
-    # "XTerm*VT100.metaSendsEscape" = true;
+    "XTerm*VT100.metaSendsEscape" = true;
     # "XTerm*VT100.modifyOtherKeys" = 2;
 
     # Translation settings
