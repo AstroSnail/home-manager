@@ -33,10 +33,13 @@
 
     # Widget settings
     "XTerm.toolBar" = true;
-    # approximate gtk dark toolbar backgrounds
+    # approximate adwaita dark menubar style
     "XTerm*form.background" = "gray21";
-    "XTerm*menubar*background" = "gray19";
+    "XTerm*menubar.background" = "gray21";
     # "XTerm*menubar.borderWidth" = 1;
+    "XTerm*MenuButton.background" = "gray21";
+    "XTerm*SimpleMenu*background" = "gray19";
+    # "XTerm*SmeLine.foreground" = "gray17"; # hard to see
     "XTerm*VT100.borderWidth" = 0; # xterm built with toolbar has extra border
     "XTerm*Tek4014.borderWidth" = 0; # do i care about the tek window?
     # TODO: disable scrollbar only in alternate screen
