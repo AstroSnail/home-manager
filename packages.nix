@@ -60,6 +60,7 @@ let
 in {
   imports = [
     ./bash.nix
+    ./editres.nix
     ./emacs.nix
     ./git.nix
     #./gnome-terminal.nix
