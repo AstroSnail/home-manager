@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  home.packages = [ pkgs.editres ];
+  # home.packages = [ pkgs.editres ];
 
   xresources.properties = {
     "Editres*xt*namesLabel.Label" = "Normal Resources: right-click gets a value";

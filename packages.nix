@@ -28,27 +28,27 @@ let
     runtimeInputs = [ config.programs.jq.package ];
     text = lib.readFile ./vim-drop.sh;
   };
-  winelegacy = pkgs.writeShellApplication {
-    name = "winelegacy";
-    # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
-    # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
-    text = lib.readFile ./wine.sh;
-  };
-  wine32 = pkgs.writeShellApplication {
-    name = "wine32";
-    # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
-    # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
-    text = lib.readFile ./wine.sh;
-  };
-  wine64 = pkgs.writeShellApplication {
-    name = "wine64";
-    # runtimeInputs = [ pkgs.wineWow64Packages.waylandFull pkgs.winetricks ];
-    # runtimeInputs = [ pkgs.wineWow64Packages.stagingFull pkgs.winetricks ];
-    runtimeInputs = [ pkgs.wineWow64Packages.full pkgs.winetricks ];
-    text = lib.readFile ./wine.sh;
-  };
+  # winelegacy = pkgs.writeShellApplication {
+  #   name = "winelegacy";
+  #   # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
+  #   # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
+  #   runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
+  #   text = lib.readFile ./wine.sh;
+  # };
+  # wine32 = pkgs.writeShellApplication {
+  #   name = "wine32";
+  #   # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
+  #   # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
+  #   runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
+  #   text = lib.readFile ./wine.sh;
+  # };
+  # wine64 = pkgs.writeShellApplication {
+  #   name = "wine64";
+  #   # runtimeInputs = [ pkgs.wineWow64Packages.waylandFull pkgs.winetricks ];
+  #   # runtimeInputs = [ pkgs.wineWow64Packages.stagingFull pkgs.winetricks ];
+  #   runtimeInputs = [ pkgs.wineWow64Packages.full pkgs.winetricks ];
+  #   text = lib.readFile ./wine.sh;
+  # };
 
   apexctl = pkgs.callPackage (pkgs.fetchFromGitHub {
     owner = "AstroSnail";
@@ -128,13 +128,13 @@ in {
     })
   ];
 
-  programs.btop.enable = true;
+  # programs.btop.enable = true;
   programs.chromium.enable = true;
   programs.direnv.enable = true;
   # programs.direnv.enableBashIntegration = false;
   #programs.direnv.enableFishIntegration = false;
   #programs.direnv.nix-direnv.enable = true;
-  programs.element-desktop.enable = true;
+  # programs.element-desktop.enable = true;
   #programs.eza.enable = true;
   #programs.eza.enableBashIntegration = false;
   #programs.eza.enableFishIntegration = false;
@@ -214,6 +214,7 @@ in {
   services.protonmail-bridge.enable = true;
   services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
   services.protonmail-bridge.extraPackages = [ pkgs.pass ];
+  systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
   services.wayvnc.enable = true;
   # TODO: unix socket
   services.wayvnc.settings.address = "::1";
@@ -223,7 +224,6 @@ in {
   services.wayvnc.settings.xkb_variant = "";
   # services.wayvnc.settings.xkb_options = "caps:escape,compose:menu";
   services.wayvnc.settings.xkb_options = "compose:menu,grp:sclk_toggle";
-  systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
 
   home.packages = [
     # should go in overlay? /shrug
@@ -233,19 +233,19 @@ in {
     passmenu-patient
     vim-commit
     vim-drop
-    winelegacy
-    wine32
-    wine64
+    # winelegacy
+    # wine32
+    # wine64
 
     pkgs._7zz
     #pkgs.anbox
     pkgs.android-tools
-    pkgs.appimage-run
+    # pkgs.appimage-run
     #pkgs.ares # broken 2025-06-20
     pkgs.ascii
-    pkgs.bat
+    # pkgs.bat
     pkgs.bc
-    pkgs.bchunk
+    # pkgs.bchunk
     pkgs.bintools
     #pkgs.blender
     #pkgs.briar-desktop
@@ -270,17 +270,17 @@ in {
     #pkgs.gdb
     #pkgs.gdmap # broken 2024-12-28
     #pkgs.ghostscript
-    pkgs.gimp
+    # pkgs.gimp
     #pkgs.gparted
     pkgs.grim
     #pkgs.gzdoom
     pkgs.htop
-    pkgs.imagemagick
+    # pkgs.imagemagick
     #pkgs.inetutils
     #pkgs.inkscape
     #pkgs.iotop
-    pkgs.irssi
-    pkgs.jre
+    # pkgs.irssi
+    # pkgs.jre
     #pkgs.kdenlive # replaced with kdepackages.kdenlive 2025-02-25
     #pkgs.killall
     #pkgs.krita
@@ -294,7 +294,7 @@ in {
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
     # pkgs.lua-language-server
     #pkgs.lutris
-    pkgs.lxterminal
+    # pkgs.lxterminal
     pkgs.man-pages
     pkgs.man-pages-posix
     #pkgs.megasync
@@ -303,10 +303,10 @@ in {
     #pkgs.minetest # broken by bisect
     pkgs.moreutils
     #pkgs.mumble # broken 2025-03-16
-    pkgs.ncdu
+    # pkgs.ncdu
     #pkgs.nixfmt
-    pkgs.nixos-option
-    pkgs.nix-output-monitor
+    # pkgs.nixos-option
+    # pkgs.nix-output-monitor
     #pkgs.nixpkgs-fmt
     #pkgs.nmap
     #pkgs.nodejs
@@ -323,19 +323,19 @@ in {
     #pkgs.piper
     #pkgs.polymc
     #pkgs.poppler_utils
-    pkgs.prismlauncher
+    # pkgs.prismlauncher
     #pkgs.protontricks
-    pkgs.pv
+    # pkgs.pv
     # (pkgs.python3.withPackages (ps: [ ps.matplotlib ps.more-itertools ps.numpy ps.sympy ps.pycurl ps.certifi ]))
-    pkgs.python3
+    # pkgs.python3
     #pkgs.qemu_full
     #pkgs.qrencode
     #pkgs.qpwgraph
     #pkgs.qtox
     #pkgs.ripcord
     pkgs.rm-improved
-    pkgs.rxvt-unicode
-    pkgs.sameboy
+    # pkgs.rxvt-unicode
+    # pkgs.sameboy
     #pkgs.scanmem
     #pkgs.scrot
     pkgs.signal-desktop
@@ -346,7 +346,7 @@ in {
     #pkgs.steamcmd
     #pkgs.strongswan
     #pkgs.superTuxKart
-    pkgs.syncplay
+    # pkgs.syncplay
     pkgs.texstudio
     pkgs.thunderbird
     #pkgs.turbovnc
@@ -371,6 +371,6 @@ in {
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli
-    pkgs.zutty
+    # pkgs.zutty
   ];
 }
