@@ -32,11 +32,12 @@
     # ls = "noexec"; # eza
     # rm = "noexec"; # rip
 
-    cp = "cp --interactive --preserve=timestamps";
-    fd = "fd --no-ignore --hidden";
+    # cp = "cp --interactive --preserve=timestamps"; # cp -ip
+    # fd = "fd --hidden --no-ignore"; # fd -u
+    # mv = "mv --interactive"; # mv -i
+    # rg = "rg --no-ignore --hidden --smart-case"; # rg -Suu
+
     ls = "ls --classify=auto --color=auto";
-    mv = "mv --interactive";
-    rg = "rg --no-ignore --hidden --glob='!.git' --smart-case";
 
     caretify = "sed --null-data --file=${./caretify.sed}";
     nix-locate = "nix run -- github:nix-community/nix-index-database";

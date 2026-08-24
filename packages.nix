@@ -171,6 +171,7 @@ in {
   programs.password-store.enable = true; # see also services.pass-secret-service
   programs.password-store.settings.PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
   programs.ripgrep.enable = true;
+  programs.ripgrep.arguments = [ "--glob=!.git" ];
   programs.streamlink.enable = true;
   programs.streamlink.settings.player = "mpv";
   programs.streamlink.settings.twitch-low-latency = true;
