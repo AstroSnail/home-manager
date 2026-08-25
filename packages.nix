@@ -294,7 +294,7 @@ in {
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
     # pkgs.lua-language-server
     #pkgs.lutris
-    # pkgs.lxterminal
+    pkgs.lxterminal
     pkgs.man-pages
     pkgs.man-pages-posix
     #pkgs.megasync
