@@ -8,9 +8,8 @@ source $VIMRUNTIME/defaults.vim
 runtime ftplugin/man.vim
 autocmd! vimHints CmdwinEnter
 
-set autoindent autoread breakindent formatoptions=tcroqj hlsearch ignorecase
-set nojoinspaces laststatus=2 linebreak showtabline=2 smartcase nostartofline
-set wildignorecase
+set autoindent autoread breakindent formatoptions=tcroqj hlsearch nojoinspaces
+set laststatus=2 linebreak showtabline=2 nostartofline wildignorecase
 set sessionoptions-=options # work around bug with the comment plugin
 &keywordprg = ':Man'
 &listchars = 'eol:$,tab:  |,space:.,extends:>,precedes:<,nbsp:+'
@@ -31,7 +30,7 @@ if &term =~ 'xterm.*'
 endif
 
 # edit git commit messages in the enclosing vim editor
-# (e.g. by running git commit in a :terminal)
+# e.g. by running git commit in a :terminal
 # uses terminal-api to spawn a window for the commit message
 $GIT_EDITOR = 'vim-commit'
 
@@ -41,9 +40,12 @@ $GIT_EDITOR = 'vim-commit'
 inoremap <C-W> <C-G>u<C-W>
 
 # unhighlight searches with Meta-u, a bit like less
-# (supposing metaSendsEscape as a metaphor, because less really parses ESC-u)
+# supposes metaSendsEscape as a metaphor, because less really parses ESC-u
+# while vim enables terminal features (e.g. modifyOtherKeys) to distinguish
+# this from :undo
+# some terminals always send meta as escape, and can't reach this mapping!
 nmap <M-u> <Cmd>nohlsearch<CR>
 
-# like doom-emacs (much more useful than :sleep)
+# like doom-emacs, much more useful than :sleep
 map gs <Plug>(easymotion-prefix)
 g:EasyMotion_startofline = 0
