@@ -32,7 +32,8 @@ lib.mkMerge [
     # '';
 
     programs.bash.initExtra = ''
-      source ${./bash-prompt.bash}
+      . ${./bash-funcs.bash}
+      . ${./bash-prompt.bash}
 
       # make CTRL-S usable in bash
       stty -ixon
@@ -55,7 +56,7 @@ lib.mkMerge [
 
     programs.bash.initExtra = ''
       eval "$(${lib.getExe' pkgs.coreutils "dircolors"})"
-      source ${pkgs.vte}/etc/profile.d/vte.sh
+      . ${pkgs.vte}/etc/profile.d/vte.sh
     '';
   }
 ]
