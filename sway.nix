@@ -47,7 +47,7 @@ in {
     fonts.names = [ "Dina" ];
     fonts.size = 10.0;
     position = "bottom";
-    statusCommand = "${pkgs.i3status}/bin/i3status | awk -f ${./i3status-wrapper.gawk}";
+    statusCommand = "${pkgs.i3status}/bin/i3status | gawk -f ${./i3status-wrapper.gawk}";
     extraConfig = ''
       modifier none
     '';
@@ -90,7 +90,7 @@ in {
   wayland.windowManager.sway.config.focus.followMouse = false;
   #wayland.windowManager.sway.config.fonts = fonts;
   wayland.windowManager.sway.config.fonts.names = [ "DejaVu Serif" ];
-  wayland.windowManager.sway.config.fonts.size = 9.5;
+  wayland.windowManager.sway.config.fonts.size = 10.0;
   wayland.windowManager.sway.config.gaps.inner = 8;
   wayland.windowManager.sway.config.input."4152:4610:SteelSeries_SteelSeries_Apex_Gaming_Keyboard" = {
     #xkb_layout = "pt";
