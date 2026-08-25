@@ -16,9 +16,9 @@
   home.sessionVariables = {
     CARGO_TARGET_DIR = "${config.xdg.cacheHome}/cargo";
     GRIM_DEFAULT_DIR = "${config.xdg.userDirs.pictures}/grim";
-    LESS = "iMR";
+    LESS = "M";
     # MOZ_ENABLE_WAYLAND = "0";
-    SYSTEMD_LESS = "iMRS";
+    SYSTEMD_LESS = "MRS";
     SYSTEMD_PAGERSECURE = "1";
     # WINEARCH = "win64";
   };
