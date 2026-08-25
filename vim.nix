@@ -7,7 +7,7 @@
         prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: {
           patches = (prevAttrs.patches or []) ++ [
             ./vim-auto-tgc.patch
-            # ./vim-terminal-env.patch
+            ./vim-term.patch
           ];
         });
     })
@@ -24,6 +24,7 @@
 
   programs.vim.enable = true;
   programs.vim.packageConfigurable = pkgs.vim-erry;
+  # NOTE: see also terminal-specific.sh
   programs.vim.defaultEditor = true;
   programs.vim.plugins = lib.mkForce [ # remove vim-sensible
     pkgs.vimPlugins.vim-erry

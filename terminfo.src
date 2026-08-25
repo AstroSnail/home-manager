@@ -4,74 +4,11 @@
 #   that should clear caps won't by themselves
 #   (is this really true?)
 
-# xterm-erry
-# specially crafted to map:
-# - kcuu1-kcub1 to SS3 A through SS3 D
-# - kent to SS3 M
-# - kpMUL-ka3 to SS3 j through SS3 y
-# - khome-knp to CSI 1 ~ through CSI 6 ~
-# - kf1-kf42 to CSI 11 ~ through CSI 63 ~ (see notes below)
-# and to enable lots of colors and features!
-# in spirit, it's a mishmash of xterm-new (features),
-# xterm-old (F-keys), xterm-vt220 (num- and edit-pad, and
-# compromise of modified keys), xterm-256color (colors) and
-# cherry-picking whatever i decided i liked best.
-# TODO: pfkey/pfloc/pfx/pfxl/pln
-#       WS (putty+screen is cool, but
-#           why is WS commented out?)
-xterm-erry|Erry's custom xterm description,
-#	unwanted and not overridden
-	kbeg@, kp5@,
-#	caps more like xterm-256color (with fixed setab/f)
-	setb@, setf@,
-	use=xterm+osc104, use=xterm+256color2,
-#	caps more like xterm-p371
-	use=dec+sl, use=bracketed+paste, use=report+version,
-#	kf[1-4] here override below
-	use=xterm+nopcfkeys,
-#	khome, kend here override below
-	use=xterm+edit,
-#	don't want khome, kend from here
-	use=xterm+app,
-#	don't want kbeg, kp5, kf[1-4] from here
-#	but otherwise extremely convenient base
-	use=xterm+nofkeys,
-
-# notes:
-
-# the VT220 keyboard (LK201) grouped the F-keys like so:
-# 1 2 3 4 5   6 7 8 9 10   11 12 13 14   15 16   17 18 19 20
-# the gaps between the groups correspond exactly to gaps in
-# the control codes XTerm sends (with keyboardType: legacy).
-# after F20 there's a gap of 7 and past that all codes
-# (invented for XTerm) are contiguous.
-# note that the VT220 wouldn't actually send F[1-5] over the
-# wire, they are used for local functions. so from a VT220
-# emulation standpoint, it's okay to put PF[1-4] there.
-
-# xterm+nopcfkeys is good, but we can take it further into
-# absurdity! too bad terminfo tops out at kf63.
-# (xterm+npcfkeys is even more restrained, stopping at kf42)
-# Xlib goes up to XK_F35, so combining that with
-# ctrlFKeys: 35 and modifyFunctionKeys: -1 lets us
-# theoretically reach up to CSI 161 ~ (aka kf140).
-# (XTerm might support even higher X11 F-keys?)
-
-# also note that xterm+nopcfkeys sets kf[1-4] to F[1-4]
-# instead of PF[1-4]. this requires either
-# keyboardType: legacy, or a patched XTerm! ideally XTerm
-# would let me mix keyboardType legacy (for F-keys) and
-# vt220 (for keypad).
-# PF[1-4] are still reachable by XK_KP_F[1-4] (achievable
-# with custom xkeyboard configs, or a real LK201).
-
-# xterm-direct caps are broken for applications that check
-# colors but not RGB (e.g. vim since 9.1.1114)
-
-# missing from xterm's XTGETTCAP responses:
-# - RGB#8, kfnd=\E[1~, kslt=\E[4~, khlp=\E[28~
-# - kclr=, kund=,
-# i'm not certain how to handle these
-# - does RGB require corresponding support in setab/f?
-# - kfnd, kslt, khlp alias khome, kend, kf15 respectively
-# - kclr, kund are empty?
+# TODO: vim uses libvterm, author of libvterm also made pangoterm with it.
+# is vim :terminal closer to pangoterm than xterm?
+vim|vim :terminal,
+	use=xterm,
+vim-color|vim :terminal with 16 colors,
+	use=xterm-color,
+vim-256color|vim :terminal with 256 colors,
+	use=xterm-256color,

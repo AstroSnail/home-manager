@@ -1,0 +1,39 @@
+diff --git a/src/os_unix.c b/src/os_unix.c
+index 904421772..af3b36e64 100644
+--- a/src/os_unix.c
++++ b/src/os_unix.c
+@@ -6218,18 +6218,13 @@ mch_job_start(char **argv, job_T *job, jobopt_T *options, int is_terminal)
+ 		// In the GUI 'term' is not what we want, use $TERM.
+ 		term = getenv("TERM");
+ #  endif
+-	    // Use 'term' or $TERM if it starts with "xterm", otherwise fall
+-	    // back to "xterm" or "xterm-color".
+-	    if (term == NULL || *term == NUL || STRNCMP(term, "xterm", 5) != 0)
+-	    {
+-		if (t_colors >= 256)
+-		    // TODO: should we check this name is supported?
+-		    term = "xterm-256color";
+-		else if (t_colors > 16)
+-		    term = "xterm-color";
+-		else
+-		    term = "xterm";
+-	    }
++	    if (t_colors >= 256)
++		// TODO: should we check this name is supported?
++		term = "vim-256color";
++	    else if (t_colors > 16)
++		term = "vim-color";
++	    else
++		term = "vim";
+ 	    set_child_environment(
+ 		    (long)options->jo_term_rows,
+ 		    (long)options->jo_term_cols,
+diff --git a/src/version.c b/src/version.c
+index 4277e31e3..ff4ad49ef 100644
+--- a/src/version.c
++++ b/src/version.c
+@@ -2338,2 +2338,4 @@ static int included_patches[] =
+ {   /* Add your patch description below this line */
++/**/
++    "term env fix",
+ /**/

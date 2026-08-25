@@ -15,7 +15,7 @@ set sessionoptions-=options # work around bug with the comment plugin
 &listchars = 'eol:$,tab:  |,space:.,extends:>,precedes:<,nbsp:+'
 &showbreak = '> '
 
-if &term =~ 'xterm.*'
+if split(&term, '-')[0] == 'xterm'
 	# enable cursor shapes
 	&t_SI = "\<Esc>[6 q"
 	&t_SR = "\<Esc>[4 q"
@@ -28,11 +28,6 @@ if &term =~ 'xterm.*'
 	&t_Ds = ''
 	&t_Ce = ''
 endif
-
-# edit git commit messages in the enclosing vim editor
-# e.g. by running git commit in a :terminal
-# uses terminal-api to spawn a window for the commit message
-$GIT_EDITOR = 'vim-commit'
 
 # add undo step for CTRL-W
 # helpful when editing and switching windows a lot

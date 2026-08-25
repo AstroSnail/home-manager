@@ -18,15 +18,15 @@ let
     runtimeInputs = [ pkgs.dmenu pkgs.pass pkgs.xdotool pkgs.ydotool ];
     text = lib.readFile ./passmenu-patient.bash;
   };
-  vim-commit = pkgs.writeShellApplication {
-    name = "vim-commit";
-    runtimeInputs = [ vim-drop ];
-    text = lib.readFile ./vim-commit.sh;
-  };
   vim-drop = pkgs.writeShellApplication {
     name = "vim-drop";
     runtimeInputs = [ config.programs.jq.package ];
     text = lib.readFile ./vim-drop.sh;
+  };
+  vim-edit = pkgs.writeShellApplication {
+    name = "vim-edit";
+    runtimeInputs = [ vim-drop ];
+    text = lib.readFile ./vim-edit.sh;
   };
   # winelegacy = pkgs.writeShellApplication {
   #   name = "winelegacy";
@@ -231,8 +231,8 @@ in {
     github-clone
     # noexec
     passmenu-patient
-    vim-commit
     vim-drop
+    vim-edit
     # winelegacy
     # wine32
     # wine64

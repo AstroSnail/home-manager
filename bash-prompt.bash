@@ -65,7 +65,7 @@ erry_ps0() {
 	printf '\e]2;%s\e\\\r' "${cmd}"
 }
 
-if [[ ${TERM} != dumb ]]; then
+if [[ ${TERM%%-*} != dumb ]]; then
 	PROMPT_COMMAND+=(erry_prompt_command)
 	# shellcheck disable=SC2016
 	PS0='${ erry_ps0; }'"${PS0:-}"

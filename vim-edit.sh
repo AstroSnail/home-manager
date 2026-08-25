@@ -1,4 +1,4 @@
-printf 'Type y <enter> after saving the commit message.\n'
+printf 'Type y <enter> here after saving your changes.\n'
 vim-drop "$@"
 read -r resp
 if [ "${resp}" = y ]; then

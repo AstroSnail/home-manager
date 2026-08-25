@@ -32,6 +32,8 @@ lib.mkMerge [
     # '';
 
     programs.bash.initExtra = ''
+      . ${./terminal-specific.sh}
+
       . ${./bash-funcs.bash}
       . ${./bash-prompt.bash}
 
@@ -55,8 +57,8 @@ lib.mkMerge [
     programs.dircolors.enable = false;
 
     programs.bash.initExtra = ''
-      eval "$(${lib.getExe' pkgs.coreutils "dircolors"})"
       . ${pkgs.vte}/etc/profile.d/vte.sh
+      eval "$(${lib.getExe' pkgs.coreutils "dircolors"})"
     '';
   }
 ]

@@ -6,7 +6,7 @@
     ./i3status.nix
     ./sway.nix
     ./systemd.nix
-    # ./terminfo.nix
+    ./terminfo.nix
     ./xdg.nix
   ];
 
