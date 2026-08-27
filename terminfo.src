@@ -5,10 +5,10 @@
 #   (is this really true?)
 
 # TODO: vim uses libvterm, author of libvterm also made pangoterm with it.
-# is vim :terminal closer to pangoterm than xterm?
-vim|vim :terminal,
+# is vim terminal closer to pangoterm than xterm?
+vim|vim terminal,
 	use=xterm,
-vim-color|vim :terminal with 16 colors,
+vim-color|vim terminal with 16 colors,
 	use=xterm-color,
-vim-256color|vim :terminal with 256 colors,
+vim-256color|vim terminal with 256 colors,
 	use=xterm-256color,
