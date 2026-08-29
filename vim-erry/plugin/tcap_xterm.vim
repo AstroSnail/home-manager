@@ -115,12 +115,27 @@ vim9script
 &t_fe = "\<Esc>[?1004h"
 &t_fd = "\<Esc>[?1004l"
 
-# if a terminal doesn't support 8u it probably doesn't support AU either
-autocmd TermResponse * {
-	if &t_8u == ''
-		&t_AU = ''
-	endif
-}
+if str2nr(&t_Co) == 16777216
+	set termguicolors
+endif
+
+augroup TcapXterm
+	autocmd!
+
+	# if a terminal doesn't support 8u it probably doesn't support AU either
+	autocmd TermResponse * {
+		if &t_8u == ''
+			&t_AU = ''
+		endif
+	}
+
+	autocmd TermResponseAll * {
+		if expand('<amatch>') == 'RGB' && v:termrgbresp == '8'
+			set termguicolors
+			redraw!
+		endif
+	}
+augroup END
 
 set keyprotocol+=vim:mok2,vte:none
 # (test vscode with \e[?4m and \e[?u)

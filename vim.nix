@@ -6,7 +6,7 @@
       vim-erry =
         prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: {
           patches = (prevAttrs.patches or []) ++ [
-            ./vim-auto-tgc.patch
+            ./vim-rgb-resp.patch
             ./vim-term.patch
           ];
         });

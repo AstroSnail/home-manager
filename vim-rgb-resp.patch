@@ -1,0 +1,214 @@
+diff --git a/runtime/doc/autocmd.txt b/runtime/doc/autocmd.txt
+index b3d1deb25..93993603f 100644
+--- a/runtime/doc/autocmd.txt
++++ b/runtime/doc/autocmd.txt
+@@ -1316,12 +1316,12 @@ TermResponse			After the response to |t_RV| is received from
+ 				takes time is involved.
+ 							*TermResponseAll*
+ TermResponseAll			After the response to |t_RV|, |t_RC|, |t_RS|,
+-				|t_u7| or any OSC command are received from
+-				the terminal.  The value of |v:termresponse|,
+-				|v:termblinkresp|, |v:termstyleresp|,
+-				|v:termu7resp|, and |v:termosc|
+-				correspondingly, can be used.  <amatch> will
+-				be set to any of:
++				|t_u7|, to any OSC command or to XTGETTCAP RGB
++				are received from the terminal.  The value of
++				|v:termresponse|, |v:termblinkresp|,
++				|v:termstyleresp|, |v:termu7resp|, |v:termosc|
++				and |v:termrgbresp| correspondingly, can be
++				used. <amatch> will be set to any of:
+ 				    "ambiguouswidth" (|t_u7|),
+ 				    "background" (|t_RB|),
+ 				    "cursorblink" (|t_RC|),
+@@ -1330,6 +1330,7 @@ TermResponseAll			After the response to |t_RV|, |t_RC|, |t_RS|,
+ 				    "da1",
+ 				    "osc",
+ 				    "version" (|t_RV|)
++				    "RGB"
+ 				Note that this event may be triggered halfway
+ 				executing another event, especially if file
+ 				I/O, a shell command or anything else that
+diff --git a/runtime/doc/eval.txt b/runtime/doc/eval.txt
+index dffeb3859..94c22dcb9 100644
+--- a/runtime/doc/eval.txt
++++ b/runtime/doc/eval.txt
+@@ -2944,6 +2944,13 @@ v:termosc	The escape sequence of the most recent OSC response received
+ 		|TermResponseAll| autocommand event is fired, with <amatch>
+ 		set to "osc".
+ 
++					*v:termrgbresp* *termrgbresp-variable*
++v:termrgbresp	The decoded response returned by the terminal for the
++		XTGETTCAP RGB request.  This is used to find out whether the
++		terminal supports direct color.  When this variable is set,
++		the |TermResponseAll| autocommand event is fired, with
++		<amatch> set to "RGB".
++
+ 					*v:testing* *testing-variable*
+ v:testing	Must be set before using `test_garbagecollect_now()`.
+ 		Also, when set certain error messages won't be shown for 2
+diff --git a/runtime/doc/tags b/runtime/doc/tags
+index b01ae4204..61d2d0a26 100644
+--- a/runtime/doc/tags
++++ b/runtime/doc/tags
+@@ -11126,6 +11126,7 @@ termresponse-variable	eval.txt	/*termresponse-variable*
+ termrfgresp-variable	eval.txt	/*termrfgresp-variable*
+ termstyleresp-variable	eval.txt	/*termstyleresp-variable*
+ termu7resp-variable	eval.txt	/*termu7resp-variable*
++termrgbresp-variable	eval.txt	/*termrgbresp-variable*
+ termux	builtin.txt	/*termux*
+ ternary	eval.txt	/*ternary*
+ test-functions	usr_41.txt	/*test-functions*
+@@ -11454,6 +11455,7 @@ v:termresponse	eval.txt	/*v:termresponse*
+ v:termrfgresp	eval.txt	/*v:termrfgresp*
+ v:termstyleresp	eval.txt	/*v:termstyleresp*
+ v:termu7resp	eval.txt	/*v:termu7resp*
++v:termrgbresp	eval.txt	/*v:termrgbresp*
+ v:testing	eval.txt	/*v:testing*
+ v:this_session	eval.txt	/*v:this_session*
+ v:throwpoint	eval.txt	/*v:throwpoint*
+diff --git a/runtime/syntax/vim.vim b/runtime/syntax/vim.vim
+index 60e584dcc..afd4ad209 100644
+--- a/runtime/syntax/vim.vim
++++ b/runtime/syntax/vim.vim
+@@ -166,7 +166,7 @@ syn keyword vimFuncName contained uri_encode utf16idx values virtcol virtcol2col
+ " Predefined variable names {{{2
+ " GEN_SYN_VIM: vimVarName, START_STR='syn keyword vimVimVarName contained', END_STR=''
+ syn keyword vimVimVarName contained count count1 prevcount errmsg warningmsg statusmsg shell_error this_session version lnum termresponse fname lang lc_time ctype charconvert_from charconvert_to fname_in fname_out fname_new fname_diff cmdarg foldstart foldend folddashes foldlevel progname servername dying exception throwpoint register cmdbang insertmode val key profiling fcs_reason fcs_choice beval_bufnr beval_winnr beval_winid beval_lnum beval_col beval_text scrollstart swapname swapchoice swapcommand char mouse_win mouse_winid mouse_lnum mouse_col operator searchforward hlsearch oldfiles windowid progpath completed_item option_new option_old option_oldlocal option_oldglobal option_command option_type errors false true none null numbermax numbermin numbersize
+-syn keyword vimVimVarName contained vim_did_enter testing t_number t_string t_func t_list t_dict t_float t_bool t_none t_job t_channel t_blob t_class t_object termrfgresp termrbgresp termu7resp termstyleresp termblinkresp event versionlong echospace argv collate exiting colornames sizeofint sizeoflong sizeofpointer maxcol python3_version t_typealias t_enum t_enumvalue stacktrace t_tuple wayland_display clipmethod termda1 termosc vim_did_init clipproviders
++syn keyword vimVimVarName contained vim_did_enter testing t_number t_string t_func t_list t_dict t_float t_bool t_none t_job t_channel t_blob t_class t_object termrfgresp termrbgresp termu7resp termstyleresp termblinkresp event versionlong echospace argv collate exiting colornames sizeofint sizeoflong sizeofpointer maxcol python3_version t_typealias t_enum t_enumvalue stacktrace t_tuple wayland_display clipmethod termda1 termosc vim_did_init clipproviders termrgbresp
+ 
+ "--- syntax here and above generated by runtime/syntax/generator/gen_syntax_vim.vim ---
+ 
+diff --git a/src/autocmd.c b/src/autocmd.c
+index 98014cf03..235d4b7b8 100644
+--- a/src/autocmd.c
++++ b/src/autocmd.c
+@@ -2560,6 +2560,9 @@ static char_u	*old_termblinkresp = NULL;
+ static char_u	*old_termrbgresp = NULL;
+ static char_u	*old_termrfgresp = NULL;
+ static char_u	*old_termstyleresp = NULL;
++static char_u	*old_termda1 = NULL;
++static char_u	*old_termosc = NULL;
++static char_u	*old_termrgbresp = NULL;
+ #endif
+ 
+ /*
+@@ -2579,6 +2582,9 @@ block_autocmds(void)
+ 	old_termrbgresp = get_vim_var_str(VV_TERMRBGRESP);
+ 	old_termrfgresp = get_vim_var_str(VV_TERMRFGRESP);
+ 	old_termstyleresp = get_vim_var_str(VV_TERMSTYLERESP);
++	old_termda1 = get_vim_var_str(VV_TERMDA1);
++	old_termosc = get_vim_var_str(VV_TERMOSC);
++	old_termrgbresp = get_vim_var_str(VV_TERMRGBRESP);
+     }
+ #endif
+     ++autocmd_blocked;
+@@ -2620,6 +2626,18 @@ unblock_autocmds(void)
+ 	{
+ 	    apply_autocmds(EVENT_TERMRESPONSEALL, (char_u *)"cursorshape", NULL, FALSE, curbuf);
+ 	}
++	if (get_vim_var_str(VV_TERMDA1) != old_termda1)
++	{
++	    apply_autocmds(EVENT_TERMRESPONSEALL, (char_u *)"da1", NULL, FALSE, curbuf);
++	}
++	if (get_vim_var_str(VV_TERMOSC) != old_termosc)
++	{
++	    apply_autocmds(EVENT_TERMRESPONSEALL, (char_u *)"osc", NULL, FALSE, curbuf);
++	}
++	if (get_vim_var_str(VV_TERMRGBRESP) != old_termrgbresp)
++	{
++	    apply_autocmds(EVENT_TERMRESPONSEALL, (char_u *)"RGB", NULL, FALSE, curbuf);
++	}
+     }
+ #endif
+ }
+diff --git a/src/evalvars.c b/src/evalvars.c
+index f74b1c76a..5019f677a 100644
+--- a/src/evalvars.c
++++ b/src/evalvars.c
+@@ -169,6 +169,7 @@ static struct vimvar
+     {VV_NAME("termosc",	 VAR_STRING), NULL, VV_RO},
+     {VV_NAME("vim_did_init",	 VAR_NUMBER), NULL, VV_RO},
+     {VV_NAME("clipproviders",	 VAR_DICT), NULL, VV_RO},
++    {VV_NAME("termrgbresp",	 VAR_STRING), NULL, VV_RO},
+ };
+ 
+ // shorthand
+diff --git a/src/term.c b/src/term.c
+index b789f3924..4e7bba1ac 100644
+--- a/src/term.c
++++ b/src/term.c
+@@ -1789,9 +1789,7 @@ static char *(key_names[]) =
+ # ifdef FEAT_TERMRESPONSE
+     // Do those ones first, both may cause a screen redraw.
+     "Co",
+-    // disabled, because it switches termguicolors, but that
+-    // is noticeable and confuses users
+-    // "RGB",
++    "RGB",
+ # endif
+     "ku", "kd", "kr", "kl",
+     "#2", "#4", "%i", "*7",
+@@ -7636,8 +7634,7 @@ got_code_from_term(char_u *code, int len)
+ # endif
+ 		may_adjust_color_count(val);
+ 	    }
+-# if 0
+-#  ifdef FEAT_TERMGUICOLORS
++# ifdef FEAT_TERMGUICOLORS
+ 	    // when RGB result comes back, it is supported when the result contains an '='
+ 	    else if (name[0] == 'R' && name[1] == 'G' && name[2] == 'B' && code[9] == '=')
+ 	    {
+@@ -7646,14 +7643,21 @@ got_code_from_term(char_u *code, int len)
+ 		// there are 8 bits per color channel
+ 		if (val == 8 && !p_tgc_set)
+ 		{
+-#   ifdef FEAT_EVAL
++#  ifdef FEAT_EVAL
+ 		    ch_log(NULL, "got_code_from_term(RGB): xterm-direct colors detected");
+-#   endif
++#  endif
++#  if 0
+ 		    // RGB capability set, enable termguicolors
+ 		    set_option_value((char_u *)"termguicolors", 1L, NULL, 0);
++		    redraw_asap(UPD_CLEAR);
++#  endif
+ 		}
+-	    }
++#  ifdef FEAT_EVAL
++		set_vim_var_string(VV_TERMRGBRESP, str, -1);
+ #  endif
++		apply_autocmds(EVENT_TERMRESPONSEALL,
++					(char_u *)"RGB", NULL, FALSE, curbuf);
++	    }
+ # endif
+ 	    else
+ 	    {
+diff --git a/src/version.c b/src/version.c
+index 4277e31e3..18aa66d26 100644
+--- a/src/version.c
++++ b/src/version.c
+@@ -2336,6 +2336,8 @@ static int included_patches[] =
+  */
+ static char *(extra_patches[]) =
+ {   /* Add your patch description below this line */
++/**/
++    "term RGB resp",
+ /**/
+     NULL
+ };
+diff --git a/src/vim.h b/src/vim.h
+index c04e5f389..67241d822 100644
+--- a/src/vim.h
++++ b/src/vim.h
+@@ -2274,7 +2274,8 @@ typedef int sock_T;
+ #define VV_TERMOSC 115
+ #define VV_VIM_DID_INIT		116
+ #define VV_CLIPPROVIDERS 117
+-#define VV_LEN		118	// number of v: vars
++#define VV_TERMRGBRESP 118
++#define VV_LEN		119	// number of v: vars
+ 
+ // used for v_number in VAR_BOOL and VAR_SPECIAL
+ #define VVAL_FALSE	0L	// VAR_BOOL

@@ -35,5 +35,5 @@ index 4277e31e3..ff4ad49ef 100644
 @@ -2338,2 +2338,4 @@ static int included_patches[] =
  {   /* Add your patch description below this line */
 +/**/
-+    "term env fix",
++    "TERM env fix",
  /**/
