@@ -334,7 +334,7 @@ in {
     #pkgs.qtox
     #pkgs.ripcord
     pkgs.rm-improved
-    # pkgs.rxvt-unicode
+    pkgs.rxvt-unicode
     # pkgs.sameboy
     #pkgs.scanmem
     #pkgs.scrot
@@ -371,6 +371,6 @@ in {
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli
-    # pkgs.zutty
+    pkgs.zutty
   ];
 }
