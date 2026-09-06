@@ -1,4 +1,10 @@
-{ config, ... }@args: {
+{ config, pkgs, ... }@args:
+
+{
+  home.packages = [
+    pkgs.rxvt-unicode
+  ];
+
   xresources.properties = let
     # TODO: wtf infinite recursion?
     #xres = config.xresources.properties;

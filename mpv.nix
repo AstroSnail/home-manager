@@ -1,9 +1,6 @@
 { pkgs, ... }:
 
 {
-  home.shellAliases.diveo = "mpv --profile=diveo";
-  home.shellAliases.duaio = "mpv --profile=duaio";
-
   nixpkgs.overlays = [
     (final: prev: {
       mpv-unwrapped =
@@ -17,6 +14,13 @@
     #})
   ];
 
+  home.shellAliases.diveo = "mpv --profile=diveo";
+  home.shellAliases.duaio = "mpv --profile=duaio";
+
   programs.mpv.enable = true;
   programs.mpv.includes = [ "${./mpv.conf}" ];
+
+  programs.streamlink.enable = true;
+  programs.streamlink.settings.player = "mpv";
+  programs.streamlink.settings.twitch-low-latency = true;
 }

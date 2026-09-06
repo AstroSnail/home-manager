@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   nixpkgs.overlays = [
     (final: prev: {
@@ -19,6 +21,11 @@
           ];
         });
     })
+  ];
+
+  home.packages = [
+    #pkgs.xterm
+    pkgs.xterm-erry
   ];
 
   xresources.properties = {

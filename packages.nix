@@ -3,11 +3,6 @@
 let
   #nixBin = name: pkgs.writeScriptBin name (lib.readFile ./${name});
 
-  github-clone = pkgs.writeShellApplication {
-    name = "github-clone";
-    runtimeInputs = [ pkgs.git ];
-    text = lib.readFile ./github-clone.sh;
-  };
   # noexec = pkgs.writeShellApplication {
   #   name = "noexec";
   #   text = lib.readFile ./noexec.sh;
@@ -17,16 +12,6 @@ let
     #runtimeInputs = [ pkgs.dmenu-wayland pkgs.pass pkgs.ydotool ];
     runtimeInputs = [ pkgs.dmenu pkgs.pass pkgs.xdotool pkgs.ydotool ];
     text = lib.readFile ./passmenu-patient.bash;
-  };
-  vim-drop = pkgs.writeShellApplication {
-    name = "vim-drop";
-    runtimeInputs = [ config.programs.jq.package ];
-    text = lib.readFile ./vim-drop.sh;
-  };
-  vim-edit = pkgs.writeShellApplication {
-    name = "vim-edit";
-    runtimeInputs = [ vim-drop ];
-    text = lib.readFile ./vim-edit.sh;
   };
   # winelegacy = pkgs.writeShellApplication {
   #   name = "winelegacy";
@@ -173,9 +158,6 @@ in {
   programs.password-store.settings.PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
   programs.ripgrep.enable = true;
   programs.ripgrep.arguments = [ "--glob=!.git" ];
-  programs.streamlink.enable = true;
-  programs.streamlink.settings.player = "mpv";
-  programs.streamlink.settings.twitch-low-latency = true;
   #programs.texlive.enable = true; # broken 2025-07-17
   programs.texlive.extraPackages = tpkgs: {
     inherit (tpkgs)
@@ -229,11 +211,8 @@ in {
   home.packages = [
     # should go in overlay? /shrug
     apexctl
-    github-clone
     # noexec
     passmenu-patient
-    vim-drop
-    vim-edit
     # winelegacy
     # wine32
     # wine64
@@ -335,7 +314,6 @@ in {
     #pkgs.qtox
     #pkgs.ripcord
     pkgs.rm-improved
-    pkgs.rxvt-unicode
     # pkgs.sameboy
     #pkgs.scanmem
     #pkgs.scrot
@@ -367,8 +345,6 @@ in {
     pkgs.xdotool
     #pkgs.xonotic
     #pkgs.xorg.xkill
-    #pkgs.xterm
-    pkgs.xterm-erry # see ./xterm.nix
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli

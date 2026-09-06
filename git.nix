@@ -1,4 +1,20 @@
-{ pkgs, ... }: {
+{ lib, pkgs, ... }:
+
+{
+  nixpkgs.overlays = [
+    (final: prev: {
+      github-clone = pkgs.writeShellApplication {
+        name = "github-clone";
+        runtimeInputs = [ pkgs.git ];
+        text = lib.readFile ./github-clone.sh;
+      };
+    })
+  ];
+
+  home.packages = [
+    pkgs.github-clone
+  ];
+
   programs.git.enable = true;
   programs.git.package = pkgs.gitFull;
   programs.git.lfs.enable = true;
