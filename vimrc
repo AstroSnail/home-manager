@@ -9,7 +9,7 @@ runtime ftplugin/man.vim
 autocmd! vimHints CmdwinEnter
 
 set autoindent autoread breakindent formatoptions=tcroqj hlsearch noicon
-set nojoinspaces laststatus=2 linebreak showtabline=2 nostartofline
+set nojoinspaces laststatus=2 linebreak showtabline=2 nostartofline title
 set wildignorecase
 set sessionoptions-=options # work around bug with the comment plugin
 &keywordprg = ':Man'
