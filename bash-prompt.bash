@@ -4,7 +4,8 @@ erry_prompt_command() {
 	# echoed-out ^C) then move to the beginning of the next:
 	# (a) reset all text and color attributes;
 	# (b) print one of these symbols in bright red for flavour;
-	#     - '\u21B5' carriage return
+	#     - '\u00B6' pilcrow sign
+	#     - '\u21B5' downwards arrow with corner leftwards
 	#     - '\u23CE' return symbol
 	# (c) print a space to avoid later spaces eating the symbol if it was
 	#     placed exactly at the right margin, due to xenl;
@@ -45,7 +46,7 @@ erry_prompt_command() {
 
 	IFS=' '
 	#       1  a     b         cd     e f 2   3          4
-	printf '\e[;1;31m\u21B5\e[m \e[%dC  \r\e[J\e]2;%s\e\\%s\n' \
+	printf '\e[;1;31m\u00B6\e[m \e[%dC  \r\e[J\e]2;%s\e\\%s\n' \
 		$((COLUMNS > 4 ? COLUMNS - 4 : 1)) "${cwd@P}" "${info[*]}"
 }
 
