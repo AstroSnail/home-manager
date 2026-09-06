@@ -1,5 +1,16 @@
 vim9script
 
+# Tested:
+# - Kitty
+# - LXTerminal (representing VTE)
+# - Rxvt-unicode
+# - Vim :terminal (pangoterm? konsole?)
+# - XTerm
+# - Zutty
+# TODO:
+# - Termux
+# - vscode
+
 # bad: xterm gets special treatment
 # def: builtin xterm
 # DEF: builtin always
@@ -72,7 +83,17 @@ vim9script
 #   have fd and fe, though that doesn't matter here)
 
 # initialize all non-standard caps. assume terminal is xterm-like and won't
-# choke on unknown termcodes
+# choke on unknown termcodes.
+
+# differences from builtin xterm:
+# - changed all BEL to ST (ESC \)
+# - AU changed %d to %p1%d
+# - Ce cleared (so vim uses ue instead)
+# - Cs Us ds Ds SI SR EI added
+# - RV XM u7 BE BD removed (termcap requested and exists)
+# TODO:
+# - me ue ti te are different builtin and external
+#   (me ue keep builtin, ti te keep external. why?)
 
 &t_ts = "\<Esc>]2;"
 &t_fs = "\<Esc>\\"
@@ -80,12 +101,12 @@ vim9script
 &t_ve = "\<Esc>[?25h"
 &t_vs = "\<Esc>[?12h"
 &t_VS = "\<Esc>[?12l"
-&t_AU = "\<Esc>[58;5;%dm"
+&t_AU = "\<Esc>[58;5;%p1%dm"
 &t_Ce = ''
-&t_Cs = ''
+&t_Cs = "\<Esc>[4:3m"
 &t_Us = "\<Esc>[21m"
-&t_ds = ''
-&t_Ds = ''
+&t_ds = "\<Esc>[4:4m"
+&t_Ds = "\<Esc>[4:5m"
 &t_Te = "\<Esc>[29m"
 &t_Ts = "\<Esc>[9m"
 &t_IS = "\<Esc>]1;"
@@ -96,13 +117,8 @@ vim9script
 &t_SI = "\<Esc>[6 q"
 &t_SR = "\<Esc>[4 q"
 &t_EI = "\<Esc>[2 q"
-&t_RV = "\<Esc>[>c"
-&t_XM = "\<Esc>[?1006;1000%?%p1%{1}%=%th%el%;"
-&t_u7 = "\<Esc>[6n"
 &t_RF = "\<Esc>]10;?\<Esc>\\"
 &t_RB = "\<Esc>]11;?\<Esc>\\"
-&t_BE = "\<Esc>[?2004h"
-&t_BD = "\<Esc>[?2004l"
 &t_SC = "\<Esc>]12;"
 &t_EC = "\<Esc>\\"
 &t_SH = "\<Esc>[%p1%d q"
@@ -115,32 +131,63 @@ vim9script
 &t_fe = "\<Esc>[?1004h"
 &t_fd = "\<Esc>[?1004l"
 
-if str2nr(&t_Co) == 16777216
+# rxvt-unicode chokes on colons (ignores them and keeps collecting parameters
+# instead of ignoring the whole sequence).
+if &term =~ "^rxvt"
+	&t_Cs = ''
+	&t_ds = ''
+	&t_Ds = ''
+endif
+
+# vim termprop bugs:
+# version < 95 implies underline_rgb=y
+# - zutty: version 0, does not support underline_rgb
+# - workaround below
+# version < 279 implies cursor_style=n
+# - vim terminal: version 100, supports cursor_style
+# - termresponse check overrides compatibility test
+# - no good workaround
+
+# vim termprop notes:
+# version >= 95, < 277 implies mouse=2 (ttymouse=xterm2)
+# - rxvt-unicode: version 95, supports mouse=s (ttymouse=sgr)
+# - (termresponse check is overridden by XM check, and XM is obtained from
+#   builtin_xterm, which rxvt qualifies for)
+# version < 141 implies no xtermcodes
+# version >= 2500 implies underline_rgb=y (Kitty and VTE)
+# TODO: why does vim sometimes use ^H in rxvt-unicode and xterm?
+# TODO: test private modes 2026 and 2048
+
+# disable mis-detected underline_rgb support
+if &term =~ "^zutty"
+	&t_AU = ''
+	&t_8u = ''
+endif
+
+# if 'term' is xterm-direct
+if &t_Co == '16777216'
 	set termguicolors
 endif
 
 augroup TcapXterm
 	autocmd!
 
-	# if a terminal doesn't support 8u it probably doesn't support AU either
+	# if a terminal doesn't support 8u it probably doesn't support AU either.
 	autocmd TermResponse * {
 		if &t_8u == ''
 			&t_AU = ''
 		endif
 	}
 
+	# if terminal responds to XTGETTCAP RGB
 	autocmd TermResponseAll * {
-		if expand('<amatch>') == 'RGB' && v:termrgbresp == '8'
+		if expand('<amatch>') == 'rgb'
 			set termguicolors
-			redraw!
 		endif
 	}
 augroup END
 
-set keyprotocol+=vim:mok2,vte:none
-# (test vscode with \e[?4m and \e[?u)
-# vim terminal might support kitty? needs testing
-# vim terminal keyprotocol is crippled by terminal_alt_sends_escape.vim
-# what do?
-# vim can correctly guess 8u support in xterm, vte, vim
-# (test vscode)
+# vim terminal supports kitty keyprotocol incompletely (recognizes CSI > 1 u,
+# doesn't recognize CSI = 1 ; 1 u, vim uses the latter).
+# (test with \e[?4m and \e[?u)
+set keyprotocol+=rxvt:none,vim:mok2,vte:none,zutty:mok2
