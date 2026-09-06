@@ -95,9 +95,9 @@ in {
     #  });
     #})
     (final: prev: {
-     vte = prev.vte.overrideAttrs (finalAttrs: prevAttrs: {
-       patches = (prevAttrs.patches or []) ++ [ ./vte-term.patch ];
-     });
+      vte = prev.vte.overrideAttrs (finalAttrs: prevAttrs: {
+        patches = (prevAttrs.patches or []) ++ [ ./vte-term.patch ];
+      });
     })
     (final: prev: {
       yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: let
