@@ -3,13 +3,14 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      vim-erry =
-        prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: {
-          patches = (prevAttrs.patches or []) ++ [
-            ./vim-rgb-resp.patch
-            ./vim-term.patch
-          ];
-        });
+
+      vim-full = prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: {
+        patches = (prevAttrs.patches or []) ++ [
+          ./vim-rgb-resp.patch
+          ./vim-term.patch
+        ];
+      });
+
       vimPlugins = prev.vimPlugins // {
         vim-erry = final.vimUtils.buildVimPlugin {
           pname = "vim-erry";
@@ -17,16 +18,19 @@
           src = ./vim-erry;
         };
       };
+
       vim-drop = pkgs.writeShellApplication {
         name = "vim-drop";
         runtimeInputs = [ config.programs.jq.package ];
         text = lib.readFile ./vim-drop.sh;
       };
+
       vim-edit = pkgs.writeShellApplication {
         name = "vim-edit";
         runtimeInputs = [ final.vim-drop ];
         text = lib.readFile ./vim-edit.sh;
       };
+
     })
   ];
 
@@ -36,7 +40,7 @@
   ];
 
   programs.vim.enable = true;
-  programs.vim.packageConfigurable = pkgs.vim-erry;
+  # programs.vim.packageConfigurable = pkgs.vim-erry;
   # NOTE: see also terminal-specific.sh
   programs.vim.defaultEditor = true;
   programs.vim.plugins = lib.mkForce [ # remove vim-sensible

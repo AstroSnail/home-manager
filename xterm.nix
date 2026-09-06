@@ -5,26 +5,25 @@
     (final: prev: {
       # overlaid under a different name because overriding xterm
       # directly seems to cause a large cascade of rebuilds
-      xterm-erry =
-        prev.xterm.overrideAttrs (finalAttrs: prevAttrs: {
-          # pname = "xterm-erry"; # broken due to finalAttrs use
-          # remove sixel-256.support.patch
-          patches = [
-            # ./xterm-f1-f4.patch
-            # ./xterm-fix-status-line.patch
-          ];
-          configureFlags = prevAttrs.configureFlags ++ [
-            "--enable-block-select"
-            # "--enable-status-line"
-            "--enable-toolbar"
-            # "--enable-trace"
-          ];
-        });
+      xterm-erry = final.xterm.overrideAttrs (finalAttrs: prevAttrs: {
+        pname = "xterm-erry";
+        # remove sixel-256.support.patch
+        patches = [
+          # ./xterm-f1-f4.patch
+          # ./xterm-fix-status-line.patch
+        ];
+        configureFlags = prevAttrs.configureFlags ++ [
+          "--enable-block-select"
+          # "--enable-status-line"
+          "--enable-toolbar"
+          # "--enable-trace"
+        ];
+      });
     })
   ];
 
   home.packages = [
-    #pkgs.xterm
+    # pkgs.xterm
     pkgs.xterm-erry
   ];
 

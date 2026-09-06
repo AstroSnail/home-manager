@@ -3,45 +3,6 @@
 let
   #nixBin = name: pkgs.writeScriptBin name (lib.readFile ./${name});
 
-  # noexec = pkgs.writeShellApplication {
-  #   name = "noexec";
-  #   text = lib.readFile ./noexec.sh;
-  # };
-  passmenu-patient = pkgs.writeShellApplication {
-    name = "passmenu-patient";
-    #runtimeInputs = [ pkgs.dmenu-wayland pkgs.pass pkgs.ydotool ];
-    runtimeInputs = [ pkgs.dmenu pkgs.pass pkgs.xdotool pkgs.ydotool ];
-    text = lib.readFile ./passmenu-patient.bash;
-  };
-  # winelegacy = pkgs.writeShellApplication {
-  #   name = "winelegacy";
-  #   # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
-  #   # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
-  #   runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
-  #   text = lib.readFile ./wine.sh;
-  # };
-  # wine32 = pkgs.writeShellApplication {
-  #   name = "wine32";
-  #   # runtimeInputs = [ pkgs.winePackages.waylandFull pkgs.winetricks ];
-  #   # runtimeInputs = [ pkgs.winePackages.stagingFull pkgs.winetricks ];
-  #   runtimeInputs = [ pkgs.winePackages.full pkgs.winetricks ];
-  #   text = lib.readFile ./wine.sh;
-  # };
-  # wine64 = pkgs.writeShellApplication {
-  #   name = "wine64";
-  #   # runtimeInputs = [ pkgs.wineWow64Packages.waylandFull pkgs.winetricks ];
-  #   # runtimeInputs = [ pkgs.wineWow64Packages.stagingFull pkgs.winetricks ];
-  #   runtimeInputs = [ pkgs.wineWow64Packages.full pkgs.winetricks ];
-  #   text = lib.readFile ./wine.sh;
-  # };
-
-  apexctl = pkgs.callPackage (pkgs.fetchFromGitHub {
-    owner = "AstroSnail";
-    repo = "apexctl";
-    rev = "b1e894cd7d7aa067f5dfa492e88c99708163c7d1";
-    hash = "sha256-v23F+XjCMtaXxe2OHmHzlRvtmSdB8yS2Fh3LPo8Hp2s=";
-  }) { };
-
 in {
   imports = [
     ./bash.nix
@@ -53,6 +14,7 @@ in {
     ./mpv.nix
     ./readline.nix
     ./ssh.nix
+    ./updates.nix
     ./urxvt.nix
     ./vim.nix
     # NOTE: after re-enabling vscode, also add direnv and lua-language-server to packages
@@ -63,17 +25,25 @@ in {
   ];
 
   nixpkgs.overlays = [
-    #(final: prev: {
-    #  direnv = prev.direnv.overrideAttrs (oldattrs: {
-    #    installPhase = oldattrs.installPhase + ''
-    #      runHook postInstall
-    #    '';
-    #    postInstall = ''
-    #      rm $out/share/fish/vendor_conf.d/direnv.fish
-    #    '';
-    #  });
-    #})
     (final: prev: {
+
+      apexctl = final.callPackage (final.fetchFromGitHub {
+        owner = "AstroSnail";
+        repo = "apexctl";
+        rev = "b1e894cd7d7aa067f5dfa492e88c99708163c7d1";
+        hash = "sha256-v23F+XjCMtaXxe2OHmHzlRvtmSdB8yS2Fh3LPo8Hp2s=";
+      }) { };
+
+      # direnv = prev.direnv.overrideAttrs (oldattrs: {
+      #   installPhase = oldattrs.installPhase + ''
+      #     runHook postInstall
+      #   '';
+      #   postInstall = ''
+      #     rm $out/share/fish/vendor_conf.d/direnv.fish
+      #   '';
+      # });
+
+      # TODO: build fortune with this built in
       fortunes-vex = final.runCommand "fortunes-vex" {
         fortune = final.fortune;
         src = ./vex;
@@ -82,35 +52,55 @@ in {
         cp "$src" "$out"/share/games/fortunes/vex
         "$fortune"/bin/strfile -x "$out"/share/games/fortunes/vex
       '';
-    })
-    (final: prev: {
+
+      # noexec = final.writeShellApplication {
+      #   name = "noexec";
+      #   text = lib.readFile ./noexec.sh;
+      # };
+
       openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
         patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
       });
-    })
-    # broken 2025-03-11
-    #(final: prev: {
-    #  vlc = prev.vlc.overrideAttrs (oldattrs: {
-    #    buildInputs = oldattrs.buildInputs ++ [ pkgs.projectm ];
-    #  });
-    #})
-    (final: prev: {
+
+      passmenu-patient = final.writeShellApplication {
+        name = "passmenu-patient";
+        #runtimeInputs = [ final.dmenu-wayland final.pass final.ydotool ];
+        runtimeInputs = [ final.dmenu final.pass final.xdotool final.ydotool ];
+        text = lib.readFile ./passmenu-patient.bash;
+      };
+
+      # broken 2025-03-11
+      # vlc = prev.vlc.overrideAttrs (oldattrs: {
+      #   buildInputs = oldattrs.buildInputs ++ [ final.projectm ];
+      # });
+
       vte = prev.vte.overrideAttrs (finalAttrs: prevAttrs: {
         patches = (prevAttrs.patches or []) ++ [ ./vte-term.patch ];
       });
-    })
-    (final: prev: {
-      yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: let
-        version = "2026.1.29";
-        hash = "sha256-ErSJ6xaCjMP/8XI/JEmS666KW/Gtdcjp8B1ymuI367k=";
-      in if lib.versionOlder prevAttrs.version version then {
-        inherit version;
-        src = final.fetchPypi {
-          pname = "yt_dlp";
-          inherit version hash;
-        };
-        postPatch = null;
-      } else {});
+
+      # winelegacy = final.writeShellApplication {
+      #   name = "winelegacy";
+      #   # runtimeInputs = [ final.winePackages.waylandFull final.winetricks ];
+      #   # runtimeInputs = [ final.winePackages.stagingFull final.winetricks ];
+      #   runtimeInputs = [ final.winePackages.full final.winetricks ];
+      #   text = lib.readFile ./wine.sh;
+      # };
+
+      # wine32 = final.writeShellApplication {
+      #   name = "wine32";
+      #   # runtimeInputs = [ final.winePackages.waylandFull final.winetricks ];
+      #   # runtimeInputs = [ final.winePackages.stagingFull final.winetricks ];
+      #   runtimeInputs = [ final.winePackages.full final.winetricks ];
+      #   text = lib.readFile ./wine.sh;
+      # };
+
+      # wine64 = final.writeShellApplication {
+      #   name = "wine64";
+      #   # runtimeInputs = [ final.wineWow64Packages.waylandFull final.winetricks ];
+      #   # runtimeInputs = [ final.wineWow64Packages.stagingFull final.winetricks ];
+      #   runtimeInputs = [ final.wineWow64Packages.full final.winetricks ];
+      #   text = lib.readFile ./wine.sh;
+      # };
     })
   ];
 
@@ -209,17 +199,10 @@ in {
   services.wayvnc.settings.xkb_options = "compose:menu,grp:sclk_toggle";
 
   home.packages = [
-    # should go in overlay? /shrug
-    apexctl
-    # noexec
-    passmenu-patient
-    # winelegacy
-    # wine32
-    # wine64
-
     pkgs._7zz
     #pkgs.anbox
     pkgs.android-tools
+    pkgs.apexctl
     # pkgs.appimage-run
     #pkgs.ares # broken 2025-06-20
     pkgs.ascii
@@ -290,12 +273,14 @@ in {
     #pkgs.nixpkgs-fmt
     #pkgs.nmap
     #pkgs.nodejs
+    # pkgs.noexec
     #pkgs.nvtopPackages.amd
     # pkgs.openrgb # broken 2026-01-12
     #pkgs.openssl
     #pkgs.osu-lazer
     # pkgs.p7zip
     #pkgs.pagemon
+    pkgs.passmenu-patient
     pkgs.pavucontrol
     #pkgs.pciutils
     # pkgs.pcsx2 # broken 2026-08-13
@@ -338,6 +323,9 @@ in {
     #pkgs.vlc
     #pkgs.vttest
     #pkgs.wget
+    # pkgs.winelegacy
+    # pkgs.wine32
+    # pkgs.wine64
     #pkgs.winePackages.waylandFull
     #pkgs.wineWow64Packages.waylandFull
     #pkgs.winetricks
