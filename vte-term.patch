@@ -1,13 +1,23 @@
+commit 6f46215b4d11b354df70935c2bc7804af6da7f7d
+Author: AstroSnail <astrosnail@protonmail.com>
+Date:   Sun Sep 6 10:16:58 2026 +0000
+
+    Change default $TERM to vte-256color
+    
+    A vte-256color description is provided by ncurses and it seems to work
+    well. Some programs and init scripts have quirks specific to $TERM
+    values beginning with "xterm" and those will need to be fixed.
+
 diff --git a/src/vtedefines.hh b/src/vtedefines.hh
-index 23827c96..6fe3edf4 100644
+index f38e2c38..0026eaa6 100644
 --- a/src/vtedefines.hh
 +++ b/src/vtedefines.hh
-@@ -141,7 +141,7 @@
+@@ -131,7 +131,7 @@
  
  #define VTE_VERSION_NUMERIC ((VTE_MAJOR_VERSION) * 10000 + (VTE_MINOR_VERSION) * 100 + (VTE_MICRO_VERSION))
  
 -#define VTE_TERMINFO_NAME "xterm-256color"
 +#define VTE_TERMINFO_NAME "vte-256color"
  
- #define VTE_MIN_CURSOR_BLINK_CYCLE (50 /* ms */)
- #define VTE_MIN_CURSOR_BLINK_TIMEOUT (50 /* ms */)
+ #define VTE_SIXEL_ENABLED_DEFAULT false
+ 

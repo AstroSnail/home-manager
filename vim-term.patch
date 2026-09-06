@@ -1,8 +1,22 @@
+commit 16bafdf0cf5a266deff0f13b54a80ec99dca8872
+Author: AstroSnail <astrosnail@protonmail.com>
+Date:   Sun Sep 6 10:07:47 2026 +0000
+
+    Set $TERM unconditionally when starting :terminal
+    
+    Problem:  The built-in terminal doesn't emulate all variants of xterm,
+              so some programs might misbehave if $TERM is set to an exotic
+              xterm variant like xterm-vt220.
+    Solution: Unconditionally set $TERM to a terminal name specific for
+              Vim's built-in terminal.  This requires terminfo support.
+    
+    (Do not submit this patch upstream)
+
 diff --git a/src/os_unix.c b/src/os_unix.c
-index 904421772..af3b36e64 100644
+index ebdc8d04a..8cb7d2195 100644
 --- a/src/os_unix.c
 +++ b/src/os_unix.c
-@@ -6218,18 +6218,13 @@ mch_job_start(char **argv, job_T *job, jobopt_T *options, int is_terminal)
+@@ -6212,18 +6212,11 @@ mch_job_start(char **argv, job_T *job, jobopt_T *options, int is_terminal)
  		// In the GUI 'term' is not what we want, use $TERM.
  		term = getenv("TERM");
  #  endif
@@ -21,18 +35,16 @@ index 904421772..af3b36e64 100644
 +	    if (t_colors >= 256)
 +		// TODO: should we check this name is supported?
 +		term = "vim-256color";
-+	    else if (t_colors > 16)
-+		term = "vim-color";
 +	    else
 +		term = "vim";
  	    set_child_environment(
  		    (long)options->jo_term_rows,
  		    (long)options->jo_term_cols,
 diff --git a/src/version.c b/src/version.c
-index 4277e31e3..36fa8459f 100644
+index d9d29b7e6..35d6c1745 100644
 --- a/src/version.c
 +++ b/src/version.c
-@@ -2338,2 +2338,4 @@ static int included_patches[] =
+@@ -2820,2 +2820,4 @@ static int included_patches[] =
  {   /* Add your patch description below this line */
 +/**/
 +    "TERM env fix",

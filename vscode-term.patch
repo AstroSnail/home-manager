@@ -1,3 +1,13 @@
+commit 5c288d8a29a8f0eb80b206d648ff0e7b3d896b91
+Author: AstroSnail <astrosnail@protonmail.com>
+Date:   Sun Sep 6 10:15:30 2026 +0000
+
+    Change default $TERM to vscode
+    
+    A vscode description is provided by ncurses and it seems to work well.
+    Some programs and init scripts have quirks specific to $TERM values
+    beginning with "xterm" and those will need to be fixed.
+
 diff --git a/src/vs/platform/terminal/node/terminalProcess.ts b/src/vs/platform/terminal/node/terminalProcess.ts
 index d8d166dc7fa..ab67698b396 100644
 --- a/src/vs/platform/terminal/node/terminalProcess.ts
