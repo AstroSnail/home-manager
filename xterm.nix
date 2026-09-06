@@ -6,7 +6,6 @@
       # overlaid under a different name because overriding xterm
       # directly seems to cause a large cascade of rebuilds
       xterm-erry = final.xterm.overrideAttrs (finalAttrs: prevAttrs: {
-        pname = "xterm-erry";
         # remove sixel-256.support.patch
         patches = [
           # ./xterm-f1-f4.patch
