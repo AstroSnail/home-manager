@@ -1,14 +1,10 @@
-# remember:
-# - earlier 'use='s override later ones
-# - compiled entries don't store cleared caps, so fragments
-#   that should clear caps won't by themselves
-#   (is this really true?)
-
 # TODO: vim uses libvterm, author of libvterm also made pangoterm with it.
 # is vim terminal closer to pangoterm than xterm?
-vim|vim terminal,
+vim|Vim terminal,
 	use=xterm,
-vim-color|vim terminal with 16 colors,
-	use=xterm-color,
-vim-256color|vim terminal with 256 colors,
+vim-256color|Vim terminal with 256 colors,
+	use=xterm-256color,
+zutty|Zutty,
+	use=xterm,
+zutty-256color|Zutty with 256 colors,
 	use=xterm-256color,
