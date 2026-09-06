@@ -371,6 +371,5 @@ in {
     #pkgs.ydotool
     #pkgs.zip
     #pkgs.zopfli
-    pkgs.zutty
   ];
 }
