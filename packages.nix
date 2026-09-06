@@ -64,6 +64,7 @@ in {
     ./emacs.nix
     ./git.nix
     #./gnome-terminal.nix
+    ./kitty.nix
     ./mpv.nix
     ./readline.nix
     ./ssh.nix
