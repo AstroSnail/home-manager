@@ -29,7 +29,7 @@ index 904421772..af3b36e64 100644
  		    (long)options->jo_term_rows,
  		    (long)options->jo_term_cols,
 diff --git a/src/version.c b/src/version.c
-index 4277e31e3..ff4ad49ef 100644
+index 4277e31e3..36fa8459f 100644
 --- a/src/version.c
 +++ b/src/version.c
 @@ -2338,2 +2338,4 @@ static int included_patches[] =
