@@ -49,12 +49,12 @@
 
     # wish i could use terminfo kcbt
     $if term=linux
-    # kcbt=\E^I
-    Meta-Tab: menu-complete-backward
+      # kcbt=\E^I
+      Meta-Tab: menu-complete-backward
     $endif
     $if term=xterm
-    # kcbt=\E[Z
-    "\M-[Z": menu-complete-backward
+      # kcbt=\E[Z
+      "\M-[Z": menu-complete-backward
     $endif
   '';
 }
