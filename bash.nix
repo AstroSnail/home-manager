@@ -45,7 +45,7 @@ lib.mkMerge [
 
       # open a fortune cookie!
       # specifically, something vicious from vex~
-      fortune ${pkgs.fortunes-vex}/share/games/fortunes/vex
+      fortune vex
     '';
   }
 

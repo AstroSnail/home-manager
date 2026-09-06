@@ -43,15 +43,16 @@ in {
       #   '';
       # });
 
-      # TODO: build fortune with this built in
-      fortunes-vex = final.runCommand "fortunes-vex" {
-        fortune = final.fortune;
-        src = ./vex;
-      } ''
-        mkdir --parents "$out"/share/games/fortunes
-        cp "$src" "$out"/share/games/fortunes/vex
-        "$fortune"/bin/strfile -x "$out"/share/games/fortunes/vex
-      '';
+      # ideally this would provide a "withFortunes" or something to add extra
+      # fortunes to the package
+      fortune = prev.fortune.overrideAttrs (finalAttrs: prevAttrs: {
+        postInstall = (prevAttrs.postInstall or "") + ''
+          vex=$out/share/games/fortunes/vex
+          cp ${./vex} "$vex"
+          "$out"/bin/strfile -x "$vex"
+          ln -s vex "$vex".u8
+        '';
+      });
 
       # noexec = final.writeShellApplication {
       #   name = "noexec";
