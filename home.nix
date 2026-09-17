@@ -49,6 +49,16 @@
   nixpkgs.config.allowUnfree = true;
   # nixpkgs.config.permittedInsecurePackages = [ "dcraw-9.28.0" ];
 
+  # accounts.email.accounts.astrosnail-plfgr = {
+  #   primary = true;
+  #   address = "astrosnail@plfgr.eu.org";
+  #   realName = "AstroSnail";
+  #   userName = "astrosnail";
+  #   smtp.host = "smtp.plfgr.eu.org";
+  #   smtp.tls.certificatesFile = ./plfgr.eu.org.pem;
+  #   # smtp.tls.useStartTls = true;
+  # };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";

@@ -17,12 +17,14 @@
 
   programs.git.enable = true;
   programs.git.package = pkgs.gitFull;
-  programs.git.lfs.enable = true;
+  # programs.git.lfs.enable = true;
   programs.git.signing.key = "8309F7A6A812A754F678F2F8C9936558DFAA3AA2";
   programs.git.signing.signByDefault = true;
   programs.git.signing.format = "openpgp";
   programs.git.settings.core.pager = "less -R";
-  programs.git.settings.user.name = "AstroSnail";
-  programs.git.settings.user.email = "astrosnail@protonmail.com";
   programs.git.settings.merge.conflictStyle = "zdiff3";
+  # TODO: get primary
+  # programs.git.settings.sendemail.identity = "astrosnail-plfgr";
+  programs.git.settings.user.name = "AstroSnail";
+  programs.git.settings.user.email = "astrosnail@plfgr.eu.org";
 }
