@@ -149,7 +149,7 @@ in {
   programs.password-store.settings.PASSWORD_STORE_DIR = "${config.xdg.dataHome}/password-store";
   programs.ripgrep.enable = true;
   programs.ripgrep.arguments = [ "--glob=!.git" ];
-  #programs.texlive.enable = true; # broken 2025-07-17
+  programs.texlive.enable = true;
   programs.texlive.extraPackages = tpkgs: {
     inherit (tpkgs)
       scheme-medium cbfonts cleveref gfsartemisia lipsum listingsutf8 srcltx titlesec was
