@@ -190,4 +190,4 @@ augroup END
 # vim terminal supports kitty keyprotocol incompletely (recognizes CSI > 1 u,
 # doesn't recognize CSI = 1 ; 1 u, vim uses the latter).
 # (test with \e[?4m and \e[?u)
-set keyprotocol+=rxvt:none,vim:mok2,vte:none,zutty:mok2
+set keyprotocol+=linux:none,rxvt:none,vim:mok2,vte:none,zutty:mok2
