@@ -20,7 +20,8 @@
     # MOZ_ENABLE_WAYLAND = "0";
     SYSTEMD_LESS = "MRS";
     SYSTEMD_PAGERSECURE = "1";
-    # WINEARCH = "win64";
+    WINEARCH = "win64";
+    WINEPREFIX = "${config.xdg.dataHome}/wine64";
   };
 
   home.shellAliases = {

@@ -329,6 +329,7 @@ in {
     # pkgs.wine32
     # pkgs.wine64
     #pkgs.winePackages.waylandFull
+    pkgs.wineWow64Packages.full
     #pkgs.wineWow64Packages.waylandFull
     #pkgs.winetricks
     pkgs.wl-clipboard
