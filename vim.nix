@@ -46,6 +46,8 @@
   programs.vim.plugins = lib.mkForce [ # remove vim-sensible
     pkgs.vimPlugins.vim-erry
     pkgs.vimPlugins.vim-easymotion
+    # pkgs.vimPlugins.vim-airline
+    # pkgs.vimPlugins.vim-fugitive
   ];
   programs.vim.extraConfig = ''
     source ${./vimrc}
