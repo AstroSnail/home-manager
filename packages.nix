@@ -152,8 +152,9 @@ in {
   programs.texlive.enable = true;
   programs.texlive.extraPackages = tpkgs: {
     inherit (tpkgs)
-      scheme-medium cbfonts cleveref gfsartemisia lipsum listingsutf8 srcltx titlesec was
-      pgfplots prooftrees svn-prov forest standalone ucs;
+      scheme-medium cbfonts cleveref doublestroke gfsartemisia lipsum
+      listingsutf8 srcltx titlesec was pgfplots prooftrees svn-prov forest
+      standalone ucs;
   };
   # programs.thunderbird.enable = true;
   # programs.timidity.enable = true;
