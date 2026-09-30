@@ -2,7 +2,7 @@
 
 {
   home.packages = [
-    pkgs.rxvt-unicode
+    # pkgs.rxvt-unicode # broken 2026-09-30
   ];
 
   xresources.properties = let

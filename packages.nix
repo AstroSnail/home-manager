@@ -186,7 +186,7 @@ in {
   #services.megasync.enable = true;
   services.mpris-proxy.enable = true;
   services.pass-secret-service.enable = true; # see also programs.password-store
-  services.protonmail-bridge.enable = true;
+  # services.protonmail-bridge.enable = true; # broken 2026-09-30
   services.protonmail-bridge.package = pkgs.protonmail-bridge-gui;
   services.protonmail-bridge.extraPackages = [ pkgs.pass ];
   systemd.user.services.protonmail-bridge.Install.WantedBy = lib.mkForce [ ];
