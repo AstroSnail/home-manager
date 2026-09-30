@@ -1,0 +1,13 @@
+diff --git a/src/main.cc b/src/main.cc
+index 266639a..39b9a09 100644
+--- a/src/main.cc
++++ b/src/main.cc
+@@ -439,7 +439,7 @@ startShell (const char* execPath, const char* const argv[])
+    {
+       // N.B.: DISPLAY and WINDOWID are inherited from parent
+       // environment (set elsewhere)
+-      if (setenv ("TERM", "xterm-256color", 1) < 0)
++      if (setenv ("TERM", "zutty-256color", 1) < 0)
+          SYS_ERROR ("setenv TERM");
+ 
+       if (setenv ("COLORTERM", "truecolor", 1) < 0)

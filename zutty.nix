@@ -1,6 +1,14 @@
 { lib, pkgs, ... }:
 
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      zutty = prev.zutty.overrideAttrs (finalAttrs: prevAttrs: {
+        patches = (prevAttrs.patches or []) ++ [ ./zutty-term.patch ];
+      });
+    })
+  ];
+
   home.packages = [
     pkgs.zutty
   ];
