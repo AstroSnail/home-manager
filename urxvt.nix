@@ -1,8 +1,16 @@
 { config, pkgs, ... }@args:
 
 {
+  nixpkgs.overlays = [
+    (final: prev: {
+      rxvt-unicode-unwrapped = prev.rxvt-unicode-unwrapped.overrideAttrs (finalAttrs: prevAttrs: {
+        patches = (prevAttrs.patches or []) ++ [ ./urxvt-compile.patch ];
+      });
+    })
+  ];
+
   home.packages = [
-    # pkgs.rxvt-unicode # broken 2026-09-30
+    pkgs.rxvt-unicode
   ];
 
   xresources.properties = let
