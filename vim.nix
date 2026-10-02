@@ -41,8 +41,7 @@
 
   programs.vim.enable = true;
   # programs.vim.packageConfigurable = pkgs.vim-erry;
-  # NOTE: see also terminal-specific.sh
-  programs.vim.defaultEditor = true;
+  # programs.vim.defaultEditor = true; # see terminal-specific.sh
   programs.vim.plugins = lib.mkForce [ # remove vim-sensible
     pkgs.vimPlugins.vim-erry
     pkgs.vimPlugins.vim-easymotion

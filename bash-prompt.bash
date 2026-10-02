@@ -55,19 +55,23 @@ erry_ps0() {
 	# BASH_COMMAND isn't updated in time for PS0, so list it from fc
 	# instead and massage its output. it prints control characters
 	# verbatim, so we sanitize it ourselves.
+	# turns out using REPLY normally instead of using ${| ...; } is faster
+	# to run.
 	# TODO: fc can't see commands excluded from history by HISTCONTROL or
 	# HISTIGNORE. what then?
-	local cmd
-	cmd=${ fc -ln -0; }
+	local REPLY
+	REPLY=${ fc -ln -0; }
 	# tab space
-	cmd=${cmd#'	 '}
-	cmd=${| REPLY=${cmd}; caretify_quick; }
+	REPLY=${REPLY#'	 '}
+	caretify_quick
 	# CR syncs column in the terminal and in the kernel's cooked mode
-	printf '\e]2;%s\e\\\r' "${cmd}"
+	printf '\e]2;%s\e\\\r' "${REPLY}"
 }
 
 if [[ ${TERM%%-*} != dumb ]]; then
 	PROMPT_COMMAND+=(erry_prompt_command)
+	# annoying that running a function at PS0 requires some kind of command
+	# substitution. luckily bash 5.3 has non-subshell options.
 	# shellcheck disable=SC2016
 	PS0='${ erry_ps0; }'"${PS0:-}"
 fi

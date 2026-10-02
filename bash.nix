@@ -32,11 +32,6 @@ lib.mkMerge [
     # '';
 
     programs.bash.initExtra = ''
-      . ${./terminal-specific.sh}
-
-      . ${./bash-funcs.bash}
-      . ${./bash-prompt.bash}
-
       # make CTRL-S usable in bash
       stty -ixon
 
@@ -57,6 +52,10 @@ lib.mkMerge [
     programs.dircolors.enable = false;
 
     programs.bash.initExtra = ''
+      . ${./bash-funcs.bash}
+      . ${./bash-prompt.bash}
+      . ${./terminal-specific.sh}
+
       . ${pkgs.vte}/etc/profile.d/vte.sh
       eval "$(${lib.getExe' pkgs.coreutils "dircolors"})"
     '';
