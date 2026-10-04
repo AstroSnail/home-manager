@@ -102,6 +102,8 @@ in {
     })
   ];
 
+  xdg.configFile."pangoterm.cfg".source = ./pangoterm.cfg;
+
   # programs.btop.enable = true;
   programs.chromium.enable = true;
   programs.direnv.enable = true;
@@ -244,6 +246,7 @@ in {
     # pkgs.irssi
     # pkgs.jre
     #pkgs.kdenlive # replaced with kdepackages.kdenlive 2025-02-25
+    pkgs.kdePackages.konsole
     #pkgs.killall
     #pkgs.krita
     #pkgs.ledger-live-desktop

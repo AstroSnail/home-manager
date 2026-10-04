@@ -8,6 +8,9 @@ vim9script
 # - XTerm
 # - Zutty
 # TODO:
+# - Konsole
+# - Linux VT
+# - Pangoterm
 # - Termux
 # - vscode
 
