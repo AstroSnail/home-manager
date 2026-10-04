@@ -1,25 +1,28 @@
 { lib, pkgs, ... }:
 
-let
-  doom-emacs = pkgs.writeShellApplication {
-    name = "doom";
-    runtimeInputs = [
-      #pkgs.agda
-      pkgs.bash
-      #pkgs.emacsNativeComp
-      pkgs.emacs
-      pkgs.fd
-      pkgs.fontconfig
-      pkgs.git
-      pkgs.gnugrep
-      pkgs.pandoc
-      pkgs.ripgrep
-      pkgs.shellcheck
-    ];
-    text = lib.readFile ./doom.sh;
-  };
+{
+  nixpkgs.overlays = [
+    (final: prev: {
+      doom-emacs = pkgs.writeShellApplication {
+        name = "doom";
+        runtimeInputs = [
+          #pkgs.agda
+          pkgs.bash
+          #pkgs.emacsNativeComp
+          pkgs.emacs
+          pkgs.fd
+          pkgs.fontconfig
+          pkgs.git
+          pkgs.gnugrep
+          pkgs.pandoc
+          pkgs.ripgrep
+          pkgs.shellcheck
+        ];
+        text = lib.readFile ./doom.sh;
+      };
+    })
+  ];
 
-in {
   #home.file.emacs.source = builtins.fetchGit {
   #  url = "https://github.com/hlissner/doom-emacs";
   #  name = "doom-emacs";
@@ -32,6 +35,4 @@ in {
   #programs.pandoc.enable = true;
 
   #home.packages = [ doom-emacs ];
-
-  nixpkgs.overlays = [ (_: _: { inherit doom-emacs; }) ];
 }

@@ -1,9 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let
-  #nixBin = name: pkgs.writeScriptBin name (lib.readFile ./${name});
-
-in {
+{
   imports = [
     ./bash.nix
     ./editres.nix

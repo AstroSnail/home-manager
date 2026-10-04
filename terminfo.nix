@@ -1,9 +1,6 @@
 { lib, pkgs, ... }:
 
-let
-
-
-in {
+{
   nixpkgs.overlays = [
     (final: prev: {
       terminfo-erry = final.runCommand "terminfo-erry" {
