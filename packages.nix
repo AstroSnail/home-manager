@@ -27,12 +27,7 @@ in {
   nixpkgs.overlays = [
     (final: prev: {
 
-      apexctl = final.callPackage (final.fetchFromGitHub {
-        owner = "AstroSnail";
-        repo = "apexctl";
-        rev = "b1e894cd7d7aa067f5dfa492e88c99708163c7d1";
-        hash = "sha256-v23F+XjCMtaXxe2OHmHzlRvtmSdB8yS2Fh3LPo8Hp2s=";
-      }) { };
+      apexctl = final.callPackage ./apexctl.nix { };
 
       # direnv = prev.direnv.overrideAttrs (oldattrs: {
       #   installPhase = oldattrs.installPhase + ''
@@ -62,6 +57,8 @@ in {
       openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
         patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
       });
+
+      pangoterm = final.callPackage ./pangoterm.nix { };
 
       passmenu-patient = final.writeShellApplication {
         name = "passmenu-patient";
