@@ -172,7 +172,7 @@ in {
 
   #services.blueman-applet.enable = true;
   #services.dunst.enable = true;
-  #services.dunst.settings.global.dmenu = "${pkgs.dmenu}/bin/dmenu -p dunst";
+  #services.dunst.settings.global.dmenu = "${lib.getExe pkgs.dmenu} -p dunst";
   #services.easyeffects.enable = true;
   #services.fluidsynth.enable = true;
   #services.fluidsynth.soundFont = "${pkgs.soundfont-fluid}/share/soundfonts/FluidR3_GM2-2.sf2";
