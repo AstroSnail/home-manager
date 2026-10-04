@@ -22,3 +22,7 @@ whichpath() {
 		realpath -- "${arg}"
 	done
 }
+
+ytdesc() {
+	yt-dlp -j -- "$1" | jq -r .description | less
+}
