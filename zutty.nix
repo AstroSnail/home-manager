@@ -4,7 +4,13 @@
   nixpkgs.overlays = [
     (final: prev: {
       zutty = prev.zutty.overrideAttrs (finalAttrs: prevAttrs: {
-        patches = (prevAttrs.patches or []) ++ [ ./zutty-term.patch ];
+        patches = (prevAttrs.patches or []) ++ [
+          ./zutty-compile.patch
+          ./zutty-term.patch
+        ];
+        meta = prevAttrs.meta // {
+          broken = false;
+        };
       });
     })
   ];

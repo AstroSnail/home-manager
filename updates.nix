@@ -43,10 +43,6 @@
           url = "https://git.hq.sig7.se/zutty.git";
           inherit rev hash;
         };
-        patches = (prevAttrs.patches or []) ++ [ ./zutty-compile.patch ];
-        meta = prevAttrs.meta // {
-          broken = false;
-        };
       } else {});
 
     })
