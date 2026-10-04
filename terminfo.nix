@@ -1,15 +1,20 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 let
 
-  terminfo-erry = pkgs.runCommand "terminfo-erry" {
-    src = ./terminfo.src;
-    tic = "${pkgs.ncurses}/bin/tic";
-  } ''
-    mkdir --parents "$out/share/terminfo"
-    "$tic" -x -o "$out/share/terminfo" -v "$src"
-  '';
 
 in {
-  home.file.".terminfo".source = "${terminfo-erry}/share/terminfo";
+  nixpkgs.overlays = [
+    (final: prev: {
+      terminfo-erry = final.runCommand "terminfo-erry" {
+        src = ./terminfo.src;
+        tic = lib.getExe' final.ncurses "tic";
+      } ''
+        mkdir --parents "$out/share/terminfo"
+        "$tic" -x -o "$out/share/terminfo" -v "$src"
+      '';
+    })
+  ];
+
+  home.file.".terminfo".source = "${pkgs.terminfo-erry}/share/terminfo";
 }
