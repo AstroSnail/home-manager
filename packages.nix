@@ -4,27 +4,21 @@
   imports = [
     ./bash.nix
     ./editres.nix
-    ./emacs.nix
     ./git.nix
     #./gnome-terminal.nix
-    ./kitty.nix
     ./mpv.nix
     ./readline.nix
     ./ssh.nix
+    ./terminals.nix
     ./updates.nix
-    ./urxvt.nix
     ./vim.nix
-    # NOTE: after re-enabling vscode, also add direnv and lua-language-server to packages
-    # ./vscode.nix
     ./vscodium.nix
-    ./xterm.nix
-    ./zutty.nix
   ];
 
   nixpkgs.overlays = [
     (final: prev: {
 
-      apexctl = final.callPackage ./apexctl.nix { };
+      apexctl = final.callPackage ./pkgs/apexctl.nix { };
 
       # direnv = prev.direnv.overrideAttrs (oldattrs: {
       #   installPhase = oldattrs.installPhase + ''
@@ -34,6 +28,8 @@
       #     rm $out/share/fish/vendor_conf.d/direnv.fish
       #   '';
       # });
+
+      doom-emacs = final.callPackage ./pkgs/doom-emacs.nix { };
 
       # ideally this would provide a "withFortunes" or something to add extra
       # fortunes to the package
@@ -46,60 +42,41 @@
         '';
       });
 
-      # noexec = final.writeShellApplication {
-      #   name = "noexec";
-      #   text = lib.readFile ./noexec.sh;
-      # };
+      # noexec = final.callPackage ./pkgs/noexec.nix { };
 
       openrgb = prev.openrgb.overrideAttrs (finalAttrs: prevAttrs: {
-        patches = (prevAttrs.patches or []) ++ [ ./openrgb-oldapex.patch ];
+        patches = (prevAttrs.patches or []) ++ [ ./patches/openrgb-oldapex.patch ];
       });
 
-      pangoterm = final.callPackage ./pangoterm.nix { };
-
-      passmenu-patient = final.writeShellApplication {
-        name = "passmenu-patient";
-        #runtimeInputs = [ final.dmenu-wayland final.pass final.ydotool ];
-        runtimeInputs = [ final.dmenu final.pass final.xdotool final.ydotool ];
-        text = lib.readFile ./passmenu-patient.bash;
-      };
+      passmenu-patient = final.callPackage ./pkgs/passmenu-patient.nix { };
 
       # broken 2025-03-11
       # vlc = prev.vlc.overrideAttrs (oldattrs: {
       #   buildInputs = oldattrs.buildInputs ++ [ final.projectm ];
       # });
 
-      vte = prev.vte.overrideAttrs (finalAttrs: prevAttrs: {
-        patches = (prevAttrs.patches or []) ++ [ ./vte-term.patch ];
-      });
-
-      # winelegacy = final.writeShellApplication {
+      # winelegacy = final.callPackage ./pkgs/wine.nix {
       #   name = "winelegacy";
-      #   # runtimeInputs = [ final.winePackages.waylandFull final.winetricks ];
-      #   # runtimeInputs = [ final.winePackages.stagingFull final.winetricks ];
-      #   runtimeInputs = [ final.winePackages.full final.winetricks ];
-      #   text = lib.readFile ./wine.sh;
+      #   # wine = final.winePackages.waylandFull;
+      #   # wine = final.winePackages.stagingFull;
+      #   wine = final.winePackages.full;
       # };
 
-      # wine32 = final.writeShellApplication {
+      # wine32 = final.callPackage ./pkgs/wine.nix {
       #   name = "wine32";
-      #   # runtimeInputs = [ final.winePackages.waylandFull final.winetricks ];
-      #   # runtimeInputs = [ final.winePackages.stagingFull final.winetricks ];
-      #   runtimeInputs = [ final.winePackages.full final.winetricks ];
-      #   text = lib.readFile ./wine.sh;
+      #   # wine = final.winePackages.waylandFull;
+      #   # wine = final.winePackages.stagingFull;
+      #   wine = final.winePackages.full;
       # };
 
-      # wine64 = final.writeShellApplication {
+      # wine64 = final.callPackage ./pkgs/wine.nix {
       #   name = "wine64";
-      #   # runtimeInputs = [ final.wineWow64Packages.waylandFull final.winetricks ];
-      #   # runtimeInputs = [ final.wineWow64Packages.stagingFull final.winetricks ];
-      #   runtimeInputs = [ final.wineWow64Packages.full final.winetricks ];
-      #   text = lib.readFile ./wine.sh;
+      #   # wine = final.wineWow64Packages.waylandFull;
+      #   # wine = final.wineWow64Packages.stagingFull;
+      #   wine = final.wineWow64Packages.full;
       # };
     })
   ];
-
-  xdg.configFile."pangoterm.cfg".source = ./pangoterm.cfg;
 
   # programs.btop.enable = true;
   programs.chromium.enable = true;
@@ -243,7 +220,6 @@
     # pkgs.irssi
     # pkgs.jre
     #pkgs.kdenlive # replaced with kdepackages.kdenlive 2025-02-25
-    pkgs.kdePackages.konsole
     #pkgs.killall
     #pkgs.krita
     #pkgs.ledger-live-desktop
@@ -256,7 +232,6 @@
     #(pkgs.luajit_2_1.withPackages (ps: [ ps.lpeg ]))
     # pkgs.lua-language-server
     #pkgs.lutris
-    pkgs.lxterminal
     pkgs.man-pages
     pkgs.man-pages-posix
     #pkgs.megasync

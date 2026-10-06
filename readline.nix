@@ -2,7 +2,7 @@
   nixpkgs.overlays = [
     #(final: prev: {
     #  readline = prev.readline.overrideAttrs (oldattrs: {
-    #    patches = oldattrs.patches ++ [ ./readline.patch ];
+    #    patches = oldattrs.patches ++ [ ./patches/readline.patch ];
     #  });
     #})
   ];

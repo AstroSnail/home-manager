@@ -3,7 +3,7 @@
 {
   nixpkgs.overlays = [
     (final: prev: {
-      # TODO: vscode-oss with ./vscode-term.patch
+      # TODO: vscode-oss with ./patches/vscode-term.patch
       vscodium-erry = final.vscodium;
     })
   ];

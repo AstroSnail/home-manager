@@ -6,8 +6,8 @@
 
       vim-full = prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: {
         patches = (prevAttrs.patches or []) ++ [
-          ./vim-rgb-resp.patch
-          ./vim-term.patch
+          ./patches/vim-rgb-resp.patch
+          ./patches/vim-term.patch
         ];
       });
 
@@ -19,17 +19,11 @@
         };
       };
 
-      vim-drop = pkgs.writeShellApplication {
-        name = "vim-drop";
-        runtimeInputs = [ config.programs.jq.package ];
-        text = lib.readFile ./vim-drop.sh;
+      vim-drop = final.callPackage ./pkgs/vim-drop.nix {
+        jq = config.programs.jq.package;
       };
 
-      vim-edit = pkgs.writeShellApplication {
-        name = "vim-edit";
-        runtimeInputs = [ final.vim-drop ];
-        text = lib.readFile ./vim-edit.sh;
-      };
+      vim-edit = final.callPackage ./pkgs/vim-edit.nix { };
 
     })
   ];

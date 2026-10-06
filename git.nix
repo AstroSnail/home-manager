@@ -1,13 +1,9 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   nixpkgs.overlays = [
     (final: prev: {
-      github-clone = pkgs.writeShellApplication {
-        name = "github-clone";
-        runtimeInputs = [ pkgs.git ];
-        text = lib.readFile ./github-clone.sh;
-      };
+      github-clone = final.callPackage ./pkgs/github-clone.nix { };
     })
   ];
 

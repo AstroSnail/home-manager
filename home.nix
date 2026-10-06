@@ -5,8 +5,6 @@
     ./packages.nix
     ./i3status.nix
     ./sway.nix
-    ./systemd.nix
-    ./terminfo.nix
     ./xdg.nix
   ];
 
@@ -40,7 +38,7 @@
 
     ls = "ls --classify=auto --color=auto";
 
-    caretify = "sed --null-data --file=${./caretify.sed}";
+    caretify = "sed --null-data --file=${./pkgs/caretify.sed}";
     nix-locate = "nix run -- github:nix-community/nix-index-database";
 
     startvnc = ". ${./startvnc.sh}";

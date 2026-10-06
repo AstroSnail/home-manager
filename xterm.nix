@@ -8,8 +8,8 @@
       xterm-erry = final.xterm.overrideAttrs (finalAttrs: prevAttrs: {
         # remove sixel-256.support.patch
         patches = [
-          # ./xterm-f1-f4.patch
-          # ./xterm-fix-status-line.patch
+          # ./patches/xterm-f1-f4.patch
+          # ./patches/xterm-fix-status-line.patch
         ];
         configureFlags = prevAttrs.configureFlags ++ [
           "--enable-block-select"

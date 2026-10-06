@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 {
-  #nixpkgs.overlays = [(_: pkgs: { openssh = pkgs.openssh.override { withFIDO = true; }; })];
+  #nixpkgs.overlays = [(final: prev: { openssh = prev.openssh.override { withFIDO = true; }; })];
   programs.ssh.enable = true;
   programs.ssh.enableDefaultConfig = false;
 

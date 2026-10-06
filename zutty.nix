@@ -5,8 +5,8 @@
     (final: prev: {
       zutty = prev.zutty.overrideAttrs (finalAttrs: prevAttrs: {
         patches = (prevAttrs.patches or []) ++ [
-          ./zutty-compile.patch
-          ./zutty-term.patch
+          ./patches/zutty-compile.patch
+          ./patches/zutty-term.patch
         ];
         meta = prevAttrs.meta // {
           broken = false;
