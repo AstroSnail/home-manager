@@ -7,6 +7,7 @@
     ./git.nix
     #./gnome-terminal.nix
     ./mpv.nix
+    ./networking.nix
     ./readline.nix
     ./ssh.nix
     ./terminals.nix
@@ -195,7 +196,6 @@
     #pkgs.discord
     pkgs.dmenu
     #pkgs.dmenu-wayland
-    #pkgs.dnsutils
     #pkgs.doom-emacs
     #pkgs.dos2unix
     #pkgs.dwarf-fortress # broken 2023-02-15
@@ -214,7 +214,6 @@
     #pkgs.gzdoom
     pkgs.htop
     # pkgs.imagemagick
-    #pkgs.inetutils
     #pkgs.inkscape
     #pkgs.iotop
     # pkgs.irssi
@@ -245,7 +244,6 @@
     # pkgs.nixos-option
     # pkgs.nix-output-monitor
     #pkgs.nixpkgs-fmt
-    #pkgs.nmap
     #pkgs.nodejs
     # pkgs.noexec
     #pkgs.nvtopPackages.amd
@@ -279,7 +277,6 @@
     pkgs.signal-desktop
     #pkgs.shellcheck
     pkgs.slurp
-    #pkgs.socat
     #pkgs.speechd
     #pkgs.steamcmd
     #pkgs.strongswan
