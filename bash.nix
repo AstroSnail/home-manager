@@ -57,7 +57,7 @@ lib.mkMerge [
       . ${./terminal-specific.sh}
 
       . ${pkgs.vte}/etc/profile.d/vte.sh
-      eval "$(${lib.getExe' pkgs.coreutils "dircolors"} --sh)"
+      eval "$(dircolors --sh)"
     '';
   }
 ]

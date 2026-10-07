@@ -2,8 +2,8 @@
 
 runCommand "terminfo-erry" {
   src = ./terminfo-erry.src;
-  tic = lib.getExe' ncurses "tic";
+  nativeBuildInputs = [ ncurses ];
 } ''
   mkdir --parents "$out/share/terminfo"
-  "$tic" -x -o "$out/share/terminfo" -v "$src"
+  tic -x -o "$out/share/terminfo" -v "$src"
 ''

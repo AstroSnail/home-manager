@@ -36,9 +36,10 @@
       # fortunes to the package
       fortune = prev.fortune.overrideAttrs (finalAttrs: prevAttrs: {
         postInstall = (prevAttrs.postInstall or "") + ''
+          PATH=''${out}/bin:''${PATH}
           vex=$out/share/games/fortunes/vex
           cp ${./vex} "$vex"
-          "$out"/bin/strfile -x "$vex"
+          strfile -x "$vex"
           ln -s vex "$vex".u8
         '';
       });

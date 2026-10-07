@@ -47,7 +47,7 @@ in {
     fonts.names = [ "Dina" ];
     fonts.size = 10.0;
     position = "bottom";
-    statusCommand = "${lib.getExe pkgs.i3status} | gawk -f ${./pkgs/i3status-wrapper.gawk}";
+    statusCommand = "i3status | gawk -f ${./pkgs/i3status-wrapper.gawk}";
     extraConfig = ''
       modifier none
     '';
