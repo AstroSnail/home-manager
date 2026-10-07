@@ -1,14 +1,6 @@
 { config, pkgs, ... }@args:
 
 {
-  nixpkgs.overlays = [
-    (final: prev: {
-      rxvt-unicode-unwrapped = prev.rxvt-unicode-unwrapped.overrideAttrs (finalAttrs: prevAttrs: {
-        patches = (prevAttrs.patches or []) ++ [ ./patches/urxvt-compile.patch ];
-      });
-    })
-  ];
-
   programs.urxvt.enable = true;
   programs.urxvt.fonts = [ "xft:Dina:size=10" ];
   programs.urxvt.scroll.lines = 0;
