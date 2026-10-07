@@ -7,7 +7,7 @@ stdenv.mkDerivation (finalAttrs: {
   src = fetchbzr {
     url = "http://bazaar.leonerd.org.uk/code/pangoterm/";
     rev = finalAttrs.version;
-    sha256 = "sha256-zik+LNwAPsr2rFqxyXZrZkglf9+JWQ/rM0wItgdT1MA=";
+    hash = "sha256-zik+LNwAPsr2rFqxyXZrZkglf9+JWQ/rM0wItgdT1MA=";
   };
 
   nativeBuildInputs = [

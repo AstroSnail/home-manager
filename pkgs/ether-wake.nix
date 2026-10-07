@@ -6,7 +6,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   src = fetchurl {
     url = "mirror://debian/pool/main/e/etherwake/etherwake_${finalAttrs.version}.orig.tar.gz";
-    sha256 = "sha256-VCQcdolXnchuKeavvG1g5p+XE1CRoTlcihD21aLa7B0=";
+    hash = "sha256-VCQcdolXnchuKeavvG1g5p+XE1CRoTlcihD21aLa7B0=";
   };
 
   patches = [
