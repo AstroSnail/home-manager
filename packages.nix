@@ -226,6 +226,7 @@
     pkgs.libreoffice
     #pkgs.libva-utils
     #pkgs.linux-manual
+    pkgs.llama-cpp-cuda # TODO: put in system config?
     #pkgs.lm_sensors
     #pkgs.ltrace
     # (pkgs.lua5_3.withPackages (ps: [ ps.lpeg ]))
