@@ -1,4 +1,4 @@
-commit 605d7403e61a96d2cb9ed76a2d462ff8cee3b65d
+commit 64545514676793760ba4aa7ee2d85a773d3bebe7
 Author: AstroSnail <astrosnail@protonmail.com>
 Date:   Sun Aug 30 18:47:53 2026 +0000
 
@@ -47,7 +47,7 @@ index 7de6947c6..45f2fcd09 100644
      }
  #endif
  }
-commit 53d8c06ede36efb4419c9f5b70bd8aa22828d07f
+commit 2b1ae11364d6656b260081390be67b39114770b3
 Author: AstroSnail <astrosnail@protonmail.com>
 Date:   Wed Sep 2 05:27:39 2026 +0000
 
@@ -65,10 +65,10 @@ Date:   Wed Sep 2 05:27:39 2026 +0000
     Signed-off-by: AstroSnail <astrosnail@protonmail.com>
 
 diff --git a/runtime/doc/autocmd.txt b/runtime/doc/autocmd.txt
-index 7a1df5c46..0fe5da032 100644
+index 4c7d7922d..3e5189929 100644
 --- a/runtime/doc/autocmd.txt
 +++ b/runtime/doc/autocmd.txt
-@@ -1324,12 +1324,12 @@ TermResponse			After the response to |t_RV| is received from
+@@ -1325,12 +1325,12 @@ TermResponse			After the response to |t_RV| is received from
  				takes time is involved.
  							*TermResponseAll*
  TermResponseAll			After the response to |t_RV|, |t_RC|, |t_RS|,
@@ -87,7 +87,7 @@ index 7a1df5c46..0fe5da032 100644
  				    "ambiguouswidth" (|t_u7|),
  				    "background" (|t_RB|),
  				    "cursorblink" (|t_RC|),
-@@ -1338,6 +1338,7 @@ TermResponseAll			After the response to |t_RV|, |t_RC|, |t_RS|,
+@@ -1339,6 +1339,7 @@ TermResponseAll			After the response to |t_RV|, |t_RC|, |t_RS|,
  				    "da1",
  				    "osc",
  				    "version" (|t_RV|)
@@ -95,33 +95,11 @@ index 7a1df5c46..0fe5da032 100644
  				Note that this event may be triggered halfway
  				executing another event, especially if file
  				I/O, a shell command or anything else that
-diff --git a/runtime/doc/builtin.txt b/runtime/doc/builtin.txt
-index b13bf6b4f..abd4f1e66 100644
---- a/runtime/doc/builtin.txt
-+++ b/runtime/doc/builtin.txt
-@@ -12182,6 +12182,7 @@ terminalprops()						*terminalprops()*
- 		   mouse		mouse type supported
- 		   kitty		whether Kitty terminal was detected
- 		   decrqm		whether sending DECRQM sequences work
-+		   rgb			whether true color is supported  **
- 
- 		** value 'u' for unknown, 'y' for yes, 'n' for no
- 
-@@ -12204,6 +12205,9 @@ terminalprops()						*terminalprops()*
- 		If "decrqm" is 'y', then Vim will query support for the
- 		'termsync' and 'termresize' ("inband") options.
- 
-+		If "rgb" is 'y', then the terminal supports true color.  See
-+		|xterm-true-color|.
-+
- 		Also see:
- 		- 'ambiwidth' - detected by using |t_u7|.
- 		- |v:termstyleresp| and |v:termblinkresp| for the response to
 diff --git a/runtime/doc/term.txt b/runtime/doc/term.txt
-index a20143efa..85428c809 100644
+index 32478ee3b..6a57bbcec 100644
 --- a/runtime/doc/term.txt
 +++ b/runtime/doc/term.txt
-@@ -710,6 +710,23 @@ equivalent hence `l` modifier) invoked with the t_ option value and three
+@@ -719,6 +719,23 @@ equivalent hence `l` modifier) invoked with the t_ option value and three
  unsigned long integers that may have any value between 0 and 255 (inclusive)
  representing red, green and blue colors respectively.
  
@@ -180,10 +158,10 @@ index 45f2fcd09..c3f481739 100644
  #endif
  }
 diff --git a/src/globals.h b/src/globals.h
-index 305725c3e..1936ea746 100644
+index d336cbf91..36ad911eb 100644
 --- a/src/globals.h
 +++ b/src/globals.h
-@@ -2106,10 +2106,6 @@ EXTERN int skip_update_topline INIT(= FALSE);
+@@ -2114,10 +2114,6 @@ EXTERN int skip_update_topline INIT(= FALSE);
  #define SHOWCMD_BUFLEN (SHOWCMD_COLS + 1 + 30)
  EXTERN char_u showcmd_buf[SHOWCMD_BUFLEN];
  
@@ -195,7 +173,7 @@ index 305725c3e..1936ea746 100644
  EXTERN bool did_warn_clipboard INIT(= FALSE);
  
 diff --git a/src/option.c b/src/option.c
-index 353082cda..a77318814 100644
+index aee261827..fc17fa9c5 100644
 --- a/src/option.c
 +++ b/src/option.c
 @@ -4793,7 +4793,6 @@ did_set_termguicolors(optset_T *args UNUSED)
@@ -215,7 +193,7 @@ index 353082cda..a77318814 100644
      return NULL;
  }
 diff --git a/src/proto/term.pro b/src/proto/term.pro
-index 1e453f09c..3c3cb19d2 100644
+index 82425f103..c037889c4 100644
 --- a/src/proto/term.pro
 +++ b/src/proto/term.pro
 @@ -3,6 +3,7 @@ guicolor_T termgui_get_color(char_u *name);
@@ -227,31 +205,19 @@ index 1e453f09c..3c3cb19d2 100644
  void set_color_count(int nr);
  keyprot_T match_keyprotocol(char_u *term);
 diff --git a/src/term.c b/src/term.c
-index b789f3924..ff91b5bb1 100644
+index bd1b4116a..2d46cbc67 100644
 --- a/src/term.c
 +++ b/src/term.c
-@@ -1549,8 +1549,10 @@ typedef struct {
- #define TPR_KITTY		    4
- // can send DECRQM requests to terminal
- #define TPR_DECRQM		    5
-+// supports true color
-+#define TPR_RGB			    6
- // table size
--#define TPR_COUNT		    6
-+#define TPR_COUNT		    7
- 
- static termprop_T term_props[TPR_COUNT];
- 
-@@ -1576,6 +1578,8 @@ init_term_props(int all)
-     term_props[TPR_KITTY].tpr_set_by_termresponse = FALSE;
+@@ -1590,7 +1590,7 @@ init_term_props(int all)
      term_props[TPR_DECRQM].tpr_name = "decrqm";
      term_props[TPR_DECRQM].tpr_set_by_termresponse = TRUE;
-+    term_props[TPR_RGB].tpr_name = "rgb";
+     term_props[TPR_RGB].tpr_name = "rgb";
+-    term_props[TPR_RGB].tpr_set_by_termresponse = FALSE;
 +    term_props[TPR_RGB].tpr_set_by_termresponse = TRUE;
  
      for (i = 0; i < TPR_COUNT; ++i)
  	if (all || term_props[i].tpr_set_by_termresponse)
-@@ -1606,6 +1610,12 @@ f_terminalprops(typval_T *argvars UNUSED, typval_T *rettv)
+@@ -1624,6 +1624,12 @@ f_terminalprops(typval_T *argvars UNUSED, typval_T *rettv)
  }
  #endif
  
@@ -264,7 +230,7 @@ index b789f3924..ff91b5bb1 100644
  /*
   * Find the builtin termcap entries for "term".
   * This also recognizes similar names.  E.g. "xterm-256color" finds the "xterm"
-@@ -1747,13 +1757,6 @@ set_color_count(int nr)
+@@ -1765,13 +1771,6 @@ set_color_count(int nr)
  	sprintf((char *)nr_colors, "%d", t_colors);
      else
  	*nr_colors = NUL;
@@ -278,7 +244,7 @@ index b789f3924..ff91b5bb1 100644
      set_string_option_direct((char_u *)"t_Co", -1, nr_colors, OPT_FREE, 0);
  }
  
-@@ -1787,11 +1790,9 @@ may_adjust_color_count(int val)
+@@ -1805,11 +1804,9 @@ may_adjust_color_count(int val)
  static char *(key_names[]) =
  {
  # ifdef FEAT_TERMRESPONSE
@@ -293,7 +259,7 @@ index b789f3924..ff91b5bb1 100644
  # endif
      "ku", "kd", "kr", "kl",
      "#2", "#4", "%i", "*7",
-@@ -1901,7 +1902,10 @@ get_term_entries(int *height, int *width)
+@@ -1919,7 +1916,10 @@ get_term_entries(int *height, int *width)
       * get key codes
       */
      for (i = 0; key_names[i] != NULL; ++i)
@@ -305,7 +271,7 @@ index b789f3924..ff91b5bb1 100644
  	{
  	    char_u *p = TGETSTR(key_names[i], &tp);
  
-@@ -7636,25 +7640,25 @@ got_code_from_term(char_u *code, int len)
+@@ -7734,25 +7734,25 @@ got_code_from_term(char_u *code, int len)
  # endif
  		may_adjust_color_count(val);
  	    }
@@ -348,98 +314,10 @@ index b789f3924..ff91b5bb1 100644
  	    {
  		i = find_term_bykeys(str, NULL);
 diff --git a/src/testdir/test_termcodes.vim b/src/testdir/test_termcodes.vim
-index 8dd33a6fd..d8a7545dc 100644
+index 2291e3a05..d0cae64e0 100644
 --- a/src/testdir/test_termcodes.vim
 +++ b/src/testdir/test_termcodes.vim
-@@ -1720,6 +1720,7 @@ func Test_xx01_term_style_response()
-         \ underline_rgb: 'u',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
- 
-@@ -1756,6 +1757,7 @@ func Test_xx02_iTerm2_response()
-         \ underline_rgb: 'u',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'y'
-         \ }, terminalprops())
- 
-@@ -1777,6 +1779,7 @@ func Run_libvterm_konsole_response(code)
-         \ underline_rgb: 'u',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
- endfunc
-@@ -1821,6 +1824,7 @@ func Test_xx04_Mac_Terminal_response()
-         \ underline_rgb: 'y',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'n'
-         \ }, terminalprops())
-   call assert_equal("\<Esc>[58;2;%lu;%lu;%lum", &t_8u)
-@@ -1853,6 +1857,7 @@ func Test_xx05_mintty_response()
-         \ underline_rgb: 'y',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
- 
-@@ -1890,6 +1895,7 @@ func Test_xx06_screen_response()
-         \ underline_rgb: 'y',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'n'
-         \ }, terminalprops())
- 
-@@ -1916,6 +1922,7 @@ func Do_check_t_8u_set_reset(set_by_user)
-         \ underline_rgb: 'u',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
-   call assert_equal(a:set_by_user ? default_value : '', &t_8u)
-@@ -1956,6 +1963,7 @@ func Test_xx07_xterm_response()
-         \ underline_rgb: 'y',
-         \ mouse: 'u',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
- 
-@@ -1973,6 +1981,7 @@ func Test_xx07_xterm_response()
-         \ underline_rgb: 'u',
-         \ mouse: '2',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
- 
-@@ -1990,6 +1999,7 @@ func Test_xx07_xterm_response()
-         \ underline_rgb: 'u',
-         \ mouse: 's',
-         \ kitty: 'u',
-+        \ rgb: 'u',
-         \ decrqm: 'u'
-         \ }, terminalprops())
- 
-@@ -2020,6 +2030,7 @@ func Test_xx08_kitty_response()
-         \ underline_rgb: 'y',
-         \ mouse: 's',
-         \ kitty: 'y',
-+        \ rgb: 'u',
-         \ decrqm: 'y'
-         \ }, terminalprops())
- 
-@@ -2983,6 +2994,41 @@ func Test_term_response_osc()
+@@ -3004,6 +3004,41 @@ func Test_term_response_osc()
    call assert_equal("\<Esc>]15;hello world!\x07", v:termosc)
  endfunc
  
@@ -481,11 +359,19 @@ index 8dd33a6fd..d8a7545dc 100644
  " Test if xOSC key is emitted.
  func Test_term_response_xosc_key()
    CheckRunVimInTerminal
+commit 7f01063d0ff5b78b87ad29d4ae999e8535949ac8
+Author: AstroSnail <astrosnail@plfgr.eu.org>
+Date:   Tue Oct 20 17:33:53 2026 +0000
+
+    Add extra patch name
+    
+    personal use, do not push
+
 diff --git a/src/version.c b/src/version.c
-index d9d29b7e6..9322a64c3 100644
+index 41932331b..d450c8d22 100644
 --- a/src/version.c
 +++ b/src/version.c
-@@ -2820,2 +2820,4 @@ static int included_patches[] =
+@@ -3086,2 +3086,4 @@ static int included_patches[] =
  {   /* Add your patch description below this line */
 +/**/
 +    "term RGB resp",
