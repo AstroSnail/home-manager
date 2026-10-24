@@ -182,9 +182,9 @@
     pkgs.apexctl
     # pkgs.appimage-run
     #pkgs.ares # broken 2025-06-20
-    pkgs.ascii
+    # pkgs.ascii
     # pkgs.bat
-    pkgs.bc
+    # pkgs.bc
     # pkgs.bchunk
     pkgs.bintools
     #pkgs.blender
@@ -276,7 +276,7 @@
     # pkgs.sameboy
     #pkgs.scanmem
     #pkgs.scrot
-    pkgs.signal-desktop
+    # pkgs.signal-desktop
     #pkgs.shellcheck
     pkgs.slurp
     #pkgs.speechd
@@ -303,8 +303,8 @@
     pkgs.wineWow64Packages.full
     #pkgs.wineWow64Packages.waylandFull
     #pkgs.winetricks
-    pkgs.wl-clipboard
-    pkgs.xdotool
+    # pkgs.wl-clipboard
+    # pkgs.xdotool
     #pkgs.xonotic
     #pkgs.xorg.xkill
     #pkgs.ydotool
