@@ -1,4 +1,4 @@
-caretify_quick() {
+caretify-quick() {
 	# convert C0 control characters (and DEL) to caret notation.
 	# input and output in REPLY
 	local oct c0 pc0
@@ -15,7 +15,21 @@ caretify_quick() {
 	REPLY=${REPLY//"${c0}"/${pc0}}
 }
 
-whichpath() {
+llama-cli() {
+	local dir
+	printf -v dir '%s/%(%FT%T%z)T' ~/Documents/llama
+	mkdir --parents "${dir}"
+	script --flush --log-in "${dir}/scripti.txt" --log-out "${dir}/scripto.txt" --log-timing "${dir}/scriptt.txt" -- llama-cli "$@"
+}
+
+nix-run() {
+	local pkg
+	pkg=$1
+	shift
+	nix run -- nixpkgs#${pkg} "$@"
+}
+
+which-path() {
 	local arg
 	for arg do
 		arg=${ type -P -- "${arg}"; }
@@ -23,6 +37,6 @@ whichpath() {
 	done
 }
 
-ytdesc() {
+yt-desc() {
 	yt-dlp -j -- "$1" | jq -r .description | less
 }

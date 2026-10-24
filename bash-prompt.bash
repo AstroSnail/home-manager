@@ -63,7 +63,7 @@ erry_ps0() {
 	REPLY=${ fc -ln -0; }
 	# tab space
 	REPLY=${REPLY#'	 '}
-	caretify_quick
+	caretify-quick
 	# CR syncs column in the terminal and in the kernel's cooked mode
 	printf '\e]2;%s\e\\\r' "${REPLY}"
 }
