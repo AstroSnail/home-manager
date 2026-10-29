@@ -15,13 +15,6 @@ caretify-quick() {
 	REPLY=${REPLY//"${c0}"/${pc0}}
 }
 
-llama-cli() {
-	local dir
-	printf -v dir '%s/%(%FT%T%z)T' ~/Documents/llama
-	mkdir --parents "${dir}"
-	script --flush --log-in "${dir}/scripti.txt" --log-out "${dir}/scripto.txt" --log-timing "${dir}/scriptt.txt" -- llama-cli "$@"
-}
-
 nix-run() {
 	local pkg
 	pkg=$1
