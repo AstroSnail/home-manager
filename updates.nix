@@ -6,6 +6,23 @@
   nixpkgs.overlays = [
     (final: prev: {
 
+      # add LFM3 support
+      llama-cpp = prev.llama-cpp.overrideAttrs (finalAttrs: prevAttrs: let
+        version = "b11941";
+        hash = "sha256-eGuyU6IPPF2QecKYVrdLA4iq5b0Tj6F8urdkkpsLrYg=";
+      in if lib.versionOlder prevAttrs.version "0.7.1" then {
+        inherit version;
+        src = final.fetchFromGitHub {
+          owner = "ggml-org";
+          repo = "llama.cpp";
+          rev = version;
+          inherit hash;
+        };
+        patches = [];
+        npmDepsHash = "sha256-XLtEZsSFdk+2SyfXzBp8HQ2e27PQPpDCn1YjePU1/9w=";
+        doCheck = false;
+      } else {});
+
       vim-full = prev.vim-full.overrideAttrs (finalAttrs: prevAttrs: let
         # version = "9.2.1021";
         # hash = "sha256-3GQno5jSGXbbamo4OjGKDCR0ph93nk71ogcmMoBHwoo=";
