@@ -127,9 +127,9 @@
     #         pointer is over the window.
     # workaround: release and re-press shift before releasing the mouse
     #             button, listen/watch out for MinorError bells.
-    "XTerm*VT100.translations" = ''
-      #override \n\
-      <KeyPress> Shift_L: set-select(on) \n\
-      <KeyRelease> Shift_L: set-select(off)'';
+    # "XTerm*VT100.translations" = ''
+    #   #override \n\
+    #   <KeyPress> Shift_L: set-select(on) \n\
+    #   <KeyRelease> Shift_L: set-select(off)'';
   };
 }
