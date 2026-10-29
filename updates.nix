@@ -41,13 +41,15 @@
       } else {});
 
       yt-dlp = prev.yt-dlp.overrideAttrs (finalAttrs: prevAttrs: let
-        version = "2026.1.29";
-        hash = "sha256-ErSJ6xaCjMP/8XI/JEmS666KW/Gtdcjp8B1ymuI367k=";
+        version = "2026.10.26";
+        hash = "sha256-0gX99Q45+1L4eH0YK0942DVTq5Wwscq3Qkj+N/EjHek=";
       in if lib.versionOlder prevAttrs.version version then {
         inherit version;
-        src = final.fetchPypi {
-          pname = "yt_dlp";
-          inherit version hash;
+        src = final.fetchFromGitHub {
+          owner = "yt-dlp";
+          repo = "yt-dlp";
+          rev = version;
+          inherit hash;
         };
         # postPatch = null;
       } else {});
