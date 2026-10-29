@@ -17,7 +17,7 @@
   programs.readline.variables.force-meta-prefix = true;
   # reduce lag when just pressing esc
   # programs.readline.variables.keyseq-timeout = 100;
-  programs.readline.variables.revert-all-at-newline = true;
+  # programs.readline.variables.revert-all-at-newline = true;
   # would be more useful if it showed even absent a primary prompt
   programs.readline.variables.show-mode-in-prompt = true;
 
