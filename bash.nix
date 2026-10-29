@@ -17,7 +17,7 @@ lib.mkMerge [
       "checkjobs"
       "histappend"
       "histreedit"
-      "histverify"
+      # "histverify"
     ];
 
     programs.bash.initExtra = ''
