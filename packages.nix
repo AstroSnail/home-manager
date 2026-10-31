@@ -305,7 +305,7 @@
     #pkgs.winetricks
     # pkgs.wl-clipboard
     # pkgs.xdotool
-    #pkgs.xonotic
+    pkgs.xonotic
     #pkgs.xorg.xkill
     #pkgs.ydotool
     #pkgs.zip
