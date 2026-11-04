@@ -24,7 +24,7 @@
   home.packages = [
     pkgs.kdePackages.konsole
     pkgs.lxterminal
-    pkgs.pangoterm
+    # pkgs.pangoterm # broken 2026-11-04 (gtk2)
   ];
 
   home.file.".terminfo".source = "${pkgs.terminfo-erry}/share/terminfo";
