@@ -20,6 +20,7 @@
 
   programs.mpv.enable = true;
   programs.mpv.includes = [ "${./mpv.conf}" ];
+  programs.mpv.scriptOpts.ytdl_hook.all_formats = false;
 
   programs.streamlink.enable = true;
   programs.streamlink.settings.player = "mpv";
