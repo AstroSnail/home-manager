@@ -54,18 +54,6 @@
         # postPatch = null;
       } else {});
 
-      zutty = prev.zutty.overrideAttrs (finalAttrs: prevAttrs: let
-        version = "0.17";
-        rev = "0.17";
-        hash = "sha256-0UhAij4ERAdbASE+pCcq6NaaYUaNEa9Fpj642QL/77c=";
-      in if lib.versionOlder prevAttrs.version version then {
-        inherit version;
-        src = final.fetchgit {
-          url = "https://git.hq.sig7.se/zutty.git";
-          inherit rev hash;
-        };
-      } else {});
-
     })
   ];
 }
